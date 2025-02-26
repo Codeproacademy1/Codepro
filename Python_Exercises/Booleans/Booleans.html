@@ -1,147 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Python Booleans Questions</title>
-  <style>
-    /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Python Booleans Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1, h2 {
+            color: #444;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .option {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #e9e9e9;
+        }
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .feedback {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .question {
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .submit-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-    body {
-      background-color: #f9f9f9;
-      color: #333;
-      margin: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2em;
-      color: #444;
-    }
-
-    .questions-container {
-      max-width: 800px;
-      margin: 0 auto;
-      background-color: #fff;
-      border-radius: 6px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    ol {
-      margin-left: 20px;
-    }
-
-    li {
-      margin-bottom: 15px;
-    }
-
-    .question-text {
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: #222;
-    }
-
-    .hint {
-      font-style: italic;
-      color: #555;
-    }
-
-    .tips-section {
-      margin-top: 25px;
-      padding: 15px;
-      background-color: #fafafa;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .tips-section h2 {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .tips-section p {
-      margin-bottom: 8px;
-    }
-
-    code {
-      background-color: #f4f4f4;
-      padding: 2px 4px;
-      font-size: 0.95em;
-      border-radius: 4px;
-    }
-  </style>
+        /* Final result section */
+        #final-page {
+            text-align: center;
+        }
+        #final-score {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <div class="quiz-container">
+        <h1>Python Booleans Quiz</h1>
+        
+        <!-- Question 1 -->
+        <div class="question active" id="question-1">
+            <h2>1. What is a Boolean?</h2>
+            <form id="quiz-form-1" name="boolean-definition">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="boolean-definition" value="A">
+                        A. It is a type of fruit.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-definition" value="B">
+                        B. It is a Python data type that can be <code>True</code> or <code>False</code>.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-definition" value="C">
+                        C. It is a special keyword for loops.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-definition" value="D">
+                        D. It is the name of a Python library.
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-1" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-1" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
 
-  <h1>Python Booleans - Kid-Friendly Questions</h1>
-  <div class="questions-container">
-    <ol>
-      <li>
-        <div class="question-text">1. What is a Boolean?</div>
-        <div class="hint">Hint: In Python, a Boolean is a type of value that can either be <code>True</code> or <code>False</code>.</div>
-      </li>
-      <li>
-        <div class="question-text">2. Which words in Python represent Boolean values?</div>
-        <div class="hint">Hint: In Python, Booleans start with capital letters.</div>
-      </li>
-      <li>
-        <div class="question-text">3. If you write <code>5 &gt; 3</code> in Python, what Boolean value will you get?</div>
-        <div class="hint">Hint: Compare 5 and 3: is 5 greater than 3 or not?</div>
-      </li>
-      <li>
-        <div class="question-text">4. If you write <code>10 &lt; 5</code> in Python, will it return <code>True</code> or <code>False</code>?</div>
-        <div class="hint">Hint: Compare the numbers carefully.</div>
-      </li>
-      <li>
-        <div class="question-text">5. What does the <code>==</code> operator check in Python?</div>
-        <div class="hint">Hint: It compares two values to see if they are the same.</div>
-      </li>
-      <li>
-        <div class="question-text">6. If <code>my_number = 7</code>, what will Python output for <code>my_number == 7</code>?</div>
-        <div class="hint">Hint: Think about whether 7 is equal to 7.</div>
-      </li>
-      <li>
-        <div class="question-text">7. What does the <code>!=</code> operator do?</div>
-        <div class="hint">Hint: It checks if two values are <em>not</em> equal.</div>
-      </li>
-      <li>
-        <div class="question-text">8. Which logical operator would make the expression <code>True and False</code> return <code>False</code>?</div>
-        <div class="hint">Hint: Remember the three logical operators in Python: <code>and</code>, <code>or</code>, <code>not</code>.</div>
-      </li>
-      <li>
-        <div class="question-text">9. How does the <code>not</code> operator affect a Boolean value?</div>
-        <div class="hint">Hint: It flips the value from <code>True</code> to <code>False</code> or from <code>False</code> to <code>True</code>.</div>
-      </li>
-      <li>
-        <div class="question-text">10. What is the result of <code>True or False</code> in Python?</div>
-        <div class="hint">Hint: If at least one value is <code>True</code>, the whole thing becomes <code>True</code>.</div>
-      </li>
-    </ol>
+        <!-- Question 2 -->
+        <div class="question" id="question-2">
+            <h2>2. Which words in Python represent Boolean values?</h2>
+            <form id="quiz-form-2" name="boolean-values">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="boolean-values" value="A">
+                        A. <code>True</code> and <code>False</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-values" value="B">
+                        B. <code>TRUE</code> and <code>FALSE</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-values" value="C">
+                        C. <code>T</code> and <code>F</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="boolean-values" value="D">
+                        D. None of the above
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-2" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-2" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
 
-    <div class="tips-section">
-      <h2>Tips for Kids</h2>
-      <p><strong>Try in a Python Shell:</strong> Open a Python interpreter and type each question’s code or expression to see what happens.</p>
-      <p><strong>Experiment:</strong> Change numbers in comparisons (for example, <code>5 &gt; 3</code> to <code>2 &gt; 10</code>) and see how the results change.</p>
-      <p><strong>Use Print Statements:</strong> 
-        <br />
-        For instance:
-        <br />
-        <code>print(5 &gt; 3)</code>
-        <br />
-        <code>print(5 &lt; 3)</code>
-        <br />
-        You’ll see the Boolean values immediately in the output!
-      </p>
+        <!-- Question 3 -->
+        <div class="question" id="question-3">
+            <h2>3. If you write <code>5 &gt; 3</code> in Python, what Boolean value will you get?</h2>
+            <form id="quiz-form-3" name="five-greater-than-three">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="five-greater-than-three" value="A"> A. <code>True</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="five-greater-than-three" value="B"> B. <code>False</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="five-greater-than-three" value="C"> C. <code>None</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="five-greater-than-three" value="D"> D. An error
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-3" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-3" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question" id="question-4">
+            <h2>4. If you write <code>10 &lt; 5</code> in Python, will it return <code>True</code> or <code>False</code>?</h2>
+            <form id="quiz-form-4" name="ten-less-than-five">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="ten-less-than-five" value="A"> A. <code>True</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="ten-less-than-five" value="B"> B. <code>False</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="ten-less-than-five" value="C"> C. <code>10</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="ten-less-than-five" value="D"> D. None of the above
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-4" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-4" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question" id="question-5">
+            <h2>5. What does the <code>==</code> operator check in Python?</h2>
+            <form id="quiz-form-5" name="double-equals">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="double-equals" value="A"> A. If two values are equal
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="double-equals" value="B"> B. If one value is greater than the other
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="double-equals" value="C"> C. If one value is less than the other
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="double-equals" value="D"> D. It does nothing special
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-5" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-5" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question" id="question-6">
+            <h2>6. If <code>my_number = 7</code>, what will Python output for <code>my_number == 7</code>?</h2>
+            <form id="quiz-form-6" name="my-number">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="my-number" value="A"> A. <code>True</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="my-number" value="B"> B. <code>False</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="my-number" value="C"> C. <code>7</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="my-number" value="D"> D. An error
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-6" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-6" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question" id="question-7">
+            <h2>7. What does the <code>!=</code> operator do?</h2>
+            <form id="quiz-form-7" name="not-equal">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="not-equal" value="A"> A. Checks if two values are the same
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-equal" value="B"> B. Checks if two values are <em>not</em> equal
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-equal" value="C"> C. Checks if the first value is larger
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-equal" value="D"> D. It is used for comments
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-7" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-7" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question" id="question-8">
+            <h2>8. Which logical operator would make the expression <code>True and False</code> return <code>False</code>?</h2>
+            <form id="quiz-form-8" name="logical-operator">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="logical-operator" value="A"> A. <code>not</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="logical-operator" value="B"> B. <code>or</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="logical-operator" value="C"> C. <code>and</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="logical-operator" value="D"> D. There is no such operator
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-8" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-8" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question" id="question-9">
+            <h2>9. How does the <code>not</code> operator affect a Boolean value?</h2>
+            <form id="quiz-form-9" name="not-operator">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="not-operator" value="A"> A. It flips <code>True</code> to <code>False</code> or <code>False</code> to <code>True</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-operator" value="B"> B. It does nothing
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-operator" value="C"> C. It adds 1 to a number
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="not-operator" value="D"> D. It throws an error in Python
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-9" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-9" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question" id="question-10">
+            <h2>10. What is the result of <code>True or False</code> in Python?</h2>
+            <form id="quiz-form-10" name="true-or-false">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="true-or-false" value="A"> A. <code>True</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="true-or-false" value="B"> B. <code>False</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="true-or-false" value="C"> C. <code>None</code>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="true-or-false" value="D"> D. An error
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-10" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-10" class="submit-button" disabled>Finish Quiz</button>
+            </div>
+        </div>
+
+        <!-- Final Page -->
+        <div class="question" id="final-page" style="display: none;">
+            <h2>Quiz Completed!</h2>
+            <p id="final-score"></p>
+        </div>
     </div>
-  </div>
 
+    <script>
+        const questions = document.querySelectorAll('.question');
+        const nextButtons = document.querySelectorAll('[id^="next-button-"]');
+
+        // Track correctness for each question (10 questions in this quiz)
+        let questionCorrect = new Array(10).fill(false);
+
+        /**
+         * Reusable function to validate each question. 
+         * If the user's answer is correct, enable Next button and show correct feedback.
+         * If incorrect, disable Next button and show incorrect feedback.
+         */
+        function validateAnswer(questionNumber, correctAnswer, feedbackId, nextButtonId) {
+            const form = document.getElementById(`quiz-form-${questionNumber}`);
+            const feedback = document.getElementById(feedbackId);
+            const nextButton = document.getElementById(nextButtonId);
+
+            form.addEventListener('change', function() {
+                // For radio buttons in this quiz, only one can be selected
+                const selectedOption = document.querySelector(`input[name="${form.name}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswer) {
+                    feedback.textContent = 'Correct! 🎉';
+                    feedback.className = 'feedback correct';
+                    nextButton.disabled = false;
+                    questionCorrect[questionNumber - 1] = true;
+                } else {
+                    feedback.textContent = 'Incorrect. Please try again.';
+                    feedback.className = 'feedback incorrect';
+                    nextButton.disabled = true;
+                    questionCorrect[questionNumber - 1] = false;
+                }
+            });
+        }
+
+        // Validate each question with its correct answer
+        validateAnswer(1, 'B', 'feedback-1', 'next-button-1');
+        validateAnswer(2, 'A', 'feedback-2', 'next-button-2');
+        validateAnswer(3, 'A', 'feedback-3', 'next-button-3');
+        validateAnswer(4, 'B', 'feedback-4', 'next-button-4');
+        validateAnswer(5, 'A', 'feedback-5', 'next-button-5');
+        validateAnswer(6, 'A', 'feedback-6', 'next-button-6');
+        validateAnswer(7, 'B', 'feedback-7', 'next-button-7');
+        validateAnswer(8, 'C', 'feedback-8', 'next-button-8');
+        validateAnswer(9, 'A', 'feedback-9', 'next-button-9');
+        validateAnswer(10, 'A', 'feedback-10', 'next-button-10');
+
+        // Navigation logic: show next question when clicking "Next"
+        nextButtons.forEach((button, index) => {
+            button.addEventListener('click', function() {
+                // Hide current question
+                questions[index].classList.remove('active');
+
+                // If we're on the last question (index === 9 for 10 questions),
+                // show final results instead of the next question
+                if (index === 9) {
+                    showFinalResults();
+                } else {
+                    // Show the next question
+                    questions[index + 1].classList.add('active');
+                }
+            });
+        });
+
+        /**
+         * Calculate and display final results
+         */
+        function showFinalResults() {
+            // Hide all question containers
+            questions.forEach(q => q.style.display = 'none');
+
+            // Show the final-page section
+            const finalPage = document.getElementById('final-page');
+            finalPage.style.display = 'block';
+
+            // Calculate number of correct answers
+            const correctCount = questionCorrect.reduce((acc, cur) => acc + (cur ? 1 : 0), 0);
+            const totalQuestions = questionCorrect.length;
+
+            // Display a message on the final page
+            const finalScore = document.getElementById('final-score');
+            finalScore.textContent = `You got ${correctCount} out of ${totalQuestions} questions correct!`;
+        }
+    </script>
 </body>
 </html>
