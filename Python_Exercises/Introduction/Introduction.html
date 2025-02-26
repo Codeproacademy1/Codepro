@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Quiz</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #444;
+            text-align: center;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .option {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #e9e9e9;
+        }
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .feedback {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .question {
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .submit-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Python Quiz</h1>
+        
+        <!-- Question 1: Python is a type of -->
+        <div class="question active" id="question-1">
+            <h2>1. Python is a type of:</h2>
+            <form id="quiz-form-1">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="type" value="A"> A. Snake
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="type" value="B"> B. Programming language
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="type" value="C"> C. Fruit
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="type" value="D"> D. Animal
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-1" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-1" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 2: Keyword to display information -->
+        <div class="question" id="question-2">
+            <h2>2. Which keyword is used in Python to display information on the screen?</h2>
+            <form id="quiz-form-2">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="keyword" value="A"> A. echo()
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="keyword" value="B"> B. show()
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="keyword" value="C"> C. print()
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="keyword" value="D"> D. display()
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-2" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-2" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 3: Marking the beginning of a new code block -->
+        <div class="question" id="question-3">
+            <h2>3. In Python, how do we mark the beginning of a new code block?</h2>
+            <form id="quiz-form-3">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="block" value="A"> A. By using curly braces { }
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="block" value="B"> B. By using indentation (spaces)
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="block" value="C"> C. By typing begin ... end
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="block" value="D"> D. By adding parentheses ( )
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-3" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-3" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 4: Assigning a value to a variable -->
+        <div class="question" id="question-4">
+            <h2>4. Which of the following lines correctly assigns a value to a variable in Python?</h2>
+            <form id="quiz-form-4">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="variable" value="A"> A. x = 10
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="variable" value="B"> B. let x = 10
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="variable" value="C"> C. x: 10
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="variable" value="D"> D. assign x = 10
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-4" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-4" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 5: Creator of Python -->
+        <div class="question" id="question-5">
+            <h2>5. Python was first created by:</h2>
+            <form id="quiz-form-5">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="creator" value="A"> A. Guido van Rossum
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="creator" value="B"> B. Bill Gates
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="creator" value="C"> C. Tim Berners-Lee
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="creator" value="D"> D. James Gosling
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-5" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-5" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 6: True/False - Python is case-sensitive -->
+        <div class="question" id="question-6">
+            <h2>6. Python is case-sensitive, meaning Age and age can be different variables.</h2>
+            <form id="quiz-form-6">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="case-sensitive" value="True"> True
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="case-sensitive" value="False"> False
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-6" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-6" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 7: True/False - print() function -->
+        <div class="question" id="question-7">
+            <h2>7. You can use the print() function in Python to show text on the screen.</h2>
+            <form id="quiz-form-7">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="print" value="True"> True
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="print" value="False"> False
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-7" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-7" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 8: True/False - Variable type declarations -->
+        <div class="question" id="question-8">
+            <h2>8. In Python, you must always declare variable types (like int, str) before using them.</h2>
+            <form id="quiz-form-8">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="declare" value="True"> True
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="declare" value="False"> False
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-8" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-8" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 9: True/False - Indentation in Python -->
+        <div class="question" id="question-9">
+            <h2>9. Indentation (spaces at the start of a line) does not matter in Python.</h2>
+            <form id="quiz-form-9">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="indentation" value="True"> True
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="indentation" value="False"> False
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-9" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-9" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 10: True/False - Uses of Python -->
+        <div class="question" id="question-10">
+            <h2>10. Python can be used to create games, websites, and other cool projects.</h2>
+            <form id="quiz-form-10">
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="uses" value="True"> True
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="uses" value="False"> False
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-10" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-10" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 11: Checkbox - Valid Data Types in Python -->
+        <div class="question" id="question-11">
+            <h2>11. Which of the following are valid data types in Python? (Check all that apply)</h2>
+            <form id="quiz-form-11">
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="data-types" value="Elephants"> Elephants
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="data-types" value="Strings"> Strings
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="data-types" value="Integers"> Integers
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="data-types" value="Lists"> Lists
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="data-types" value="Chairs"> Chairs
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-11" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-11" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 12: Checkbox - Valid Variable Names in Python -->
+        <div class="question" id="question-12">
+            <h2>12. Which of the following are valid variable names in Python? (Check all that apply)</h2>
+            <form id="quiz-form-12">
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="variable-names" value="1st_place"> 1st_place
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="variable-names" value="first_place"> first_place
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="variable-names" value="place_1"> place_1
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="variable-names" value="$value"> $value
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="variable-names" value="user_name"> user_name
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-12" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-12" class="submit-button" disabled>Next Question</button>
+            </div>
+        </div>
+
+        <!-- Question 13: Checkbox - Uses for Python -->
+        <div class="question" id="question-13">
+            <h2>13. Which of the following can you do with Python? (Check all that apply)</h2>
+            <form id="quiz-form-13">
+                <div class="options">
+                    <label class="option">
+                        <input type="checkbox" name="uses-python" value="Build websites"> Build websites
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="uses-python" value="Make games"> Make games
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="uses-python" value="Analyze data"> Analyze data
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="uses-python" value="Teleport to Mars"> Teleport to Mars
+                    </label>
+                    <label class="option">
+                        <input type="checkbox" name="uses-python" value="Automate simple tasks"> Automate simple tasks
+                    </label>
+                </div>
+            </form>
+            <div id="feedback-13" class="feedback"></div>
+            <div class="navigation-buttons">
+                <button id="next-button-13" class="submit-button" disabled>Finish Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.question');
+        const nextButtons = document.querySelectorAll('[id^="next-button-"]');
+
+        // Function to validate answers and enable/disable next button
+        function validateAnswer(questionNumber, correctAnswer, feedbackId, nextButtonId) {
+            const form = document.getElementById(`quiz-form-${questionNumber}`);
+            const feedback = document.getElementById(feedbackId);
+            const nextButton = document.getElementById(nextButtonId);
+
+            form.addEventListener('change', function(event) {
+                const selectedOption = document.querySelector(`input[name="${form.name}"]:checked`);
+                const selectedCheckboxes = document.querySelectorAll(`input[name="${form.name}"]:checked`);
+
+                if (form.name.includes('data-types') || form.name.includes('variable-names') || form.name.includes('uses-python')) {
+                    // Checkbox validation
+                    const selectedValues = Array.from(selectedCheckboxes).map(cb => cb.value);
+                    const isCorrect = selectedValues.sort().toString() === correctAnswer.sort().toString();
+
+                    if (isCorrect) {
+                        feedback.textContent = 'Correct! 🎉';
+                        feedback.className = 'feedback correct';
+                        nextButton.disabled = false;
+                    } else {
+                        feedback.textContent = 'Incorrect. Please check your answers.';
+                        feedback.className = 'feedback incorrect';
+                        nextButton.disabled = true;
+                    }
+                } else {
+                    // Radio button validation
+                    if (selectedOption && selectedOption.value === correctAnswer) {
+                        feedback.textContent = 'Correct! 🎉';
+                        feedback.className = 'feedback correct';
+                        nextButton.disabled = false;
+                    } else {
+                        feedback.textContent = 'Incorrect. Please try again.';
+                        feedback.className = 'feedback incorrect';
+                        nextButton.disabled = true;
+                    }
+                }
+            });
+        }
+
+        // Validate each question
+        validateAnswer(1, 'B', 'feedback-1', 'next-button-1');
+        validateAnswer(2, 'C', 'feedback-2', 'next-button-2');
+        validateAnswer(3, 'B', 'feedback-3', 'next-button-3');
+        validateAnswer(4, 'A', 'feedback-4', 'next-button-4');
+        validateAnswer(5, 'A', 'feedback-5', 'next-button-5');
+        validateAnswer(6, 'True', 'feedback-6', 'next-button-6');
+        validateAnswer(7, 'True', 'feedback-7', 'next-button-7');
+        validateAnswer(8, 'False', 'feedback-8', 'next-button-8');
+        validateAnswer(9, 'False', 'feedback-9', 'next-button-9');
+        validateAnswer(10, 'True', 'feedback-10', 'next-button-10');
+        validateAnswer(11, ['Strings', 'Integers', 'Lists'], 'feedback-11', 'next-button-11');
+        validateAnswer(12, ['first_place', 'place_1', 'user_name'], 'feedback-12', 'next-button-12');
+        validateAnswer(13, ['Build websites', 'Make games', 'Analyze data', 'Automate simple tasks'], 'feedback-13', 'next-button-13');
+
+        // Navigation logic
+        nextButtons.forEach((button, index) => {
+            button.addEventListener('click', function() {
+                questions[index].classList.remove('active');
+                questions[index + 1].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
