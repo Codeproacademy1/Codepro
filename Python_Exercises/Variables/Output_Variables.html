@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Python String & Arithmetic Quiz</title>
+  <style>
+    /* Global Reset & Body */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #3f51b5;
+    }
+    .question {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+    .question h3 {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      margin-right: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.check {
+      background-color: #3f51b5;
+      color: #fff;
+    }
+    button.next {
+      background-color: #ff5722;
+      color: #fff;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .feedback {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Python String & Arithmetic Quiz</h1>
+  
+  <!-- Question 1 -->
+  <div id="question1" class="question" data-answer="b">
+    <h3>1. What is the output of the following code?</h3>
+    <pre><code>x = 10  
+y = "20"  
+print(str(x) + y)</code></pre>
+    <label><input type="radio" name="q1" value="a"> a) 30</label>
+    <label><input type="radio" name="q1" value="b"> b) 1020</label>
+    <label><input type="radio" name="q1" value="c"> c) Error</label>
+    <label><input type="radio" name="q1" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(1)">Check Answer</button>
+    <button class="next" id="next1" onclick="nextQuestion(1)" disabled>Next</button>
+    <p class="feedback" id="feedback1"></p>
+  </div>
+  
+  <!-- Question 2 -->
+  <div id="question2" class="question" data-answer="a" style="display: none;">
+    <h3>2. What is the output of the following code?</h3>
+    <pre><code>x = 5  
+y = 2  
+print(f"{x} + {y} = {x + y}")</code></pre>
+    <label><input type="radio" name="q2" value="a"> a) 5 + 2 = 7</label>
+    <label><input type="radio" name="q2" value="b"> b) 5 + 2 = {x + y}</label>
+    <label><input type="radio" name="q2" value="c"> c) Error</label>
+    <label><input type="radio" name="q2" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(2)">Check Answer</button>
+    <button class="next" id="next2" onclick="nextQuestion(2)" disabled>Next</button>
+    <p class="feedback" id="feedback2"></p>
+  </div>
+  
+  <!-- Question 3 -->
+  <div id="question3" class="question" data-answer="a" style="display: none;">
+    <h3>3. What is the output of the following code?</h3>
+    <pre><code>x = "Python"  
+print(x * 2)</code></pre>
+    <label><input type="radio" name="q3" value="a"> a) PythonPython</label>
+    <label><input type="radio" name="q3" value="b"> b) Python2</label>
+    <label><input type="radio" name="q3" value="c"> c) Error</label>
+    <label><input type="radio" name="q3" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(3)">Check Answer</button>
+    <button class="next" id="next3" onclick="nextQuestion(3)" disabled>Next</button>
+    <p class="feedback" id="feedback3"></p>
+  </div>
+  
+  <!-- Question 4 -->
+  <div id="question4" class="question" data-answer="a" style="display: none;">
+    <h3>4. What is the output of the following code?</h3>
+    <pre><code>x = 10  
+y = 20  
+print(x + y)</code></pre>
+    <label><input type="radio" name="q4" value="a"> a) 30</label>
+    <label><input type="radio" name="q4" value="b"> b) 1020</label>
+    <label><input type="radio" name="q4" value="c"> c) Error</label>
+    <label><input type="radio" name="q4" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(4)">Check Answer</button>
+    <button class="next" id="next4" onclick="nextQuestion(4)" disabled>Next</button>
+    <p class="feedback" id="feedback4"></p>
+  </div>
+  
+  <!-- Question 5 -->
+  <div id="question5" class="question" data-answer="a" style="display: none;">
+    <h3>5. What is the output of the following code?</h3>
+    <pre><code>x = "Hello"  
+y = "World"  
+print(x + y)</code></pre>
+    <label><input type="radio" name="q5" value="a"> a) HelloWorld</label>
+    <label><input type="radio" name="q5" value="b"> b) Hello World</label>
+    <label><input type="radio" name="q5" value="c"> c) Error</label>
+    <label><input type="radio" name="q5" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(5)">Check Answer</button>
+    <button class="next" id="next5" onclick="nextQuestion(5)" disabled>Next</button>
+    <p class="feedback" id="feedback5"></p>
+  </div>
+  
+  <!-- Question 6 -->
+  <div id="question6" class="question" data-answer="a" style="display: none;">
+    <h3>6. What is the output of the following code?</h3>
+    <pre><code>x = 10  
+y = 3  
+print(x % y)</code></pre>
+    <label><input type="radio" name="q6" value="a"> a) 1</label>
+    <label><input type="radio" name="q6" value="b"> b) 3</label>
+    <label><input type="radio" name="q6" value="c"> c) 0</label>
+    <label><input type="radio" name="q6" value="d"> d) 10</label>
+    <button class="check" onclick="checkAnswer(6)">Check Answer</button>
+    <button class="next" id="next6" onclick="nextQuestion(6)" disabled>Next</button>
+    <p class="feedback" id="feedback6"></p>
+  </div>
+  
+  <!-- Question 7 -->
+  <div id="question7" class="question" data-answer="c" style="display: none;">
+    <h3>7. What is the output of the following code?</h3>
+    <pre><code>x = [1, 2, 3]  
+print(len(x))</code></pre>
+    <label><input type="radio" name="q7" value="a"> a) 1</label>
+    <label><input type="radio" name="q7" value="b"> b) 2</label>
+    <label><input type="radio" name="q7" value="c"> c) 3</label>
+    <label><input type="radio" name="q7" value="d"> d) Error</label>
+    <button class="check" onclick="checkAnswer(7)">Check Answer</button>
+    <button class="next" id="next7" onclick="nextQuestion(7)" disabled>Next</button>
+    <p class="feedback" id="feedback7"></p>
+  </div>
+  
+  <!-- Question 8 -->
+  <div id="question8" class="question" data-answer="c" style="display: none;">
+    <h3>8. What is the output of the following code?</h3>
+    <pre><code>x = "Python"  
+print(x[-1])</code></pre>
+    <label><input type="radio" name="q8" value="a"> a) P</label>
+    <label><input type="radio" name="q8" value="b"> b) y</label>
+    <label><input type="radio" name="q8" value="c"> c) n</label>
+    <label><input type="radio" name="q8" value="d"> d) Error</label>
+    <button class="check" onclick="checkAnswer(8)">Check Answer</button>
+    <button class="next" id="next8" onclick="nextQuestion(8)" disabled>Next</button>
+    <p class="feedback" id="feedback8"></p>
+  </div>
+  
+  <!-- Question 9 -->
+  <div id="question9" class="question" data-answer="a" style="display: none;">
+    <h3>9. What is the output of the following code?</h3>
+    <pre><code>x = 10  
+y = "20"  
+print(x + int(y))</code></pre>
+    <label><input type="radio" name="q9" value="a"> a) 30</label>
+    <label><input type="radio" name="q9" value="b"> b) 1020</label>
+    <label><input type="radio" name="q9" value="c"> c) Error</label>
+    <label><input type="radio" name="q9" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(9)">Check Answer</button>
+    <button class="next" id="next9" onclick="nextQuestion(9)" disabled>Next</button>
+    <p class="feedback" id="feedback9"></p>
+  </div>
+  
+  <!-- Question 10 -->
+  <div id="question10" class="question" data-answer="a" style="display: none;">
+    <h3>10. What is the output of the following code?</h3>
+    <pre><code>x = 10  
+y = 20  
+print(f"{x} + {y} = {x + y}")</code></pre>
+    <label><input type="radio" name="q10" value="a"> a) 10 + 20 = 30</label>
+    <label><input type="radio" name="q10" value="b"> b) 10 + 20 = {x + y}</label>
+    <label><input type="radio" name="q10" value="c"> c) Error</label>
+    <label><input type="radio" name="q10" value="d"> d) None</label>
+    <button class="check" onclick="checkAnswer(10)">Check Answer</button>
+    <button class="next" id="next10" onclick="nextQuestion(10)" disabled>Next</button>
+    <p class="feedback" id="feedback10"></p>
+  </div>
+  
+  <!-- Final Message -->
+  <div id="finalMessage" class="question" style="display: none;">
+    <h3>Congratulations, you have completed the quiz!</h3>
+  </div>
+  
+  <script>
+    function checkAnswer(qNum) {
+      const questionDiv = document.getElementById("question" + qNum);
+      const correctAnswer = questionDiv.getAttribute("data-answer");
+      const selected = document.querySelector('input[name="q' + qNum + '"]:checked');
+      const feedback = document.getElementById("feedback" + qNum);
+      
+      if (!selected) {
+        feedback.style.color = "red";
+        feedback.textContent = "Please select an answer.";
+        return;
+      }
+      
+      if (selected.value === correctAnswer) {
+        feedback.style.color = "green";
+        feedback.textContent = "Correct!";
+        document.getElementById("next" + qNum).disabled = false;
+      } else {
+        feedback.style.color = "red";
+        feedback.textContent = "Incorrect, please try again.";
+        document.getElementById("next" + qNum).disabled = true;
+      }
+    }
+    
+    function nextQuestion(qNum) {
+      document.getElementById("question" + qNum).style.display = "none";
+      const nextQ = qNum + 1;
+      const nextQuestionDiv = document.getElementById("question" + nextQ);
+      
+      if (nextQuestionDiv) {
+        nextQuestionDiv.style.display = "block";
+      } else {
+        document.getElementById("finalMessage").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
