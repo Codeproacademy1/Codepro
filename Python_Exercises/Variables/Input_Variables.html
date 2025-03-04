@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Python Input & Conversion Quiz</title>
   <style>
-    /* Global Reset & Body */
+    /* Reset & Base */
     * {
       margin: 0;
       padding: 0;
@@ -14,13 +14,40 @@
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
       color: #333;
-      padding: 20px;
+
+      /* Sticky footer technique */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
+
+    /* HEADER */
+    header {
+      background: #fff;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    header h1 {
       color: #3f51b5;
+      font-size: 1.4rem;
+      margin: 0;
     }
+
+    /* MAIN CONTAINER to center content */
+    .main-container {
+      max-width: 1100px;
+      margin: 20px auto; /* top/bottom margin for spacing */
+      flex: 1 0 auto;    /* grows to fill leftover space for sticky footer */
+      padding: 0 20px;   /* optional side padding */
+    }
+
+    /* QUIZ WRAPPER for the entire quiz section */
+    .quiz-container {
+      max-width: 700px;   /* narrower quiz area for better readability */
+      margin: 0 auto;
+    }
+
+    /* QUESTIONS */
     .question {
       margin-bottom: 30px;
       padding: 15px;
@@ -39,6 +66,15 @@
     input[type="radio"] {
       margin-right: 8px;
     }
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      margin-bottom: 10px;
+    }
+
+    /* BUTTONS */
     button {
       padding: 8px 16px;
       margin-right: 10px;
@@ -60,180 +96,206 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+
+    /* FEEDBACK TEXT */
     .feedback {
       font-weight: bold;
       margin-top: 10px;
     }
-    pre {
-      background-color: #f4f4f4;
-      padding: 10px;
-      border-radius: 4px;
-      overflow-x: auto;
+
+    /* FOOTER */
+    footer {
+      background: #3f51b5;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;  /* reduced padding for a smaller footer */
+      flex-shrink: 0;   /* ensures footer stays at bottom */
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem; /* slightly smaller text if you want */
     }
   </style>
 </head>
 <body>
-  <h1>Python Input & Conversion Quiz</h1>
-  
-  <!-- Question 1 -->
-  <div id="question1" class="question" data-answer="c">
-    <h3>1. What is the output of the following code?</h3>
-    <pre><code>x = input("Enter a number: ")  
+  <!-- HEADER -->
+  <header>
+    <h1>Python Input & Conversion Quiz</h1>
+  </header>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <div class="main-container">
+    <!-- QUIZ CONTAINER -->
+    <div class="quiz-container">
+
+      <!-- Question 1 -->
+      <div id="question1" class="question" data-answer="c">
+        <h3>1. What is the output of the following code?</h3>
+        <pre><code>x = input("Enter a number: ")
 print(type(x))</code></pre>
-    <label><input type="radio" name="q1" value="a"> a) &lt;class 'int'&gt;</label>
-    <label><input type="radio" name="q1" value="b"> b) &lt;class 'float'&gt;</label>
-    <label><input type="radio" name="q1" value="c"> c) &lt;class 'str'&gt;</label>
-    <label><input type="radio" name="q1" value="d"> d) &lt;class 'input'&gt;</label>
-    <button class="check" onclick="checkAnswer(1)">Check Answer</button>
-    <button class="next" id="next1" onclick="nextQuestion(1)" disabled>Next</button>
-    <p class="feedback" id="feedback1"></p>
-  </div>
-  
-  <!-- Question 2 -->
-  <div id="question2" class="question" data-answer="c" style="display:none;">
-    <h3>2. What is the output of the following code if the user enters 10?</h3>
-    <pre><code>x = input("Enter a number: ")  
+        <label><input type="radio" name="q1" value="a"> a) &lt;class 'int'&gt;</label>
+        <label><input type="radio" name="q1" value="b"> b) &lt;class 'float'&gt;</label>
+        <label><input type="radio" name="q1" value="c"> c) &lt;class 'str'&gt;</label>
+        <label><input type="radio" name="q1" value="d"> d) &lt;class 'input'&gt;</label>
+        <button class="check" onclick="checkAnswer(1)">Check Answer</button>
+        <button class="next" id="next1" onclick="nextQuestion(1)" disabled>Next</button>
+        <p class="feedback" id="feedback1"></p>
+      </div>
+
+      <!-- Question 2 -->
+      <div id="question2" class="question" data-answer="c" style="display:none;">
+        <h3>2. What is the output of the following code if the user enters 10?</h3>
+        <pre><code>x = input("Enter a number: ")
 print(x + 5)</code></pre>
-    <label><input type="radio" name="q2" value="a"> a) 15</label>
-    <label><input type="radio" name="q2" value="b"> b) 105</label>
-    <label><input type="radio" name="q2" value="c"> c) Error</label>
-    <label><input type="radio" name="q2" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(2)">Check Answer</button>
-    <button class="next" id="next2" onclick="nextQuestion(2)" disabled>Next</button>
-    <p class="feedback" id="feedback2"></p>
-  </div>
-  
-  <!-- Question 3 -->
-  <div id="question3" class="question" data-answer="b" style="display:none;">
-    <h3>3. What is the output of the following code if the user enters 5?</h3>
-    <pre><code>x = int(input("Enter a number: "))  
+        <label><input type="radio" name="q2" value="a"> a) 15</label>
+        <label><input type="radio" name="q2" value="b"> b) 105</label>
+        <label><input type="radio" name="q2" value="c"> c) Error</label>
+        <label><input type="radio" name="q2" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(2)">Check Answer</button>
+        <button class="next" id="next2" onclick="nextQuestion(2)" disabled>Next</button>
+        <p class="feedback" id="feedback2"></p>
+      </div>
+
+      <!-- Question 3 -->
+      <div id="question3" class="question" data-answer="b" style="display:none;">
+        <h3>3. What is the output of the following code if the user enters 5?</h3>
+        <pre><code>x = int(input("Enter a number: "))
 print(x + 10)</code></pre>
-    <label><input type="radio" name="q3" value="a"> a) 5</label>
-    <label><input type="radio" name="q3" value="b"> b) 15</label>
-    <label><input type="radio" name="q3" value="c"> c) Error</label>
-    <label><input type="radio" name="q3" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(3)">Check Answer</button>
-    <button class="next" id="next3" onclick="nextQuestion(3)" disabled>Next</button>
-    <p class="feedback" id="feedback3"></p>
-  </div>
-  
-  <!-- Question 4 -->
-  <div id="question4" class="question" data-answer="b" style="display:none;">
-    <h3>4. What is the output of the following code if the user enters 3.14?</h3>
-    <pre><code>x = float(input("Enter a number: "))  
+        <label><input type="radio" name="q3" value="a"> a) 5</label>
+        <label><input type="radio" name="q3" value="b"> b) 15</label>
+        <label><input type="radio" name="q3" value="c"> c) Error</label>
+        <label><input type="radio" name="q3" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(3)">Check Answer</button>
+        <button class="next" id="next3" onclick="nextQuestion(3)" disabled>Next</button>
+        <p class="feedback" id="feedback3"></p>
+      </div>
+
+      <!-- Question 4 -->
+      <div id="question4" class="question" data-answer="b" style="display:none;">
+        <h3>4. What is the output of the following code if the user enters 3.14?</h3>
+        <pre><code>x = float(input("Enter a number: "))
 print(x + 2)</code></pre>
-    <label><input type="radio" name="q4" value="a"> a) 3.14</label>
-    <label><input type="radio" name="q4" value="b"> b) 5.14</label>
-    <label><input type="radio" name="q4" value="c"> c) Error</label>
-    <label><input type="radio" name="q4" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(4)">Check Answer</button>
-    <button class="next" id="next4" onclick="nextQuestion(4)" disabled>Next</button>
-    <p class="feedback" id="feedback4"></p>
-  </div>
-  
-  <!-- Question 5 -->
-  <div id="question5" class="question" data-answer="a" style="display:none;">
-    <h3>5. What is the output of the following code if the user enters Hello?</h3>
-    <pre><code>x = input("Enter a string: ")  
+        <label><input type="radio" name="q4" value="a"> a) 3.14</label>
+        <label><input type="radio" name="q4" value="b"> b) 5.14</label>
+        <label><input type="radio" name="q4" value="c"> c) Error</label>
+        <label><input type="radio" name="q4" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(4)">Check Answer</button>
+        <button class="next" id="next4" onclick="nextQuestion(4)" disabled>Next</button>
+        <p class="feedback" id="feedback4"></p>
+      </div>
+
+      <!-- Question 5 -->
+      <div id="question5" class="question" data-answer="a" style="display:none;">
+        <h3>5. What is the output of the following code if the user enters Hello?</h3>
+        <pre><code>x = input("Enter a string: ")
 print(x * 2)</code></pre>
-    <label><input type="radio" name="q5" value="a"> a) HelloHello</label>
-    <label><input type="radio" name="q5" value="b"> b) Hello2</label>
-    <label><input type="radio" name="q5" value="c"> c) Error</label>
-    <label><input type="radio" name="q5" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(5)">Check Answer</button>
-    <button class="next" id="next5" onclick="nextQuestion(5)" disabled>Next</button>
-    <p class="feedback" id="feedback5"></p>
-  </div>
-  
-  <!-- Question 6 -->
-  <div id="question6" class="question" data-answer="b" style="display:none;">
-    <h3>6. What is the output of the following code if the user enters 10 and 20?</h3>
-    <pre><code>x = input("Enter a number: ")  
-y = input("Enter another number: ")  
+        <label><input type="radio" name="q5" value="a"> a) HelloHello</label>
+        <label><input type="radio" name="q5" value="b"> b) Hello2</label>
+        <label><input type="radio" name="q5" value="c"> c) Error</label>
+        <label><input type="radio" name="q5" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(5)">Check Answer</button>
+        <button class="next" id="next5" onclick="nextQuestion(5)" disabled>Next</button>
+        <p class="feedback" id="feedback5"></p>
+      </div>
+
+      <!-- Question 6 -->
+      <div id="question6" class="question" data-answer="b" style="display:none;">
+        <h3>6. What is the output of the following code if the user enters 10 and 20?</h3>
+        <pre><code>x = input("Enter a number: ")
+y = input("Enter another number: ")
 print(x + y)</code></pre>
-    <label><input type="radio" name="q6" value="a"> a) 30</label>
-    <label><input type="radio" name="q6" value="b"> b) 1020</label>
-    <label><input type="radio" name="q6" value="c"> c) Error</label>
-    <label><input type="radio" name="q6" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(6)">Check Answer</button>
-    <button class="next" id="next6" onclick="nextQuestion(6)" disabled>Next</button>
-    <p class="feedback" id="feedback6"></p>
-  </div>
-  
-  <!-- Question 7 -->
-  <div id="question7" class="question" data-answer="a" style="display:none;">
-    <h3>7. What is the output of the following code if the user enters 5?</h3>
-    <pre><code>x = int(input("Enter a number: "))  
+        <label><input type="radio" name="q6" value="a"> a) 30</label>
+        <label><input type="radio" name="q6" value="b"> b) 1020</label>
+        <label><input type="radio" name="q6" value="c"> c) Error</label>
+        <label><input type="radio" name="q6" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(6)">Check Answer</button>
+        <button class="next" id="next6" onclick="nextQuestion(6)" disabled>Next</button>
+        <p class="feedback" id="feedback6"></p>
+      </div>
+
+      <!-- Question 7 -->
+      <div id="question7" class="question" data-answer="a" style="display:none;">
+        <h3>7. What is the output of the following code if the user enters 5?</h3>
+        <pre><code>x = int(input("Enter a number: "))
 print(f"The square of {x} is {x ** 2}")</code></pre>
-    <label><input type="radio" name="q7" value="a"> a) The square of 5 is 25</label>
-    <label><input type="radio" name="q7" value="b"> b) The square of 5 is 10</label>
-    <label><input type="radio" name="q7" value="c"> c) Error</label>
-    <label><input type="radio" name="q7" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(7)">Check Answer</button>
-    <button class="next" id="next7" onclick="nextQuestion(7)" disabled>Next</button>
-    <p class="feedback" id="feedback7"></p>
-  </div>
-  
-  <!-- Question 8 -->
-  <div id="question8" class="question" data-answer="b" style="display:none;">
-    <h3>8. What is the output of the following code if the user enters Python?</h3>
-    <pre><code>x = input("Enter a string: ")  
+        <label><input type="radio" name="q7" value="a"> a) The square of 5 is 25</label>
+        <label><input type="radio" name="q7" value="b"> b) The square of 5 is 10</label>
+        <label><input type="radio" name="q7" value="c"> c) Error</label>
+        <label><input type="radio" name="q7" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(7)">Check Answer</button>
+        <button class="next" id="next7" onclick="nextQuestion(7)" disabled>Next</button>
+        <p class="feedback" id="feedback7"></p>
+      </div>
+
+      <!-- Question 8 -->
+      <div id="question8" class="question" data-answer="b" style="display:none;">
+        <h3>8. What is the output of the following code if the user enters Python?</h3>
+        <pre><code>x = input("Enter a string: ")
 print(x.upper())</code></pre>
-    <label><input type="radio" name="q8" value="a"> a) python</label>
-    <label><input type="radio" name="q8" value="b"> b) PYTHON</label>
-    <label><input type="radio" name="q8" value="c"> c) Error</label>
-    <label><input type="radio" name="q8" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(8)">Check Answer</button>
-    <button class="next" id="next8" onclick="nextQuestion(8)" disabled>Next</button>
-    <p class="feedback" id="feedback8"></p>
-  </div>
-  
-  <!-- Question 9 -->
-  <div id="question9" class="question" data-answer="a" style="display:none;">
-    <h3>9. What is the output of the following code if the user enters 10?</h3>
-    <pre><code>x = int(input("Enter a number: "))  
+        <label><input type="radio" name="q8" value="a"> a) python</label>
+        <label><input type="radio" name="q8" value="b"> b) PYTHON</label>
+        <label><input type="radio" name="q8" value="c"> c) Error</label>
+        <label><input type="radio" name="q8" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(8)">Check Answer</button>
+        <button class="next" id="next8" onclick="nextQuestion(8)" disabled>Next</button>
+        <p class="feedback" id="feedback8"></p>
+      </div>
+
+      <!-- Question 9 -->
+      <div id="question9" class="question" data-answer="a" style="display:none;">
+        <h3>9. What is the output of the following code if the user enters 10?</h3>
+        <pre><code>x = int(input("Enter a number: "))
 print(f"{x} is even." if x % 2 == 0 else f"{x} is odd.")</code></pre>
-    <label><input type="radio" name="q9" value="a"> a) 10 is even.</label>
-    <label><input type="radio" name="q9" value="b"> b) 10 is odd.</label>
-    <label><input type="radio" name="q9" value="c"> c) Error</label>
-    <label><input type="radio" name="q9" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(9)">Check Answer</button>
-    <button class="next" id="next9" onclick="nextQuestion(9)" disabled>Next</button>
-    <p class="feedback" id="feedback9"></p>
-  </div>
-  
-  <!-- Question 10 -->
-  <div id="question10" class="question" data-answer="b" style="display:none;">
-    <h3>10. What is the output of the following code if the user enters 3.14?</h3>
-    <pre><code>x = float(input("Enter a number: "))  
+        <label><input type="radio" name="q9" value="a"> a) 10 is even.</label>
+        <label><input type="radio" name="q9" value="b"> b) 10 is odd.</label>
+        <label><input type="radio" name="q9" value="c"> c) Error</label>
+        <label><input type="radio" name="q9" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(9)">Check Answer</button>
+        <button class="next" id="next9" onclick="nextQuestion(9)" disabled>Next</button>
+        <p class="feedback" id="feedback9"></p>
+      </div>
+
+      <!-- Question 10 -->
+      <div id="question10" class="question" data-answer="b" style="display:none;">
+        <h3>10. What is the output of the following code if the user enters 3.14?</h3>
+        <pre><code>x = float(input("Enter a number: "))
 print(f"The integer part is {int(x)}")</code></pre>
-    <label><input type="radio" name="q10" value="a"> a) The integer part is 3.14</label>
-    <label><input type="radio" name="q10" value="b"> b) The integer part is 3</label>
-    <label><input type="radio" name="q10" value="c"> c) Error</label>
-    <label><input type="radio" name="q10" value="d"> d) None</label>
-    <button class="check" onclick="checkAnswer(10)">Check Answer</button>
-    <button class="next" id="next10" onclick="nextQuestion(10)" disabled>Next</button>
-    <p class="feedback" id="feedback10"></p>
-  </div>
-  
-  <!-- Final Message -->
-  <div id="finalMessage" class="question" style="display:none;">
-    <h3>Congratulations, you have completed the quiz!</h3>
-  </div>
-  
+        <label><input type="radio" name="q10" value="a"> a) The integer part is 3.14</label>
+        <label><input type="radio" name="q10" value="b"> b) The integer part is 3</label>
+        <label><input type="radio" name="q10" value="c"> c) Error</label>
+        <label><input type="radio" name="q10" value="d"> d) None</label>
+        <button class="check" onclick="checkAnswer(10)">Check Answer</button>
+        <button class="next" id="next10" onclick="nextQuestion(10)" disabled>Next</button>
+        <p class="feedback" id="feedback10"></p>
+      </div>
+
+      <!-- Final Message -->
+      <div id="finalMessage" class="question" style="display:none;">
+        <h3>Congratulations, you have completed the quiz!</h3>
+      </div>
+
+    </div> <!-- end .quiz-container -->
+  </div>   <!-- end .main-container -->
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Code Pro Academy — All Rights Reserved</p>
+  </footer>
+
+  <!-- QUIZ SCRIPT -->
   <script>
     function checkAnswer(qNum) {
       const questionDiv = document.getElementById("question" + qNum);
       const correctAnswer = questionDiv.getAttribute("data-answer");
       const selected = document.querySelector('input[name="q' + qNum + '"]:checked');
       const feedback = document.getElementById("feedback" + qNum);
-      
+
       if (!selected) {
         feedback.style.color = "red";
         feedback.textContent = "Please select an answer.";
         return;
       }
-      
+
       if (selected.value === correctAnswer) {
         feedback.style.color = "green";
         feedback.textContent = "Correct!";
@@ -244,12 +306,12 @@ print(f"The integer part is {int(x)}")</code></pre>
         document.getElementById("next" + qNum).disabled = true;
       }
     }
-    
+
     function nextQuestion(qNum) {
       document.getElementById("question" + qNum).style.display = "none";
       const nextQ = qNum + 1;
       const nextQuestionDiv = document.getElementById("question" + nextQ);
-      
+
       if (nextQuestionDiv) {
         nextQuestionDiv.style.display = "block";
       } else {
