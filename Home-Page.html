@@ -407,42 +407,41 @@
       - Hero content stacks
       - Courses grid becomes single column
     */
-@media (max-width: 768px) {
-  /* Make the navbar vertical on mobile */
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.75rem 1rem;
-  }
-
-  /* First row: logo + name */
-  .logo {
-    margin-bottom: 0.5rem; /* some spacing between rows */
-  }
-
-  /* Second row: nav links + free session button + language switcher */
-  .nav-links {
-    width: 100%;
-    order: 2; /* ensure nav-links appear before the button row if needed */
-    margin-bottom: 0.5rem;
-  }
-  .nav-links li {
-    margin-bottom: 0.5rem;
-  }
-
-  /* The .navbar-right (free session + language) can also go on a second line */
-  .navbar-right {
-    width: 100%;
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* If you want the language switcher to be on a new line too, you can do: */
-  .language-switcher {
-    margin-left: 0;
-  }
-}
+   @media (max-width: 768px) {
+      .hero-heading {
+        font-size: 2rem;
+      }
+      .hero-subtext {
+        font-size: 1rem;
+      }
+      .hero-content {
+        flex-direction: column;
+        align-items: center;
+      }
+      .featured-courses {
+        margin-top: 0;
+        transform: translateY(-30px);
+      }
+      .courses-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+   /* Mobile adjustments for Certification section */
+    @media (max-width: 768px) {
+      #certification {
+        padding: 1rem;
+      }
+      #certification h1 {
+        font-size: 1.8rem;
+      }
+      #certification p {
+        font-size: 1rem;
+      }
+      #certification img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
   </style>
 </head>
 <body class="lang-en">
