@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Code Pro Academy - Coding Classes for Kids and Teens">
@@ -42,19 +43,28 @@
   ============================ -->
   <style>
     /* Enable smooth scrolling via CSS */
-    html, body {
+    html,
+    body {
       scroll-behavior: smooth;
     }
-    
+
     /* Add scroll-margin-top to each section to offset fixed navbar */
     section {
       scroll-margin-top: 80px;
     }
 
     /* Language toggle classes */
-    [data-lang] { display: none; }
-    .lang-block.active { display: block !important; }
-    .lang-inline.active { display: inline-block !important; }
+    [data-lang] {
+      display: none;
+    }
+
+    .lang-block.active {
+      display: block !important;
+    }
+
+    .lang-inline.active {
+      display: inline-block !important;
+    }
 
     /* CERTIFICATION SECTION */
     .certification {
@@ -62,19 +72,22 @@
       padding: 1.5rem;
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       margin-bottom: 2rem;
     }
+
     .certification h2 {
       font-size: 1.6rem;
       color: #3f51b5;
       margin-bottom: 1rem;
     }
+
     .certification p {
       font-size: 1rem;
       color: #555;
       margin-bottom: 1rem;
     }
+
     .certification img {
       max-width: 600px;
       margin-top: 1rem;
@@ -87,10 +100,13 @@
       padding: 0;
       box-sizing: border-box;
     }
-    html, body {
+
+    html,
+    body {
       font-family: "Poppins", Arial, sans-serif;
       background-color: #f9f9f9;
     }
+
     a {
       text-decoration: none;
       color: inherit;
@@ -102,33 +118,38 @@
       top: 0;
       width: 100%;
       background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       z-index: 999;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0.75rem 1.5rem;
     }
+
     .logo {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .logo img {
       width: 40px;
       height: auto;
     }
+
     .logo span {
       font-weight: 600;
       font-size: 1.2rem;
       color: #333;
     }
+
     .nav-links {
       list-style: none;
       display: flex;
       gap: 1rem;
       align-items: center;
     }
+
     .nav-links li a {
       color: #333;
       font-weight: 500;
@@ -138,14 +159,17 @@
       align-items: center;
       gap: 0.2rem;
     }
+
     .nav-links li a:hover {
       color: #d76d77;
     }
+
     .navbar-right {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .free-session-btn {
       background-color: #ff5722;
       border: none;
@@ -159,14 +183,17 @@
       align-items: center;
       gap: 0.2rem;
     }
+
     .free-session-btn:hover {
       background-color: #e64a19;
     }
+
     .language-switcher {
       display: flex;
       gap: 0.5rem;
       margin-left: 0.5rem;
     }
+
     .language-switcher button {
       background-color: #ff5722;
       border: none;
@@ -177,6 +204,7 @@
       font-weight: 500;
       transition: background-color 0.2s ease;
     }
+
     .language-switcher button:hover {
       background-color: #e64a19;
     }
@@ -195,11 +223,21 @@
       color: #fff;
       text-align: center;
     }
+
     @keyframes gradientBG {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
     }
+
     .hero-content {
       max-width: 800px;
       display: flex;
@@ -207,11 +245,13 @@
       gap: 1.5rem;
       align-items: center;
     }
+
     .hero-heading {
       font-size: 2.6rem;
       font-weight: 700;
       line-height: 1.3;
     }
+
     .hero-subtext {
       font-size: 1.2rem;
       line-height: 1.6;
@@ -224,9 +264,10 @@
       padding: 3rem 1.5rem 2rem;
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
       transform: translateY(-60px);
     }
+
     .featured-courses h2 {
       font-size: 2rem;
       margin-bottom: 2rem;
@@ -234,11 +275,13 @@
       font-weight: 700;
       color: #333;
     }
+
     .courses-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 2rem;
     }
+
     .course-card {
       background-color: #fafafa;
       padding: 1.5rem;
@@ -247,25 +290,30 @@
       transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
     }
+
     .course-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0,0,0,0.07);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.07);
     }
+
     .course-card h3 {
       margin-bottom: 0.5rem;
       font-size: 1.25rem;
       font-weight: 600;
       color: #333;
     }
+
     .course-card p {
       margin-bottom: 1rem;
       color: #555;
     }
+
     .course-card a {
       color: #ff5722;
       font-weight: 600;
       transition: color 0.3s ease;
     }
+
     .course-card a:hover {
       color: #e64a19;
     }
@@ -275,6 +323,7 @@
       background-color: #fff;
       padding: 3rem 1.5rem;
     }
+
     .testimonials-section h2 {
       font-size: 2rem;
       text-align: center;
@@ -282,6 +331,7 @@
       font-weight: 700;
       color: #333;
     }
+
     .swiper {
       width: 100%;
       height: 100%;
@@ -290,10 +340,11 @@
       margin: 0 auto;
       padding: 1rem;
     }
+
     .swiper-slide {
       background: #fafafa;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       padding: 2rem;
       display: flex;
       flex-direction: column;
@@ -307,9 +358,10 @@
       margin: 3rem auto;
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       padding: 2rem 1.5rem;
     }
+
     #certification h1 {
       margin-bottom: 1rem;
       font-size: 2rem;
@@ -317,6 +369,7 @@
       font-weight: 700;
       color: #333;
     }
+
     #certification p {
       margin-bottom: 1.5rem;
       text-align: center;
@@ -329,9 +382,10 @@
       margin: 3rem auto;
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       padding: 2rem 1.5rem;
     }
+
     #contact h1 {
       margin-bottom: 1rem;
       font-size: 2rem;
@@ -339,20 +393,24 @@
       font-weight: 700;
       color: #333;
     }
+
     #contact p {
       margin-bottom: 1.5rem;
       text-align: center;
       color: #555;
     }
+
     .contact-form {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
+
     .contact-form label {
       font-weight: 500;
       margin-bottom: 0.25rem;
     }
+
     .contact-form input,
     .contact-form textarea {
       padding: 0.75rem;
@@ -360,6 +418,7 @@
       border-radius: 4px;
       font-size: 1rem;
     }
+
     .contact-form button {
       background-color: #ff5722;
       color: #fff;
@@ -371,9 +430,11 @@
       cursor: pointer;
       transition: transform 0.2s ease;
     }
+
     .contact-form button:hover {
       transform: scale(1.03);
     }
+
     #error_message {
       display: none;
       text-align: center;
@@ -397,6 +458,7 @@
       transition-property: transform, opacity;
       transition-duration: 0.6s;
     }
+
     [data-aos].aos-animate {
       opacity: 1;
     }
@@ -407,43 +469,117 @@
       - Hero content stacks
       - Courses grid becomes single column
     */
-   @media (max-width: 768px) {
+    @media (max-width: 768px) {
       .hero-heading {
         font-size: 2rem;
       }
+
       .hero-subtext {
         font-size: 1rem;
       }
+
       .hero-content {
         flex-direction: column;
         align-items: center;
       }
+
       .featured-courses {
         margin-top: 0;
         transform: translateY(-30px);
       }
+
       .courses-grid {
         grid-template-columns: 1fr;
       }
     }
-   /* Mobile adjustments for Certification section */
+
+    /* MOBILE-ONLY Free Session button (hidden on desktop) */
+    .free-session-btn--mobile {
+      display: none;
+      background-color: #ffffff;
+      color: #3a1c71;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .free-session-btn--mobile:hover {
+      transform: scale(1.03);
+    }
+
+    /* Mobile adjustments for Certification section */
     @media (max-width: 768px) {
       #certification {
         padding: 1rem;
       }
+
       #certification h1 {
         font-size: 1.8rem;
       }
+
       #certification p {
         font-size: 1rem;
       }
+
       #certification img {
         max-width: 100%;
         height: auto;
       }
     }
+
+    @media (max-width: 768px) {
+
+      /* Make the navbar vertical on mobile */
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+      }
+
+      /* First row: logo + name */
+      .logo {
+        margin-bottom: 0.5rem;
+        /* some spacing between rows */
+      }
+
+      /* Second row: nav links + free session button + language switcher */
+      .nav-links {
+        width: 100%;
+        order: 2;
+        /* ensure nav-links appear before the button row if needed */
+        margin-bottom: 0.5rem;
+      }
+
+      .nav-links li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* The .navbar-right (free session + language) can also go on a second line */
+      .navbar-right {
+        width: 100%;
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .language-switcher {
+        display: none !important;
+      }
+
+      .free-session-btn {
+        display: none !important;
+      }
+
+      .free-session-btn--mobile {
+        display: inline-block !important;
+      }
+    }
   </style>
 </head>
+
 <body class="lang-en">
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation" aria-label="Main Navigation">
@@ -504,6 +640,13 @@
         انضمّ إلينا في دورات البرمجة التفاعلية الممتعة للأطفال والمراهقين (6–18 سنة)،
         وتعلّم سكراتش وبايثون والروبوتات والمزيد في بيئة داعمة.
       </p>
+
+      <!-- MOBILE-ONLY Free Session Button -->
+      <button class="free-session-btn--mobile"
+        onclick="window.open('https://wa.me/01044357569?text=Hello%2C%20I%27m%20interested%20in%20a%20free%20session!','_blank');">
+        <span data-lang="en" class="lang-inline">Free Session</span>
+        <span data-lang="ar" class="lang-inline">حصة مجانية</span>
+      </button>
     </div>
   </section>
 
@@ -523,8 +666,10 @@
           <p class="lang-block" data-lang="ar">
             بيئة برمجة ممتعة بالاعتماد على الكتل، تتيح للأطفال إنشاء الألعاب والرسوم المتحركة بسهولة.
           </p>
-          <a href="https://codeproacademy1.github.io/Codepro/Robotics-Junior/robotics-junior-en.html" class="lang-inline" data-lang="en" target="_blank">Learn More.</a>
-          <a href="https://sites.google.com/view/codepro-academy/home-page/robotics-junior-ar" class="lang-inline" data-lang="ar" target="_blank">تعرف أكثر</a>
+          <a href="https://codeproacademy1.github.io/Codepro/Robotics-Junior/robotics-junior-en.html"
+            class="lang-inline" data-lang="en" target="_blank">Learn More.</a>
+          <a href="https://sites.google.com/view/codepro-academy/home-page/robotics-junior-ar" class="lang-inline"
+            data-lang="ar" target="_blank">تعرف أكثر</a>
         </div>
         <!-- Track Card 2 -->
         <div class="course-card" data-aos="zoom-in" data-aos-delay="100">
@@ -536,7 +681,8 @@
           <p class="lang-block" data-lang="ar">
             دمج البرمجة والأجهزة عبر راسبيري باي بيكو والمستشعرات الحقيقية.
           </p>
-          <a href="https://codeproacademy1.github.io/Codepro/Robotics-Challenger/robotics-challenger-en.html" class="lang-inline" data-lang="en">Learn More.</a>
+          <a href="https://codeproacademy1.github.io/Codepro/Robotics-Challenger/robotics-challenger-en.html"
+            class="lang-inline" data-lang="en">Learn More.</a>
           <a href="#courses" class="lang-inline" data-lang="ar">تعرف أكثر</a>
         </div>
         <!-- Track Card 3 -->
@@ -586,12 +732,17 @@
     <h1 class="lang-block" data-lang="en">Our Certification</h1>
     <h1 class="lang-block" data-lang="ar">شهادتنا</h1>
     <p class="lang-block">
-      <span data-lang="en">Upon successful completion of the Scratch course and your chosen track, you will earn a Code Pro Academy certification. This certificate validates your skills in block-based programming and your ability to create interactive projects.</span>
-      <span data-lang="ar">عند إكمال دورة سكراتش والمسار الذي تختاره بنجاح، ستحصل على شهادة من أكاديمية كود برو. تثبت هذه الشهادة مهاراتك في البرمجة بالاعتماد على الكتل وقدرتك على إنشاء مشاريع تفاعلية.</span>
+      <span data-lang="en">Upon successful completion of the Scratch course and your chosen track, you will earn a Code
+        Pro Academy certification. This certificate validates your skills in block-based programming and your ability to
+        create interactive projects.</span>
+      <span data-lang="ar">عند إكمال دورة سكراتش والمسار الذي تختاره بنجاح، ستحصل على شهادة من أكاديمية كود برو. تثبت
+        هذه الشهادة مهاراتك في البرمجة بالاعتماد على الكتل وقدرتك على إنشاء مشاريع تفاعلية.</span>
     </p>
     <p class="lang-block">
-      <span data-lang="en">Our certification is recognized by industry partners and will help boost your portfolio as you advance in your coding journey.</span>
-      <span data-lang="ar">شهادتنا معترف بها من قبل شركاء الصناعة وستساعد في تعزيز ملفك الشخصي أثناء تقدمك في رحلتك البرمجية.</span>
+      <span data-lang="en">Our certification is recognized by industry partners and will help boost your portfolio as
+        you advance in your coding journey.</span>
+      <span data-lang="ar">شهادتنا معترف بها من قبل شركاء الصناعة وستساعد في تعزيز ملفك الشخصي أثناء تقدمك في رحلتك
+        البرمجية.</span>
     </p>
     <img src="https://i.imgur.com/qhe3lgq.png" alt="Certification Badge">
   </section>
@@ -607,8 +758,8 @@
       هل لديك أسئلة أو تريد التسجيل؟ املأ النموذج أدناه!
     </p>
     <form class="contact-form" id="gform"
-          action="https://script.google.com/macros/s/AKfycbyZ8xfz5sYO4lCUULl6Nk_hkj_TGzVOs3J_ZMYVBI4U_NnEvOndA5CyEbVMIkyHoacVyQ/exec"
-          method="POST">
+      action="https://script.google.com/macros/s/AKfycbyZ8xfz5sYO4lCUULl6Nk_hkj_TGzVOs3J_ZMYVBI4U_NnEvOndA5CyEbVMIkyHoacVyQ/exec"
+      method="POST">
       <!-- NAME -->
       <label for="name" class="lang-block" data-lang="en">Name</label>
       <label for="name" class="lang-block" data-lang="ar">الاسم</label>
@@ -622,18 +773,20 @@
       <!-- MESSAGE -->
       <label for="message" class="lang-block" data-lang="en">Message</label>
       <label for="message" class="lang-block" data-lang="ar">الرسالة</label>
-      <textarea id="message" name="message" rows="4" placeholder="Your Message" required aria-required="true"></textarea>
+      <textarea id="message" name="message" rows="4" placeholder="Your Message" required
+        aria-required="true"></textarea>
 
       <!-- SUBMIT BUTTONS -->
       <button type="submit" class="lang-inline" data-lang="en">Send Message</button>
       <button type="submit" class="lang-inline" data-lang="ar">إرسال</button>
     </form>
-    <div id="thankyou_message" role="alert" aria-live="assertive" style="display:none; text-align:center; margin-top:1rem;">
+    <div id="thankyou_message" role="alert" aria-live="assertive"
+      style="display:none; text-align:center; margin-top:1rem;">
       <h2>Thank you! Your message has been sent.</h2>
     </div>
     <div id="error_message" role="alert" aria-live="assertive"></div>
   </section>
-  
+
   <!-- FOOTER -->
   <footer>
     <p class="lang-block" data-lang="en">© 2025 Code Pro Academy. All rights reserved.</p>
@@ -719,7 +872,7 @@
 
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+        anchor.addEventListener('click', function (e) {
           e.preventDefault();
           const targetElement = document.querySelector(this.getAttribute('href'));
           if (targetElement) {
@@ -732,4 +885,5 @@
     });
   </script>
 </body>
+
 </html>
