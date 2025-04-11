@@ -35,13 +35,6 @@
       /* a little padding or margin if you like */
     }
 
-    /* Top heading inside .main (optional) */
-    .main h1 {
-      text-align: center;
-      margin: 20px 0;
-      font-size: 36px;
-    }
-
     /* The iframe that displays selected content */
     iframe[name="contentFrame"] {
       flex: 1; /* Take remaining vertical space */
@@ -103,7 +96,7 @@
       <details>
         <summary>📌 Basics</summary>
         <ul>
-          <li><a href="print.html" target="contentFrame">✅ Print in Python</a></li>
+          <li><a href="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html" target="contentFrame">✅ Print in Python</a></li>
           <li><a href="comments.html" target="contentFrame">✅ Comments</a></li>
           <li><a href="variables.html" target="contentFrame">✅ Variables</a></li>
           <li><a href="numbers.html" target="contentFrame">✅ Numbers</a></li>
@@ -182,9 +175,192 @@
 
     <!-- RIGHT MAIN SECTION -->
     <div class="main">
-      <!-- Optional header in main area (could be removed if you don’t want it) -->
-      <!-- <h1>Welcome to Python Tutorials</h1> -->
-      <iframe name="contentFrame" src="" title="Content Area"></iframe>
+      <!-- Iframe loads print.html by default -->
+      <iframe name="contentFrame" src="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html" title="Content Area"></iframe>
+    </div>
+
+  </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Lessons – CodePro Academy</title>
+  <style>
+    body {
+      background-color: #f0f8ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #2c3e50;
+    }
+
+    /* Overall container with two columns */
+    .container {
+      display: flex;
+      height: 100vh; /* Make the layout fill the browser window height */
+    }
+
+    /* Left sidebar styling */
+    .sidebar {
+      width: 300px; /* Adjust as needed */
+      padding: 20px;
+      background: #f0f8ff; /* same as body or customize */
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+      overflow-y: auto; /* Scroll if content exceeds the viewport */
+    }
+
+    /* Main content area on the right */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      /* a little padding or margin if you like */
+    }
+
+    /* The iframe that displays selected content */
+    iframe[name="contentFrame"] {
+      flex: 1; /* Take remaining vertical space */
+      border: none;
+      width: 100%;
+      min-height: 0; /* ensures flex item can shrink properly */
+    }
+
+    /* Style your details/summary blocks in the sidebar */
+    details {
+      background: white;
+      padding: 15px 20px;
+      margin: 10px auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+    details:hover {
+      transform: translateY(-3px);
+      background-color: #eaf7ff;
+    }
+    summary {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      cursor: pointer;
+      outline: none;
+    }
+    summary img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+
+    /* Links inside the details */
+    a {
+      text-decoration: none;
+      font-size: 18px;
+      color: #2c3e50;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Optional: remove the default triangle from <summary> in some browsers */
+    summary::-webkit-details-marker {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- LEFT SIDEBAR -->
+    <nav class="sidebar">
+      <h1 style="text-align:center; margin-top:0;">📘 Python Learning</h1>
+
+      <details>
+        <summary>📌 Basics</summary>
+        <ul>
+          <li><a href="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html" target="contentFrame">✅ Print in Python</a></li>
+          <li><a href="comments.html" target="contentFrame">✅ Comments</a></li>
+          <li><a href="variables.html" target="contentFrame">✅ Variables</a></li>
+          <li><a href="numbers.html" target="contentFrame">✅ Numbers</a></li>
+          <li><a href="operators.html" target="contentFrame">✅ Operators</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🔁 Lists & Tuples</summary>
+        <ul>
+          <li><a href="lists.html" target="contentFrame">✅ Lists</a></li>
+          <li><a href="lists-functions.html" target="contentFrame">✅ Lists with Functions</a></li>
+          <li><a href="tuples.html" target="contentFrame">✅ Tuples</a></li>
+          <li><a href="tuples-functions.html" target="contentFrame">✅ Functions with Tuples</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>📖 Dictionaries</summary>
+        <ul>
+          <li><a href="dictionaries.html" target="contentFrame">✅ Dictionaries</a></li>
+          <li><a href="dictionaries-conditions.html" target="contentFrame">✅ Conditions with Dictionaries</a></li>
+          <li><a href="dictionaries-functions.html" target="contentFrame">✅ Functions with Dictionaries</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🧮 Sets</summary>
+        <ul>
+          <li><a href="sets.html" target="contentFrame">✅ Sets</a></li>
+          <li><a href="sets-conditions.html" target="contentFrame">✅ Conditions with Sets</a></li>
+          <li><a href="sets-functions.html" target="contentFrame">✅ Functions with Sets</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>💬 Strings</summary>
+        <ul>
+          <li><a href="strings.html" target="contentFrame">✅ Strings</a></li>
+          <li><a href="strings-conditions.html" target="contentFrame">✅ Conditions with Strings</a></li>
+          <li><a href="strings-functions.html" target="contentFrame">✅ Functions with Strings</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🔘 Booleans</summary>
+        <ul>
+          <li><a href="booleans.html" target="contentFrame">✅ Booleans</a></li>
+          <li><a href="booleans-conditions.html" target="contentFrame">✅ Conditions with Booleans</a></li>
+          <li><a href="booleans-functions.html" target="contentFrame">✅ Functions with Booleans</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🔄 Loops</summary>
+        <ul>
+          <li><a href="for-while-loops.html" target="contentFrame">✅ For & While Loops</a></li>
+          <li><a href="nested-loops.html" target="contentFrame">✅ Nested Loops</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🧠 Functions</summary>
+        <ul>
+          <li><a href="functions.html" target="contentFrame">✅ Functions</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>🧩 Match Statement</summary>
+        <ul>
+          <li><a href="match.html" target="contentFrame">✅ Match Statement</a></li>
+        </ul>
+      </details>
+    </nav>
+
+    <!-- RIGHT MAIN SECTION -->
+    <div class="main">
+      <!-- Iframe loads print.html by default -->
+      <iframe name="contentFrame" src="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html" title="Content Area"></iframe>
     </div>
 
   </div>
