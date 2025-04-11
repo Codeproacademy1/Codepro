@@ -12,10 +12,54 @@
       color: #2c3e50;
     }
 
-    /* Overall container with two columns */
+    /****** NAVBAR STYLES ******/
+    header {
+      background-color: #ffffff; /* Adjust as needed */
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+    }
+    .navbar-left {
+      /* Left area for the home icon */
+    }
+    .navbar-center {
+      /* Center area for logo and academy name */
+      /* margin: 0 auto will push this container to the center */
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Home icon link: using the 🏠 symbol */
+    .home-link {
+      /* Increase the font size as you like. Adjust spacing if needed. */
+      font-size: 24px;
+      text-decoration: none;
+      color: #2c3e50;
+      margin-right: 10px; /* gives some space before logo if you want */
+    }
+
+    /* Academy logo */
+    .academy-logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px; /* spacing between logo and text */
+    }
+
+    /* Academy name */
+    .academy-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    /****** MAIN LAYOUT STYLES ******/
     .container {
       display: flex;
-      height: 100vh; /* Make the layout fill the browser window height */
+      height: 100vh; /* Fill the browser window height */
     }
 
     /* Left sidebar styling */
@@ -32,7 +76,6 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      /* a little padding or margin if you like */
     }
 
     /* The iframe that displays selected content */
@@ -43,7 +86,7 @@
       min-height: 0; /* ensures flex item can shrink properly */
     }
 
-    /* Style your details/summary blocks in the sidebar */
+    /****** SIDEBAR DETAILS + SUMMARY ******/
     details {
       background: white;
       padding: 15px 20px;
@@ -79,7 +122,7 @@
       margin-bottom: 8px;
     }
 
-    /* Optional: remove the default triangle from <summary> in some browsers */
+    /* Remove the default triangle from <summary> in some browsers */
     summary::-webkit-details-marker {
       display: none;
     }
@@ -87,8 +130,24 @@
 </head>
 <body>
 
-  <div class="container">
+  <!-- TOP NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <!-- LEFT: Home icon (Unicode) -->
+      <div class="navbar-left">
+        <a href="https://sites.google.com/view/codepro-academy" class="home-link">🏠</a>
+      </div>
 
+      <!-- CENTER: Logo + Academy Name -->
+      <div class="navbar-center">
+        <img src="https://i.imgur.com/vwLt5jS.png" alt="Academy Logo" class="academy-logo">
+        <span class="academy-name">CodePro Academy</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT AREA: LEFT SIDEBAR + RIGHT IFRAME -->
+  <div class="container">
     <!-- LEFT SIDEBAR -->
     <nav class="sidebar">
       <h1 style="text-align:center; margin-top:0;">📘 Python Learning</h1>
@@ -175,10 +234,14 @@
 
     <!-- RIGHT MAIN SECTION -->
     <div class="main">
-      <!-- Iframe loads print.html by default -->
-      <iframe name="contentFrame" src="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html" title="Content Area"></iframe>
+      <!-- Default content (change URL if needed) -->
+      <iframe
+        name="contentFrame"
+        src="https://codeproacademy1.github.io/Codepro/Python/Python_Sysntax.html"
+        title="Content Area">
+      </iframe>
     </div>
-
   </div>
+
 </body>
 </html>
