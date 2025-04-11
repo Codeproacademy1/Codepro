@@ -4,19 +4,30 @@
   <meta charset="UTF-8">
   <title>Python Beginner Examples</title>
   <style>
-
-
- body {
+    /* 1) BODY & GLOBAL STYLES */
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f0f8ff;
+      background-color: #e9f3fb; /* Slightly brighter background */
+      margin: 0;
       padding: 20px;
       color: #333;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
-    /* Navbar style */
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    h2, h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    /* 2) NAVBAR STYLE */
     .navbar {
       display: flex;
       justify-content: center;
@@ -35,13 +46,28 @@
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
+      transition: background-color 0.3s ease;
     }
-
     .navbar button:hover {
       background-color: #019875;
     }
 
-    /* Section styling */
+    /* 3) SECTIONS (examples, exercises, assignment) */
+    #examples,
+    #exercises,
+    #assignment {
+      display: none; /* hidden by default; toggled via JS */
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto; /* center the content container */
+    }
+
+    /* Show the default tab (examples) when the page loads */
+    #examples {
+      display: block;
+    }
+
+    /* 4) EXAMPLE SECTIONS */
     .section {
       background: white;
       padding: 20px;
@@ -49,11 +75,6 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       margin-bottom: 30px;
       position: relative;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2c3e50;
     }
 
     pre {
@@ -67,6 +88,7 @@
 
     code {
       font-family: Consolas, monospace;
+      font-size: 14px;
     }
 
     button.copy-btn {
@@ -81,16 +103,11 @@
       cursor: pointer;
       font-size: 14px;
     }
-
     button.copy-btn:hover {
       background-color: #019875;
     }
 
-    ul {
-      padding-left: 20px;
-    }
-
-    /* Title style with icon */
+    /* Title with an icon */
     .icon-title {
       display: flex;
       align-items: center;
@@ -99,43 +116,81 @@
       color: #2c3e50;
       margin-bottom: 15px;
     }
-
     .icon-title img {
       width: 28px;
       height: 28px;
       margin-right: 10px;
     }
-	
 
+    /* 5) EXERCISES SECTION */
+    #exercises h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Center the exercise content (quiz) */
+    #exercises {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* QUIZ CARD STYLING */
     .card {
-      background-color: #34495e;
+      background-color: #2f3e5f; /* darker background for better contrast */
+      color: #ffffff; /* light text for better visibility */
       padding: 30px;
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
       width: 500px;
       max-width: 90%;
+      margin: 20px auto; /* center the card horizontally */
     }
+
+    .quiz-icon {
+      margin-right: 8px;
+    }
+
+    /* The question title, made more visible with bold text and lighter color */
+    #question-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #aed6f1; /* lighter text color for contrast */
+      display: flex;
+      align-items: center;
+    }
+
+    /* Code-line styling for the code snippet in the quiz card */
     .code-line {
-      background-color: #2c3e50;
+      background-color: #394966;
       padding: 10px;
       border-radius: 8px;
       margin-bottom: 8px;
       white-space: pre-wrap;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: #ecf0f1;
     }
+
+    /* Text input for user code */
     input[type="text"] {
       width: 70%;
       padding: 8px;
       font-family: 'Fira Code', monospace;
-      font-size: 16px;
+      font-size: 14px;
       border: none;
       border-radius: 5px;
       background-color: #1f2d3a;
       color: #ecf0f1;
+      outline: none;
     }
-    button {
+
+    /* Buttons inside the quiz card */
+    button.quiz-btn {
       margin-top: 15px;
       padding: 10px 20px;
-      font-size: 16px;
+      font-size: 14px;
       background-color: #27ae60;
       border: none;
       border-radius: 8px;
@@ -144,15 +199,19 @@
       transition: background-color 0.3s ease;
       margin-right: 10px;
     }
-    button:hover {
+    button.quiz-btn:hover {
       background-color: #2ecc71;
     }
+
+    /* "Show Answer" button styling */
     .toggle-button {
-      background-color: #7f8c8d;
+      background-color: #7f8c8d !important;
     }
     .toggle-button:hover {
-      background-color: #95a5a6;
+      background-color: #95a5a6 !important;
     }
+
+    /* The hidden answer box in the quiz */
     .answer-box {
       display: none;
       background-color: #1f2d3a;
@@ -162,19 +221,73 @@
       font-size: 16px;
       color: #f39c12;
     }
+
+    /* Result message after Submit Answer */
     #result {
       margin-top: 15px;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 16px;
     }
+
+    /* Hidden class used to hide elements */
     .hidden {
       display: none;
     }
+
     .final-result {
       text-align: center;
       font-size: 20px;
       font-weight: bold;
       color: #2ecc71;
+    }
+
+    /* 6) ASSIGNMENT SECTION */
+    #assignment {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* center horizontally */
+      justify-content: start;
+    }
+
+    /* Reusable assignment card style */
+    .assignment-card {
+      background-color: #e2f1f8;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 600px;
+      max-width: 90%;
+      margin: 20px auto;
+      border-left: 8px solid #00b894;
+    }
+
+    .assignment-card h2 {
+      margin-top: 0;
+      font-size: 22px;
+      color: #2c3e50;
+    }
+
+    .assignment-card ol {
+      padding-left: 20px;
+    }
+
+    .assignment-card li {
+      margin-bottom: 10px;
+    }
+
+    .assignment-card code {
+      background: #eee;
+      color: #333;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+
+    .assignment-card pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
     }
   </style>
 </head>
@@ -187,8 +300,8 @@
     <button onclick="showSection('assignment')">Assignment</button>
   </div>
 
-  <!-- Content Sections (Initially hidden) -->
-  <div id="examples" style="display:block;">
+  <!-- EXAMPLES SECTION -->
+  <div id="examples">
     <h1>🐍 Python Beginner Examples</h1>
 
     <!-- Example 1: Print Text -->
@@ -253,38 +366,107 @@ print("I am", age, "years old")
       </ul>
     </div>
   </div>
+  </div>
 
-  <div id="exercises" style="display:none;">
+  <!-- EXERCISES SECTION -->
+  <div id="exercises">
     <h1>Exercises</h1>
 
+    <!-- Centered Card for the Quiz -->
+    <div class="card" id="quiz-container">
+      <div id="question-title">
+        <img class="quiz-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="quiz icon" width="22" />
+        <span></span>
+      </div>
+      <div class="code-line" id="code-line-1"></div>
+      <div class="code-line">
+        print(<input type="text" id="codeInput" placeholder="your code here">)
+      </div>
 
-  <div class="card" id="quiz-container">
-    <div id="question-title"></div>
-    <div class="code-line" id="code-line-1"></div>
-    <div class="code-line">print(<input type="text" id="codeInput" placeholder="your code here">)</div>
-    <button onclick="checkAnswer()">✅ Submit Answer</button>
-    <button class="toggle-button" onclick="toggleAnswer()">👀 Show Answer</button>
-    <div id="correctAnswer" class="answer-box"></div>
-    <p id="result"></p>
-    <button id="nextBtn" class="hidden" onclick="nextQuestion()">➡️ Next</button>
+      <button class="quiz-btn" onclick="checkAnswer()">✅ Submit Answer</button>
+      <button class="quiz-btn toggle-button" onclick="toggleAnswer()">👀 Show Answer</button>
+
+      <div id="correctAnswer" class="answer-box"></div>
+      <p id="result"></p>
+      <button id="nextBtn" class="quiz-btn hidden">➡️ Next</button>
+    </div>
+
+    <!-- Final Score Box -->
+    <div class="card hidden" id="finalScoreBox">
+      <p class="final-result" id="finalScoreText"></p>
+    </div>
   </div>
 
-  <div class="card hidden" id="finalScoreBox">
-    <p class="final-result" id="finalScoreText"></p>
+  <!-- ASSIGNMENT SECTION -->
+  <div id="assignment">
+    <h1>Assignments</h1>
+
+    <!-- Assignment Card 1 -->
+    <div class="assignment-card">
+      <h2>Assignment 1: My Info</h2>
+      <p>
+        Based on what you've learned about printing, math operations, and variables, create a short Python script named <strong>my_info.py</strong> that does the following:
+      </p>
+      <ol>
+        <li>Ask the user for their name.</li>
+        <li>Ask the user for their age.</li>
+        <li>Use variables to store these inputs.</li>
+        <li>Print a greeting that includes both the name and age. For example: <br>
+          <code>Hello, Alex! You are 11 years old.</code>
+        </li>
+        <li>Add a small math operation that uses the user’s age. For instance, add 5 to their current age and print the result.</li>
+      </ol>
+      <p><strong>Expected Output Example</strong> (if the user’s name is Maria and age is 12):</p>
+      <pre>
+Hello, Maria! You are 12 years old.
+In 5 years, you will be 17!
+      </pre>
+    </div>
+
+    <!-- Assignment Card 2 -->
+    <div class="assignment-card">
+      <h2>Assignment 2: Basic Calculator</h2>
+      <p>
+        Create a Python script named <strong>calculator.py</strong> that:
+      </p>
+      <ol>
+        <li>Prompts the user for two numbers (e.g., <code>num1</code> and <code>num2</code>).</li>
+        <li>Performs <em>addition</em>, <em>subtraction</em>, <em>multiplication</em>, and <em>division</em> on these two numbers.</li>
+        <li>Prints out the results in a clear format.</li>
+      </ol>
+      <p><strong>Expected Output Example</strong> (if the user enters 10 and 2):</p>
+      <pre>
+Enter first number: 10
+Enter second number: 2
+Sum = 12
+Difference = 8
+Product = 20
+Quotient = 5.0
+      </pre>
+    </div>
+
+    <!-- Assignment Card 3 -->
+    <div class="assignment-card">
+      <h2>Assignment 3: Temperature Converter</h2>
+      <p>Create a Python script named <strong>temp_converter.py</strong> that:</p>
+      <ol>
+        <li>Asks the user for a temperature in Celsius.</li>
+        <li>Converts that temperature to Fahrenheit using the formula: 
+          <code>F = (C * 9/5) + 32</code></li>
+        <li>Prints the resulting Fahrenheit temperature.</li>
+      </ol>
+      <p><strong>Expected Output Example</strong> (if user enters 25 Celsius):</p>
+      <pre>
+Enter temperature in Celsius: 25
+25 Celsius is 77.0 Fahrenheit.
+      </pre>
+    </div>
+
   </div>
 
-
-
-    <p>Content for exercises...</p>
-  </div>
-
-  <div id="assignment" style="display:none;">
-    <h1>Assignment</h1>
-    <!-- Add your assignment content here -->
-    <p>Content for assignments...</p>
-  </div>
-
+  <!-- JAVASCRIPT SECTION -->
   <script>
+    // Function to copy code from the examples
     function copyCode(id) {
       const code = document.getElementById(id).textContent;
       const textarea = document.createElement("textarea");
@@ -296,6 +478,7 @@ print("I am", age, "years old")
       alert("✅ Code copied!");
     }
 
+    // Function to switch between sections
     function showSection(section) {
       // Hide all sections
       document.getElementById('examples').style.display = 'none';
@@ -305,36 +488,38 @@ print("I am", age, "years old")
       // Show the selected section
       document.getElementById(section).style.display = 'block';
     }
-	
-	const questions = [
+
+    // Quiz data
+    const questions = [
       {
-        title: "🔁 Fill in the missing parts to complete the while loop over a tuple.",
+        title: "Fill in the missing parts to complete the while loop over a tuple.",
         line: `mytuple = ('apple', 'banana', 'cherry')\ni = 0\n⬛ i < ⬛(mytuple):\n    print(mytuple[i])\n    i = i + 1`,
         answer: "mytuple[i]"
       },
       {
-        title: "🧠 Use negative indexing to print the last item in the tuple.",
+        title: "Use negative indexing to print the last item in the tuple.",
         line: 'fruits = ("apple", "banana", "cherry")',
         answer: "fruits[-1]"
       },
       {
-        title: "🔢 Print the first item in the tuple using indexing.",
+        title: "Print the first item in the tuple using indexing.",
         line: 'numbers = (10, 20, 30)',
         answer: "numbers[0]"
       },
       {
-        title: "🎯 Access the second item using indexing.",
+        title: "Access the second item in the tuple using indexing.",
         line: 'colors = ("red", "green", "blue")',
         answer: "colors[1]"
       }
     ];
 
+    // Quiz logic
     let current = 0;
     let score = 0;
 
     function loadQuestion() {
       const q = questions[current];
-      document.getElementById("question-title").textContent = q.title;
+      document.querySelector("#question-title span").textContent = q.title;
       document.getElementById("code-line-1").textContent = q.line;
       document.getElementById("codeInput").value = "";
       document.getElementById("result").textContent = "";
@@ -359,12 +544,13 @@ print("I am", age, "years old")
       }
 
       document.getElementById("nextBtn").classList.remove("hidden");
+      document.getElementById("nextBtn").onclick = nextQuestion; // attach function
     }
 
     function toggleAnswer() {
       const box = document.getElementById("correctAnswer");
       const btn = document.querySelector(".toggle-button");
-      if (box.style.display === "none") {
+      if (box.style.display === "none" || box.style.display === "") {
         box.style.display = "block";
         btn.textContent = "🙈 Hide Answer";
       } else {
@@ -385,9 +571,11 @@ print("I am", age, "years old")
       }
     }
 
-    // Start
+    // Initialize the first question
     loadQuestion();
   </script>
-
 </body>
 </html>
+
+
+
