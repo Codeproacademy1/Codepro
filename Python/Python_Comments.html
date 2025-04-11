@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Comments – Examples</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      color: #333;
+    }
+
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    button.copy-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.copy-btn:hover {
+      background-color: #019875;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .icon-title {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .icon-title img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📝 Python Comments – Examples</h1>
+
+  <!-- ✅ Example 1: Single-line & Inline Comment -->
+  <div class="section">
+    <div class="icon-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" alt="icon">
+      Example 1 – Single-Line & Inline Comment
+    </div>
+    <button class="copy-btn" onclick="copyCode('code1')">📋 Copy</button>
+    <pre><code id="code1">
+# This is a single-line comment
+print("Hello!")  # This is an inline comment
+    </code></pre>
+    <ul>
+      <li><strong>#</strong> starts a single-line comment.</li>
+      <li>You can also put a comment after a line of code (inline).</li>
+      <li>Python ignores comments when running the program.</li>
+      <li>Output: <code>Hello!</code></li>
+    </ul>
+  </div>
+
+  <!-- ✅ Example 2: Multi-line Comment -->
+  <div class="section">
+    <div class="icon-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="icon">
+      Example 2 – Multi-Line Comment
+    </div>
+    <button class="copy-btn" onclick="copyCode('code2')">📋 Copy</button>
+    <pre><code id="code2">
+'''
+This is a multi-line comment
+It can be used to explain big blocks of code
+'''
+
+print("Python is fun!")
+    </code></pre>
+    <ul>
+      <li><strong>'''</strong> (or <strong>"""</strong>) can be used for multi-line comments.</li>
+      <li>Great for explaining full blocks of logic or code.</li>
+      <li>Python will skip anything inside the quotes.</li>
+      <li>Output: <code>Python is fun!</code></li>
+    </ul>
+  </div>
+
+  <!-- ✅ Extra Example: Inline Comment -->
+  <div class="section">
+    <div class="icon-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png" alt="icon">
+      Extra Example – Inline Comment
+    </div>
+    <button class="copy-btn" onclick="copyCode('code-inline')">📋 Copy</button>
+    <pre><code id="code-inline">
+print("Sara loves drawing")  # This line prints a sentence about Sara
+    </code></pre>
+    <ul>
+      <li>This is a single line with code and comment.</li>
+      <li>Comments after <code>#</code> are ignored by Python.</li>
+      <li>Only the text <code>Sara loves drawing</code> will be printed.</li>
+    </ul>
+  </div>
+
+  <script>
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("✅ Code copied!");
+    }
+  </script>
+
+</body>
+</html>

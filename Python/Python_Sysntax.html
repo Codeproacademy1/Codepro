@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Beginner Examples</title>
+  <style>
+
+
+ body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      color: #333;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    /* Navbar style */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #2c3e50;
+      padding: 10px 0;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    .navbar button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .navbar button:hover {
+      background-color: #019875;
+    }
+
+    /* Section styling */
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    button.copy-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.copy-btn:hover {
+      background-color: #019875;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    /* Title style with icon */
+    .icon-title {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .icon-title img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+	
+
+    .card {
+      background-color: #34495e;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      width: 500px;
+      max-width: 90%;
+    }
+    .code-line {
+      background-color: #2c3e50;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      white-space: pre-wrap;
+    }
+    input[type="text"] {
+      width: 70%;
+      padding: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #1f2d3a;
+      color: #ecf0f1;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #27ae60;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #2ecc71;
+    }
+    .toggle-button {
+      background-color: #7f8c8d;
+    }
+    .toggle-button:hover {
+      background-color: #95a5a6;
+    }
+    .answer-box {
+      display: none;
+      background-color: #1f2d3a;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #f39c12;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .hidden {
+      display: none;
+    }
+    .final-result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar for switching content -->
+  <div class="navbar">
+    <button onclick="showSection('examples')">Examples</button>
+    <button onclick="showSection('exercises')">Exercises</button>
+    <button onclick="showSection('assignment')">Assignment</button>
+  </div>
+
+  <!-- Content Sections (Initially hidden) -->
+  <div id="examples" style="display:block;">
+    <h1>🐍 Python Beginner Examples</h1>
+
+    <!-- Example 1: Print Text -->
+    <div class="section">
+      <div class="icon-title">
+        <img src="https://cdn-icons-png.flaticon.com/512/4341/4341139.png" alt="icon">
+        Code Example 1 – Print Text
+      </div>
+      <button class="copy-btn" onclick="copyCode('code1')">📋 Copy</button>
+      <pre><code id="code1">
+print("Hello, my name is Alex")
+print("I am 11 years old")
+print('''
+My hobbies are:
+🎨 Drawing
+📚 Reading
+⚽ Playing football
+''')
+      </code></pre>
+      <ul>
+        <li><strong>print()</strong> displays text on the screen.</li>
+        <li>You can use single, double, or triple quotes.</li>
+        <li>Triple quotes let you print multiple lines.</li>
+      </ul>
+    </div>
+
+    <!-- Example 2: Math -->
+    <div class="section">
+      <div class="icon-title">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="icon">
+        Code Example 2 – Math Operations
+      </div>
+      <button class="copy-btn" onclick="copyCode('code2')">📋 Copy</button>
+      <pre><code id="code2">
+print("8 + 2")  # shows the text "8 + 2"
+print(8 + 2)    # calculates and prints the result: 10
+      </code></pre>
+      <ul>
+        <li>Text inside quotes is shown exactly as written.</li>
+        <li>Math without quotes gets calculated by Python.</li>
+      </ul>
+    </div>
+
+    <!-- Example 3: Variables -->
+    <div class="section">
+      <div class="icon-title">
+        <img src="https://cdn-icons-png.flaticon.com/512/4021/4021723.png" alt="icon">
+        Code Example 3 – Using Variables
+      </div>
+      <button class="copy-btn" onclick="copyCode('code3')">📋 Copy</button>
+      <pre><code id="code3">
+name = "Alex"
+age = 11
+
+print("My name is", name)
+print("I am", age, "years old")
+      </code></pre>
+      <ul>
+        <li><strong>Variables</strong> store information like names or numbers.</li>
+        <li><strong>print()</strong> can show both text and variables.</li>
+        <li>Use <code>,</code> to separate parts inside <code>print()</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="exercises" style="display:none;">
+    <h1>Exercises</h1>
+
+
+  <div class="card" id="quiz-container">
+    <div id="question-title"></div>
+    <div class="code-line" id="code-line-1"></div>
+    <div class="code-line">print(<input type="text" id="codeInput" placeholder="your code here">)</div>
+    <button onclick="checkAnswer()">✅ Submit Answer</button>
+    <button class="toggle-button" onclick="toggleAnswer()">👀 Show Answer</button>
+    <div id="correctAnswer" class="answer-box"></div>
+    <p id="result"></p>
+    <button id="nextBtn" class="hidden" onclick="nextQuestion()">➡️ Next</button>
+  </div>
+
+  <div class="card hidden" id="finalScoreBox">
+    <p class="final-result" id="finalScoreText"></p>
+  </div>
+
+
+
+    <p>Content for exercises...</p>
+  </div>
+
+  <div id="assignment" style="display:none;">
+    <h1>Assignment</h1>
+    <!-- Add your assignment content here -->
+    <p>Content for assignments...</p>
+  </div>
+
+  <script>
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("✅ Code copied!");
+    }
+
+    function showSection(section) {
+      // Hide all sections
+      document.getElementById('examples').style.display = 'none';
+      document.getElementById('exercises').style.display = 'none';
+      document.getElementById('assignment').style.display = 'none';
+
+      // Show the selected section
+      document.getElementById(section).style.display = 'block';
+    }
+	
+	const questions = [
+      {
+        title: "🔁 Fill in the missing parts to complete the while loop over a tuple.",
+        line: `mytuple = ('apple', 'banana', 'cherry')\ni = 0\n⬛ i < ⬛(mytuple):\n    print(mytuple[i])\n    i = i + 1`,
+        answer: "mytuple[i]"
+      },
+      {
+        title: "🧠 Use negative indexing to print the last item in the tuple.",
+        line: 'fruits = ("apple", "banana", "cherry")',
+        answer: "fruits[-1]"
+      },
+      {
+        title: "🔢 Print the first item in the tuple using indexing.",
+        line: 'numbers = (10, 20, 30)',
+        answer: "numbers[0]"
+      },
+      {
+        title: "🎯 Access the second item using indexing.",
+        line: 'colors = ("red", "green", "blue")',
+        answer: "colors[1]"
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("question-title").textContent = q.title;
+      document.getElementById("code-line-1").textContent = q.line;
+      document.getElementById("codeInput").value = "";
+      document.getElementById("result").textContent = "";
+      document.getElementById("correctAnswer").style.display = "none";
+      document.getElementById("correctAnswer").textContent = `print(${q.answer})`;
+      document.getElementById("nextBtn").classList.add("hidden");
+      document.querySelector(".toggle-button").textContent = "👀 Show Answer";
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("codeInput").value.trim();
+      const correct = questions[current].answer;
+      const result = document.getElementById("result");
+
+      if (input === correct) {
+        result.textContent = "✅ Correct!";
+        result.style.color = "#2ecc71";
+        score++;
+      } else {
+        result.textContent = "❌ Try again!";
+        result.style.color = "#e74c3c";
+      }
+
+      document.getElementById("nextBtn").classList.remove("hidden");
+    }
+
+    function toggleAnswer() {
+      const box = document.getElementById("correctAnswer");
+      const btn = document.querySelector(".toggle-button");
+      if (box.style.display === "none") {
+        box.style.display = "block";
+        btn.textContent = "🙈 Hide Answer";
+      } else {
+        box.style.display = "none";
+        btn.textContent = "👀 Show Answer";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < questions.length) {
+        loadQuestion();
+      } else {
+        document.getElementById("quiz-container").classList.add("hidden");
+        document.getElementById("finalScoreBox").classList.remove("hidden");
+        document.getElementById("finalScoreText").textContent =
+          `🎉 You answered ${score} out of ${questions.length} correctly!`;
+      }
+    }
+
+    // Start
+    loadQuestion();
+  </script>
+
+</body>
+</html>
