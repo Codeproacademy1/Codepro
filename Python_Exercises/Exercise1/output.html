@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Output Prediction Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(145deg, #1e2a38, #2c3e50);
+      font-family: 'Fira Code', monospace;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    .quiz-wrapper {
+      display: flex;
+      gap: 20px;
+      width: 900px;
+      max-width: 95%;
+    }
+    .category-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 200px;
+    }
+    .card {
+      background-color: #34495e;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      flex: 1;
+    }
+    .category-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2c3e50;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      text-align: left;
+      text-decoration: none;
+    }
+    .category-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .code-container {
+      background-color: #2c3e50;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      line-height: 1.8;
+    }
+    .code-line {
+      white-space: pre;
+      margin-bottom: 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 15px;
+    }
+    .input-box {
+      padding: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: #1f2d3a;
+      color: #ecf0f1;
+      text-align: center;
+      margin: 0 3px;
+      min-width: 20px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #27ae60;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+    .toggle-button {
+      background-color: #7f8c8d;
+    }
+    .toggle-button:hover {
+      background-color: #95a5a6;
+    }
+    .next-button {
+      background-color: #3498db;
+    }
+    .next-button:hover {
+      background-color: #2980b9;
+    }
+    .answer-box {
+      display: none;
+      background-color: #1f2d3a;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #f39c12;
+    }
+    .show {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+    .final-result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+    .exercise-title {
+      color: #f39c12;
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .exercise {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #3d566e;
+      padding-bottom: 20px;
+    }
+    .exercise:last-child {
+      border-bottom: none;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .correct-answer {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+    .result-message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .correct {
+      color: #2ecc71;
+    }
+    .incorrect {
+      color: #e74c3c;
+    }
+    .icon {
+      font-size: 16px;
+    }
+    .back-btn {
+      background-color: #7f8c8d;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .back-btn:hover {
+      background-color: #95a5a6;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-wrapper">
+    <div class="category-selector">
+      <a href="index.html" class="category-btn back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Menu
+      </a>
+    </div>
+    
+    <div class="card" id="quiz-container">
+      <h2 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction Questions</h2>
+      
+      <div id="output-exercises">
+        <!-- Output Exercise 1 -->
+        <div class="exercise" id="output-exercise1">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Hello")</div>
+            <div class="code-line">print("World")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex1" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(1, 'Hello\nWorld')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer1')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn1" class="next-button hidden" onclick="nextExercise('output', 1)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result1" class="result-message"></div>
+          <div id="output-answer1" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Hello</div>
+            <div class="code-line correct-answer">World</div>
+            <p><i class="fas fa-info-circle"></i> Each print() statement outputs on a new line.</p>
+          </div>
+        </div>
+        
+        <!-- Output Exercise 2 -->
+        <div class="exercise hidden" id="output-exercise2">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Hello", "World")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex2" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(2, 'Hello World')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer2')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn2" class="next-button hidden" onclick="nextExercise('output', 2)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result2" class="result-message"></div>
+          <div id="output-answer2" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Hello World</div>
+            <p><i class="fas fa-info-circle"></i> print() adds a space between arguments by default.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 3 -->
+        <div class="exercise hidden" id="output-exercise3">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("3" + "5")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex3" placeholder="Your answer" style="width: 100px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(3, '35')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer3')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn3" class="next-button hidden" onclick="nextExercise('output', 3)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result3" class="result-message"></div>
+          <div id="output-answer3" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">35</div>
+            <p><i class="fas fa-info-circle"></i> The + operator concatenates strings.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 4 -->
+        <div class="exercise hidden" id="output-exercise4">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print(3 + 5)</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex4" placeholder="Your answer" style="width: 50px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(4, '8')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer4')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn4" class="next-button hidden" onclick="nextExercise('output', 4)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result4" class="result-message"></div>
+          <div id="output-answer4" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">8</div>
+            <p><i class="fas fa-info-circle"></i> The + operator performs addition with numbers.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 5 -->
+        <div class="exercise hidden" id="output-exercise5">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("3 + 5")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex5" placeholder="Your answer" style="width: 100px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(5, '3 + 5')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer5')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn5" class="next-button hidden" onclick="nextExercise('output', 5)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result5" class="result-message"></div>
+          <div id="output-answer5" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">3 + 5</div>
+            <p><i class="fas fa-info-circle"></i> The string is printed literally.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 6 -->
+        <div class="exercise hidden" id="output-exercise6">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Line1\nLine2")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex6" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(6, 'Line1\nLine2')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer6')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn6" class="next-button hidden" onclick="nextExercise('output', 6)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result6" class="result-message"></div>
+          <div id="output-answer6" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Line1</div>
+            <div class="code-line correct-answer">Line2</div>
+            <p><i class="fas fa-info-circle"></i> \n creates a new line in the output.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 7 -->
+        <div class="exercise hidden" id="output-exercise7">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Tab\tSpace")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex7" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(7, 'Tab\tSpace')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer7')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn7" class="next-button hidden" onclick="nextExercise('output', 7)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result7" class="result-message"></div>
+          <div id="output-answer7" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Tab    Space</div>
+            <p><i class="fas fa-info-circle"></i> \t creates a tab space in the output.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 8 -->
+        <div class="exercise hidden" id="output-exercise8">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("A", end="")</div>
+            <div class="code-line">print("B")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex8" placeholder="Your answer" style="width: 100px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(8, 'AB')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer8')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn8" class="next-button hidden" onclick="nextExercise('output', 8)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result8" class="result-message"></div>
+          <div id="output-answer8" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">AB</div>
+            <p><i class="fas fa-info-circle"></i> end="" prevents a newline after the first print.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 9 -->
+        <div class="exercise hidden" id="output-exercise9">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Learn", end="<symbol>")</div>
+            <div class="code-line">print("Python")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex9" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(9, 'Learn<symbol>Python')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer9')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn9" class="next-button hidden" onclick="nextExercise('output', 9)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result9" class="result-message"></div>
+          <div id="output-answer9" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Learn<symbol>Python</div>
+            <p><i class="fas fa-info-circle"></i> end="<symbol>" adds the symbol between the outputs.</p>
+          </div>
+        </div>
+
+        <!-- Output Exercise 10 -->
+        <div class="exercise hidden" id="output-exercise10">
+          <h3 class="exercise-title"><i class="fas fa-terminal"></i> Output Prediction</h3>
+          <div class="code-container">
+            <div class="code-line">print("Hello" + " " + "Python")</div>
+            <p>What will be the output of this code?</p>
+            <input type="text" class="input-box" id="output-ex10" placeholder="Your answer" style="width: 200px;">
+          </div>
+          <div class="button-group">
+            <button onclick="checkOutputAnswer(10, 'Hello Python')">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('output-answer10')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="output-nextBtn10" class="next-button hidden" onclick="nextExercise('output', 10)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="output-result10" class="result-message"></div>
+          <div id="output-answer10" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <div class="code-line correct-answer">Hello Python</div>
+            <p><i class="fas fa-info-circle"></i> The + operator concatenates the strings.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Final completion message -->
+      <div id="completionMessage" class="exercise hidden">
+        <h3 class="final-result"><i class="fas fa-trophy"></i> All exercises completed! <i class="fas fa-trophy"></i></h3>
+        <button onclick="resetQuiz()">
+          <i class="fas fa-redo icon"></i> Start Over
+        </button>
+        <a href="index.html" class="category-btn back-btn" style="margin-top: 15px;">
+          <i class="fas fa-home"></i> Back to Menu
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentExerciseNum = 1;
+    
+    // Check Output answer
+    function checkOutputAnswer(exerciseNum, correctAnswer) {
+      const userAnswer = document.getElementById(`output-ex${exerciseNum}`).value.trim();
+      const resultDiv = document.getElementById(`output-result${exerciseNum}`);
+      const nextBtn = document.getElementById(`output-nextBtn${exerciseNum}`);
+      
+      if (userAnswer === correctAnswer) {
+        resultDiv.innerHTML = '<i class="fas fa-check-circle icon"></i><span>✓ Correct!</span>';
+        resultDiv.className = 'result-message correct';
+        nextBtn.classList.remove('hidden');
+      } else {
+        resultDiv.innerHTML = '<i class="fas fa-times-circle icon"></i><span>✗ Try again!</span>';
+        resultDiv.className = 'result-message incorrect';
+        nextBtn.classList.add('hidden');
+      }
+    }
+    
+    // Toggle answer visibility
+    function toggleAnswer(answerId) {
+      const answerBox = document.getElementById(answerId);
+      const btn = event.currentTarget;
+      const icon = btn.querySelector('i');
+      
+      if (answerBox.classList.contains('hidden')) {
+        answerBox.classList.remove('hidden');
+        answerBox.classList.add('show');
+        icon.className = 'far fa-eye-slash icon';
+        btn.innerHTML = '<i class="far fa-eye-slash icon"></i> Hide Answer';
+      } else {
+        answerBox.classList.add('hidden');
+        answerBox.classList.remove('show');
+        icon.className = 'far fa-eye icon';
+        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+      }
+    }
+    
+    // Move to next exercise
+    function nextExercise(category, currentEx) {
+      // Hide current exercise
+      document.getElementById(`${category}-exercise${currentEx}`).classList.add('hidden');
+      
+      // Show next exercise or completion message
+      const nextEx = currentEx + 1;
+      if (document.getElementById(`${category}-exercise${nextEx}`)) {
+        document.getElementById(`${category}-exercise${nextEx}`).classList.remove('hidden');
+        currentExerciseNum = nextEx;
+      } else {
+        document.getElementById('completionMessage').classList.remove('hidden');
+      }
+    }
+    
+    // Reset the quiz
+    function resetQuiz() {
+      // Hide all exercises and completion message
+      document.querySelectorAll('.exercise').forEach(ex => {
+        ex.classList.add('hidden');
+      });
+      
+      // Reset all answer boxes
+      document.querySelectorAll('.answer-box').forEach(box => {
+        box.classList.add('hidden');
+        box.classList.remove('show');
+      });
+      
+      // Reset all input fields
+      document.querySelectorAll('.input-box').forEach(input => {
+        input.value = '';
+      });
+      
+      // Reset all result messages
+      document.querySelectorAll('.result-message').forEach(msg => {
+        msg.innerHTML = '';
+        msg.className = 'result-message';
+      });
+      
+      // Reset all next buttons
+      document.querySelectorAll('.next-button').forEach(btn => {
+        btn.classList.add('hidden');
+      });
+      
+      // Reset toggle buttons
+      document.querySelectorAll('.toggle-button').forEach(btn => {
+        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+      });
+      
+      // Show first exercise
+      document.getElementById('output-exercise1').classList.remove('hidden');
+      currentExerciseNum = 1;
+      
+      // Hide completion message
+      document.getElementById('completionMessage').classList.add('hidden');
+    }
+    
+    // Initialize with first exercise
+    window.onload = function() {
+      document.getElementById('output-exercise1').classList.remove('hidden');
+    };
+  </script>
+</body>
+</html>

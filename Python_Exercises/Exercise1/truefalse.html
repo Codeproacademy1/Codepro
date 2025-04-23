@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>True/False Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(145deg, #1e2a38, #2c3e50);
+      font-family: 'Fira Code', monospace;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    .quiz-wrapper {
+      display: flex;
+      gap: 20px;
+      width: 900px;
+      max-width: 95%;
+    }
+    .category-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 200px;
+    }
+    .card {
+      background-color: #34495e;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      flex: 1;
+    }
+    .category-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2c3e50;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      text-align: left;
+      text-decoration: none;
+    }
+    .category-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .code-container {
+      background-color: #2c3e50;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      line-height: 1.8;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #27ae60;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+    .toggle-button {
+      background-color: #7f8c8d;
+    }
+    .toggle-button:hover {
+      background-color: #95a5a6;
+    }
+    .next-button {
+      background-color: #3498db;
+    }
+    .next-button:hover {
+      background-color: #2980b9;
+    }
+    .answer-box {
+      display: none;
+      background-color: #1f2d3a;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #f39c12;
+    }
+    .show {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+    .final-result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+    .exercise-title {
+      color: #f39c12;
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .exercise {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #3d566e;
+      padding-bottom: 20px;
+    }
+    .exercise:last-child {
+      border-bottom: none;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .correct-answer {
+      color: #2ecc71;
+      font-weight: bold;
+    }
+    .result-message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .correct {
+      color: #2ecc71;
+    }
+    .incorrect {
+      color: #e74c3c;
+    }
+    .icon {
+      font-size: 16px;
+    }
+    .true-false-options {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .true-false-btn {
+      flex: 1;
+      text-align: center;
+      background-color: #2c3e50;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .true-false-btn:hover {
+      background-color: #3d566e;
+    }
+    .true-false-btn.selected {
+      background-color: #3498db;
+    }
+    .back-btn {
+      background-color: #7f8c8d;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .back-btn:hover {
+      background-color: #95a5a6;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-wrapper">
+    <div class="category-selector">
+      <a href="index.html" class="category-btn back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Menu
+      </a>
+    </div>
+    
+    <div class="card" id="quiz-container">
+      <h2 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Questions</h2>
+      
+      <div id="truefalse-exercises">
+        <!-- True/False Exercise 1 -->
+        <div class="exercise" id="truefalse-exercise1">
+          <h3 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Question</h3>
+          <div class="code-container">
+            <p>The print() function in Python always adds a space between multiple arguments.</p>
+            <div class="true-false-options">
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse1', true)">True</button>
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse1', false)">False</button>
+            </div>
+          </div>
+          <div class="button-group">
+            <button onclick="checkTFAnswer(1, true)">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('truefalse-answer1')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="truefalse-nextBtn1" class="next-button hidden" onclick="nextExercise('truefalse', 1)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="truefalse-result1" class="result-message"></div>
+          <div id="truefalse-answer1" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <p>True</p>
+            <p><i class="fas fa-info-circle"></i> print() adds a space between arguments by default.</p>
+          </div>
+        </div>
+        
+        <!-- True/False Exercise 2 -->
+        <div class="exercise hidden" id="truefalse-exercise2">
+          <h3 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Question</h3>
+          <div class="code-container">
+            <p>print("Python", 3.9) will print: Python3.9</p>
+            <div class="true-false-options">
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse2', true)">True</button>
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse2', false)">False</button>
+            </div>
+          </div>
+          <div class="button-group">
+            <button onclick="checkTFAnswer(2, false)">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('truefalse-answer2')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="truefalse-nextBtn2" class="next-button hidden" onclick="nextExercise('truefalse', 2)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="truefalse-result2" class="result-message"></div>
+          <div id="truefalse-answer2" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <p>False</p>
+            <p><i class="fas fa-info-circle"></i> It will print: Python 3.9 (with a space)</p>
+          </div>
+        </div>
+
+        <!-- True/False Exercise 3 -->
+        <div class="exercise hidden" id="truefalse-exercise3">
+          <h3 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Question</h3>
+          <div class="code-container">
+            <p>print("5" + 2) will cause an error.</p>
+            <div class="true-false-options">
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse3', true)">True</button>
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse3', false)">False</button>
+            </div>
+          </div>
+          <div class="button-group">
+            <button onclick="checkTFAnswer(3, true)">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('truefalse-answer3')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="truefalse-nextBtn3" class="next-button hidden" onclick="nextExercise('truefalse', 3)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="truefalse-result3" class="result-message"></div>
+          <div id="truefalse-answer3" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <p>True</p>
+            <p><i class="fas fa-info-circle"></i> You can't concatenate a string and integer directly.</p>
+          </div>
+        </div>
+
+        <!-- True/False Exercise 4 -->
+        <div class="exercise hidden" id="truefalse-exercise4">
+          <h3 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Question</h3>
+          <div class="code-container">
+            <p>print("Hello", end="*") will end the line with a star (*).</p>
+            <div class="true-false-options">
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse4', true)">True</button>
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse4', false)">False</button>
+            </div>
+          </div>
+          <div class="button-group">
+            <button onclick="checkTFAnswer(4, true)">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('truefalse-answer4')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="truefalse-nextBtn4" class="next-button hidden" onclick="nextExercise('truefalse', 4)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="truefalse-result4" class="result-message"></div>
+          <div id="truefalse-answer4" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <p>True</p>
+            <p><i class="fas fa-info-circle"></i> The end parameter specifies what to print at the end.</p>
+          </div>
+        </div>
+
+        <!-- True/False Exercise 5 -->
+        <div class="exercise hidden" id="truefalse-exercise5">
+          <h3 class="exercise-title"><i class="fas fa-check-circle"></i> True/False Question</h3>
+          <div class="code-container">
+            <p>You can use print() to read data from the user.</p>
+            <div class="true-false-options">
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse5', true)">True</button>
+              <button class="true-false-btn" onclick="selectTFAnswer(this, 'truefalse5', false)">False</button>
+            </div>
+          </div>
+          <div class="button-group">
+            <button onclick="checkTFAnswer(5, false)">
+              <i class="fas fa-paper-plane icon"></i> Submit Answer
+            </button>
+            <button class="toggle-button" onclick="toggleAnswer('truefalse-answer5')">
+              <i class="far fa-eye icon"></i> Show Answer
+            </button>
+            <button id="truefalse-nextBtn5" class="next-button hidden" onclick="nextExercise('truefalse', 5)">
+              <i class="fas fa-arrow-right icon"></i> Next
+            </button>
+          </div>
+          <div id="truefalse-result5" class="result-message"></div>
+          <div id="truefalse-answer5" class="answer-box hidden">
+            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
+            <p>False</p>
+            <p><i class="fas fa-info-circle"></i> print() is for output, input() is for reading user input.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Final completion message -->
+      <div id="completionMessage" class="exercise hidden">
+        <h3 class="final-result"><i class="fas fa-trophy"></i> All exercises completed! <i class="fas fa-trophy"></i></h3>
+        <button onclick="resetQuiz()">
+          <i class="fas fa-redo icon"></i> Start Over
+        </button>
+        <a href="index.html" class="category-btn back-btn" style="margin-top: 15px;">
+          <i class="fas fa-home"></i> Back to Menu
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentExerciseNum = 1;
+    
+    // True/False selection
+    function selectTFAnswer(element, questionId, isTrue) {
+      // Remove selection from all options in this question
+      document.querySelectorAll(`[onclick*="${questionId}"]`).forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Select clicked option
+      element.classList.add('selected');
+    }
+    
+    // Check True/False answer
+    function checkTFAnswer(exerciseNum, correctAnswer) {
+      const selectedBtn = document.querySelector(`#truefalse-exercise${exerciseNum} .selected`);
+      const resultDiv = document.getElementById(`truefalse-result${exerciseNum}`);
+      const nextBtn = document.getElementById(`truefalse-nextBtn${exerciseNum}`);
+      
+      if (!selectedBtn) {
+        resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i><span>Please select an option!</span>';
+        resultDiv.className = 'result-message incorrect';
+        return;
+      }
+      
+      const isTrueSelected = selectedBtn.textContent.trim() === 'True';
+      
+      if (isTrueSelected === correctAnswer) {
+        resultDiv.innerHTML = '<i class="fas fa-check-circle icon"></i><span>✓ Correct!</span>';
+        resultDiv.className = 'result-message correct';
+        nextBtn.classList.remove('hidden');
+      } else {
+        resultDiv.innerHTML = '<i class="fas fa-times-circle icon"></i><span>✗ Try again!</span>';
+        resultDiv.className = 'result-message incorrect';
+        nextBtn.classList.add('hidden');
+      }
+    }
+    
+    // Toggle answer visibility
+    function toggleAnswer(answerId) {
+      const answerBox = document.getElementById(answerId);
+      const btn = event.currentTarget;
+      const icon = btn.querySelector('i');
+      
+      if (answerBox.classList.contains('hidden')) {
+        answerBox.classList.remove('hidden');
+        answerBox.classList.add('show');
+        icon.className = 'far fa-eye-slash icon';
+        btn.innerHTML = '<i class="far fa-eye-slash icon"></i> Hide Answer';
+      } else {
+        answerBox.classList.add('hidden');
+        answerBox.classList.remove('show');
+        icon.className = 'far fa-eye icon';
+        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+      }
+    }
+    
+    // Move to next exercise
+    function nextExercise(category, currentEx) {
+      // Hide current exercise
+      document.getElementById(`${category}-exercise${currentEx}`).classList.add('hidden');
+      
+      // Show next exercise or completion message
+      const nextEx = currentEx + 1;
+      if (document.getElementById(`${category}-exercise${nextEx}`)) {
+        document.getElementById(`${category}-exercise${nextEx}`).classList.remove('hidden');
+        currentExerciseNum = nextEx;
+      } else {
+        document.getElementById('completionMessage').classList.remove('hidden');
+      }
+    }
+    
+    // Reset the quiz
+    function resetQuiz() {
+      // Hide all exercises and completion message
+      document.querySelectorAll('.exercise').forEach(ex => {
+        ex.classList.add('hidden');
+      });
+      
+      // Reset all answer boxes
+      document.querySelectorAll('.answer-box').forEach(box => {
+        box.classList.add('hidden');
+        box.classList.remove('show');
+      });
+      
+      // Reset all result messages
+      document.querySelectorAll('.result-message').forEach(msg => {
+        msg.innerHTML = '';
+        msg.className = 'result-message';
+      });
+      
+      // Reset all next buttons
+      document.querySelectorAll('.next-button').forEach(btn => {
+        btn.classList.add('hidden');
+      });
+      
+      // Reset toggle buttons
+      document.querySelectorAll('.toggle-button').forEach(btn => {
+        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+      });
+      
+      // Reset selected options
+      document.querySelectorAll('.true-false-btn').forEach(el => {
+        el.classList.remove('selected');
+      });
+      
+      // Show first exercise
+      document.getElementById('truefalse-exercise1').classList.remove('hidden');
+      currentExerciseNum = 1;
+      
+      // Hide completion message
+      document.getElementById('completionMessage').classList.add('hidden');
+    }
+    
+    // Initialize with first exercise
+    window.onload = function() {
+      document.getElementById('truefalse-exercise1').classList.remove('hidden');
+    };
+  </script>
+</body>
+</html>

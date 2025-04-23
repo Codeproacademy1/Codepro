@@ -15,18 +15,15 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
     h1 {
       text-align: center;
       color: #2c3e50;
       margin-top: 0;
     }
-
     h2, h3 {
       color: #2c3e50;
       margin-top: 0;
     }
-
     /* 2) NAVBAR STYLE */
     .navbar {
       display: flex;
@@ -36,7 +33,6 @@
       border-radius: 12px;
       margin-bottom: 30px;
     }
-
     .navbar button {
       background-color: #00b894;
       color: white;
@@ -51,22 +47,24 @@
     .navbar button:hover {
       background-color: #019875;
     }
-
     /* 3) SECTIONS (examples, exercises, assignment) */
     #examples,
     #exercises,
     #assignment {
-      display: none; /* hidden by default; toggled via JS */
       width: 100%;
       max-width: 1200px;
-      margin: 0 auto; /* center the content container */
+      margin: 0 auto; /* Center the content container */
     }
-
-    /* Show the default tab (examples) when the page loads */
+    /* Initially display the Examples section. Exercises will be loaded dynamically */
     #examples {
       display: block;
     }
-
+    #exercises {
+      display: none;
+    }
+    #assignment {
+      display: none;
+    }
     /* 4) EXAMPLE SECTIONS */
     .section {
       background: white;
@@ -76,7 +74,6 @@
       margin-bottom: 30px;
       position: relative;
     }
-
     pre {
       background: #272822;
       color: #f8f8f2;
@@ -85,12 +82,10 @@
       overflow-x: auto;
       margin-top: 10px;
     }
-
     code {
       font-family: Consolas, monospace;
       font-size: 14px;
     }
-
     button.copy-btn {
       position: absolute;
       top: 15px;
@@ -106,7 +101,6 @@
     button.copy-btn:hover {
       background-color: #019875;
     }
-
     /* Title with an icon */
     .icon-title {
       display: flex;
@@ -121,135 +115,11 @@
       height: 28px;
       margin-right: 10px;
     }
-
-    /* 5) EXERCISES SECTION */
-    #exercises h1 {
+    /* 5) ASSIGNMENT SECTION */
+    #assignment h1 {
+      text-align: center;
       margin-bottom: 20px;
     }
-
-    /* Center the exercise content (quiz) */
-    #exercises {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* QUIZ CARD STYLING */
-    .card {
-      background-color: #2f3e5f; /* darker background for better contrast */
-      color: #ffffff; /* light text for better visibility */
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      width: 500px;
-      max-width: 90%;
-      margin: 20px auto; /* center the card horizontally */
-    }
-
-    .quiz-icon {
-      margin-right: 8px;
-    }
-
-    /* The question title, made more visible with bold text and lighter color */
-    #question-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #aed6f1; /* lighter text color for contrast */
-      display: flex;
-      align-items: center;
-    }
-
-    /* Code-line styling for the code snippet in the quiz card */
-    .code-line {
-      background-color: #394966;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      white-space: pre-wrap;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      color: #ecf0f1;
-    }
-
-    /* Text input for user code */
-    input[type="text"] {
-      width: 70%;
-      padding: 8px;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
-      background-color: #1f2d3a;
-      color: #ecf0f1;
-      outline: none;
-    }
-
-    /* Buttons inside the quiz card */
-    button.quiz-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 14px;
-      background-color: #27ae60;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-right: 10px;
-    }
-    button.quiz-btn:hover {
-      background-color: #2ecc71;
-    }
-
-    /* "Show Answer" button styling */
-    .toggle-button {
-      background-color: #7f8c8d !important;
-    }
-    .toggle-button:hover {
-      background-color: #95a5a6 !important;
-    }
-
-    /* The hidden answer box in the quiz */
-    .answer-box {
-      display: none;
-      background-color: #1f2d3a;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-      font-size: 16px;
-      color: #f39c12;
-    }
-
-    /* Result message after Submit Answer */
-    #result {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    /* Hidden class used to hide elements */
-    .hidden {
-      display: none;
-    }
-
-    .final-result {
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #2ecc71;
-    }
-
-    /* 6) ASSIGNMENT SECTION */
-    #assignment {
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* center horizontally */
-      justify-content: start;
-    }
-
-    /* Reusable assignment card style */
     .assignment-card {
       background-color: #e2f1f8;
       padding: 30px;
@@ -260,28 +130,23 @@
       margin: 20px auto;
       border-left: 8px solid #00b894;
     }
-
     .assignment-card h2 {
       margin-top: 0;
       font-size: 22px;
       color: #2c3e50;
     }
-
     .assignment-card ol {
       padding-left: 20px;
     }
-
     .assignment-card li {
       margin-bottom: 10px;
     }
-
     .assignment-card code {
       background: #eee;
       color: #333;
       padding: 2px 4px;
       border-radius: 4px;
     }
-
     .assignment-card pre {
       background: #272822;
       color: #f8f8f2;
@@ -289,10 +154,22 @@
       border-radius: 10px;
       overflow-x: auto;
     }
+    /* Styling for the external GitHub link */
+    .github-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    .github-link a {
+      color: #00b894;
+      text-decoration: none;
+    }
+    .github-link a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-
   <!-- Navbar for switching content -->
   <div class="navbar">
     <button onclick="showSection('examples')">Examples</button>
@@ -303,7 +180,6 @@
   <!-- EXAMPLES SECTION -->
   <div id="examples">
     <h1>🐍 Python Beginner Examples</h1>
-
     <!-- Example 1: Print Text -->
     <div class="section">
       <div class="icon-title">
@@ -366,41 +242,13 @@ print("I am", age, "years old")
       </ul>
     </div>
   </div>
-  </div>
 
-  <!-- EXERCISES SECTION -->
-  <div id="exercises">
-    <h1>Exercises</h1>
-
-    <!-- Centered Card for the Quiz -->
-    <div class="card" id="quiz-container">
-      <div id="question-title">
-        <img class="quiz-icon" src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="quiz icon" width="22" />
-        <span></span>
-      </div>
-      <div class="code-line" id="code-line-1"></div>
-      <div class="code-line">
-        print(<input type="text" id="codeInput" placeholder="your code here">)
-      </div>
-
-      <button class="quiz-btn" onclick="checkAnswer()">✅ Submit Answer</button>
-      <button class="quiz-btn toggle-button" onclick="toggleAnswer()">👀 Show Answer</button>
-
-      <div id="correctAnswer" class="answer-box"></div>
-      <p id="result"></p>
-      <button id="nextBtn" class="quiz-btn hidden">➡️ Next</button>
-    </div>
-
-    <!-- Final Score Box -->
-    <div class="card hidden" id="finalScoreBox">
-      <p class="final-result" id="finalScoreText"></p>
-    </div>
-  </div>
+  <!-- EXERCISES SECTION (initially empty: content loaded externally) -->
+  <div id="exercises"></div>
 
   <!-- ASSIGNMENT SECTION -->
   <div id="assignment">
     <h1>Assignments</h1>
-
     <!-- Assignment Card 1 -->
     <div class="assignment-card">
       <h2>Assignment 1: My Info</h2>
@@ -411,7 +259,8 @@ print("I am", age, "years old")
         <li>Ask the user for their name.</li>
         <li>Ask the user for their age.</li>
         <li>Use variables to store these inputs.</li>
-        <li>Print a greeting that includes both the name and age. For example: <br>
+        <li>Print a greeting that includes both the name and age. For example:
+          <br>
           <code>Hello, Alex! You are 11 years old.</code>
         </li>
         <li>Add a small math operation that uses the user’s age. For instance, add 5 to their current age and print the result.</li>
@@ -452,7 +301,8 @@ Quotient = 5.0
       <ol>
         <li>Asks the user for a temperature in Celsius.</li>
         <li>Converts that temperature to Fahrenheit using the formula: 
-          <code>F = (C * 9/5) + 32</code></li>
+          <code>F = (C * 9/5) + 32</code>
+        </li>
         <li>Prints the resulting Fahrenheit temperature.</li>
       </ol>
       <p><strong>Expected Output Example</strong> (if user enters 25 Celsius):</p>
@@ -461,7 +311,6 @@ Enter temperature in Celsius: 25
 25 Celsius is 77.0 Fahrenheit.
       </pre>
     </div>
-
   </div>
 
   <!-- JAVASCRIPT SECTION -->
@@ -477,105 +326,47 @@ Enter temperature in Celsius: 25
       document.body.removeChild(textarea);
       alert("✅ Code copied!");
     }
-
     // Function to switch between sections
     function showSection(section) {
       // Hide all sections
       document.getElementById('examples').style.display = 'none';
       document.getElementById('exercises').style.display = 'none';
       document.getElementById('assignment').style.display = 'none';
-
-      // Show the selected section
-      document.getElementById(section).style.display = 'block';
-    }
-
-    // Quiz data
-    const questions = [
-      {
-        title: "Fill in the missing parts to complete the while loop over a tuple.",
-        line: `mytuple = ('apple', 'banana', 'cherry')\ni = 0\n⬛ i < ⬛(mytuple):\n    print(mytuple[i])\n    i = i + 1`,
-        answer: "mytuple[i]"
-      },
-      {
-        title: "Use negative indexing to print the last item in the tuple.",
-        line: 'fruits = ("apple", "banana", "cherry")',
-        answer: "fruits[-1]"
-      },
-      {
-        title: "Print the first item in the tuple using indexing.",
-        line: 'numbers = (10, 20, 30)',
-        answer: "numbers[0]"
-      },
-      {
-        title: "Access the second item in the tuple using indexing.",
-        line: 'colors = ("red", "green", "blue")',
-        answer: "colors[1]"
-      }
-    ];
-
-    // Quiz logic
-    let current = 0;
-    let score = 0;
-
-    function loadQuestion() {
-      const q = questions[current];
-      document.querySelector("#question-title span").textContent = q.title;
-      document.getElementById("code-line-1").textContent = q.line;
-      document.getElementById("codeInput").value = "";
-      document.getElementById("result").textContent = "";
-      document.getElementById("correctAnswer").style.display = "none";
-      document.getElementById("correctAnswer").textContent = `print(${q.answer})`;
-      document.getElementById("nextBtn").classList.add("hidden");
-      document.querySelector(".toggle-button").textContent = "👀 Show Answer";
-    }
-
-    function checkAnswer() {
-      const input = document.getElementById("codeInput").value.trim();
-      const correct = questions[current].answer;
-      const result = document.getElementById("result");
-
-      if (input === correct) {
-        result.textContent = "✅ Correct!";
-        result.style.color = "#2ecc71";
-        score++;
+      if (section === 'exercises') {
+        // Load exercises content from an external file and append the provided link
+        fetch('exercises.html')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text();
+          })
+          .then(html => {
+            const exercisesDiv = document.getElementById('exercises');
+            // Create a link block with the provided URL
+            const externalLink = `
+              <div class="github-link">
+                <p>Check out the exercises page on <a href="https://codeproacademy1.github.io/Codepro/Python_Ex/EX1.html" target="_blank">CodePro Academy</a>.</p>
+              </div>
+            `;
+            // Append the external link after the loaded content
+            exercisesDiv.innerHTML = html + externalLink;
+            exercisesDiv.style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error loading exercises:', error);
+            document.getElementById('exercises').innerHTML = "<p>Sorry, the exercises could not be loaded at this time.</p>";
+            document.getElementById('exercises').style.display = 'block';
+          });
       } else {
-        result.textContent = "❌ Try again!";
-        result.style.color = "#e74c3c";
-      }
-
-      document.getElementById("nextBtn").classList.remove("hidden");
-      document.getElementById("nextBtn").onclick = nextQuestion; // attach function
-    }
-
-    function toggleAnswer() {
-      const box = document.getElementById("correctAnswer");
-      const btn = document.querySelector(".toggle-button");
-      if (box.style.display === "none" || box.style.display === "") {
-        box.style.display = "block";
-        btn.textContent = "🙈 Hide Answer";
-      } else {
-        box.style.display = "none";
-        btn.textContent = "👀 Show Answer";
+        // Display the selected local section
+        document.getElementById(section).style.display = 'block';
       }
     }
-
-    function nextQuestion() {
-      current++;
-      if (current < questions.length) {
-        loadQuestion();
-      } else {
-        document.getElementById("quiz-container").classList.add("hidden");
-        document.getElementById("finalScoreBox").classList.remove("hidden");
-        document.getElementById("finalScoreText").textContent =
-          `🎉 You answered ${score} out of ${questions.length} correctly!`;
-      }
-    }
-
-    // Initialize the first question
-    loadQuestion();
+    // Display the Examples section by default on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      showSection('examples');
+    });
   </script>
 </body>
 </html>
-
-
-
