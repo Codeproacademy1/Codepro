@@ -194,6 +194,150 @@
     .option.selected {
       background-color: #3498db;
     }
+
+    /* MSQ specific styles */
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #3d566e;
+    }
+    .header h1 {
+      color: #f39c12;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+    .header p {
+      color: #bdc3c7;
+      font-size: 16px;
+    }
+    .question {
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #ecf0f1;
+    }
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-letter {
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      background-color: #1f2d3a;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .option.selected .option-letter {
+      background-color: #1a5276;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background-color: #27ae60;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background-color: #7f8c8d;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background-color: #95a5a6;
+      transform: translateY(-2px);
+    }
+    .btn-next {
+      background-color: #3498db;
+      color: white;
+    }
+    .btn-next:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+    .feedback {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      display: none;
+    }
+    .feedback.show {
+      display: block;
+    }
+    .correct-feedback {
+      background-color: rgba(46, 204, 113, 0.2);
+      border-left: 4px solid #2ecc71;
+      color: #2ecc71;
+    }
+    .incorrect-feedback {
+      background-color: rgba(231, 76, 60, 0.2);
+      border-left: 4px solid #e74c3c;
+      color: #e74c3c;
+    }
+    .solution {
+      background-color: rgba(52, 152, 219, 0.2);
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: none;
+    }
+    .solution.show {
+      display: block;
+    }
+    .solution h4 {
+      margin-top: 0;
+      color: #3498db;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-container {
+      width: 100%;
+      background-color: #2c3e50;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      height: 10px;
+    }
+    .progress-bar {
+      height: 100%;
+      border-radius: 8px;
+      background-color: #3498db;
+      transition: width 0.4s ease;
+    }
   </style>
 </head>
 <body>
@@ -226,7 +370,7 @@
     const categoryUrls = {
       msq: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/msq.html',
       truefalse: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/truefalse.html',
-      output: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/output.html',
+      output: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/loutput.html',
       missing: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/missing.html'
     };
     
@@ -286,34 +430,41 @@
     }
     
     function reattachEventListeners() {
-      // Reattach all necessary event listeners for the loaded content
+      // Reattach option selection listeners
       document.querySelectorAll('.option').forEach(option => {
         option.addEventListener('click', function() {
-          selectOption(this, this.getAttribute('data-question-id'));
+          const questionId = this.closest('.exercise').id;
+          selectOption(this, questionId);
         });
       });
       
-      document.querySelectorAll('[onclick^="checkMSQAnswer"]').forEach(btn => {
-        const match = btn.getAttribute('onclick').match(/checkMSQAnswer\((\d+), '([A-Z])'/);
-        if (match) {
+      // Reattach answer check listeners
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        const questionId = btn.closest('.exercise').id;
+        const correctAnswer = btn.getAttribute('onclick')?.match(/checkAnswer\('([^']+)', '([^']+)'/)?.[2];
+        if (questionId && correctAnswer) {
           btn.addEventListener('click', function() {
-            checkMSQAnswer(parseInt(match[1]), match[2]);
+            checkAnswer(questionId, correctAnswer);
           });
         }
       });
       
-      document.querySelectorAll('[onclick^="toggleAnswer"]').forEach(btn => {
-        const answerId = btn.getAttribute('onclick').match(/toggleAnswer\('([^']+)'/)[1];
-        btn.addEventListener('click', function() {
-          toggleAnswer(answerId);
-        });
+      // Reattach solution toggle listeners
+      document.querySelectorAll('.btn-secondary').forEach(btn => {
+        const solutionId = btn.getAttribute('onclick')?.match(/toggleSolution\('([^']+)'/)?.[1];
+        if (solutionId) {
+          btn.addEventListener('click', function() {
+            toggleSolution(solutionId);
+          });
+        }
       });
       
-      document.querySelectorAll('[onclick^="nextExercise"]').forEach(btn => {
-        const match = btn.getAttribute('onclick').match(/nextExercise\('([^']+)', (\d+)\)/);
+      // Reattach next question listeners
+      document.querySelectorAll('.btn-next').forEach(btn => {
+        const match = btn.getAttribute('onclick')?.match(/nextQuestion\('([^']+)', '([^']+)'/);
         if (match) {
           btn.addEventListener('click', function() {
-            nextExercise(match[1], parseInt(match[2]));
+            nextQuestion(match[1], match[2]);
           });
         }
       });
@@ -331,71 +482,85 @@
       element.classList.add('selected');
     }
     
-    // Check MSQ answer
-    function checkMSQAnswer(exerciseNum, correctAnswer) {
-      const exercise = document.getElementById(`msq-exercise${exerciseNum}`);
-      if (!exercise) return;
-      
-      const selectedOption = exercise.querySelector('.option.selected');
-      const resultDiv = exercise.querySelector('.result-message');
-      const nextBtn = exercise.querySelector('.next-button');
+    // Check answer
+    function checkAnswer(questionId, correctAnswer) {
+      const questionContainer = document.getElementById(questionId);
+      const selectedOption = questionContainer.querySelector('.option.selected');
+      const feedbackDiv = questionContainer.querySelector('.feedback');
+      const nextBtn = questionContainer.querySelector('.btn-next');
       
       if (!selectedOption) {
-        resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i><span>Please select an option!</span>';
-        resultDiv.className = 'result-message incorrect';
+        feedbackDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please select an answer before submitting.';
+        feedbackDiv.className = 'feedback incorrect-feedback show';
         return;
       }
       
-      const selectedAnswer = selectedOption.textContent.charAt(0);
+      const selectedLetter = selectedOption.querySelector('.option-letter').textContent;
       
-      if (selectedAnswer === correctAnswer) {
-        resultDiv.innerHTML = '<i class="fas fa-check-circle icon"></i><span>✓ Correct!</span>';
-        resultDiv.className = 'result-message correct';
-        if (nextBtn) nextBtn.classList.remove('hidden');
+      if (selectedLetter === correctAnswer) {
+        feedbackDiv.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
+        feedbackDiv.className = 'feedback correct-feedback show';
+        if (nextBtn) nextBtn.style.display = 'flex';
       } else {
-        resultDiv.innerHTML = '<i class="fas fa-times-circle icon"></i><span>✗ Try again!</span>';
-        resultDiv.className = 'result-message incorrect';
-        if (nextBtn) nextBtn.classList.add('hidden');
+        feedbackDiv.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. Try again or view the solution.';
+        feedbackDiv.className = 'feedback incorrect-feedback show';
+        if (nextBtn) nextBtn.style.display = 'none';
       }
     }
     
-    // Toggle answer visibility
-    function toggleAnswer(answerId) {
-      const answerBox = document.getElementById(answerId);
-      if (!answerBox) return;
-      
+    // Toggle solution visibility
+    function toggleSolution(solutionId) {
+      const solution = document.getElementById(solutionId);
       const btn = event.currentTarget;
       const icon = btn.querySelector('i');
       
-      if (answerBox.classList.contains('hidden')) {
-        answerBox.classList.remove('hidden');
-        answerBox.classList.add('show');
-        icon.className = 'far fa-eye-slash icon';
-        btn.innerHTML = '<i class="far fa-eye-slash icon"></i> Hide Answer';
+      if (solution.classList.contains('show')) {
+        solution.classList.remove('show');
+        icon.className = 'fas fa-lightbulb';
+        btn.innerHTML = '<i class="fas fa-lightbulb"></i> Show Solution';
       } else {
-        answerBox.classList.add('hidden');
-        answerBox.classList.remove('show');
-        icon.className = 'far fa-eye icon';
-        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+        solution.classList.add('show');
+        icon.className = 'fas fa-eye-slash';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Solution';
       }
     }
     
-    // Move to next exercise
-    function nextExercise(category, currentEx) {
-      // Hide current exercise
-      const currentExercise = document.getElementById(`${category}-exercise${currentEx}`);
-      if (currentExercise) currentExercise.classList.add('hidden');
+    // Move to next question
+    function nextQuestion(currentId, nextId) {
+      document.getElementById(currentId).style.display = 'none';
       
-      // Show next exercise or completion message
-      const nextEx = currentEx + 1;
-      const nextExercise = document.getElementById(`${category}-exercise${nextEx}`);
-      const completionMessage = document.getElementById('completionMessage');
-      
-      if (nextExercise) {
-        nextExercise.classList.remove('hidden');
-      } else if (completionMessage) {
-        completionMessage.classList.remove('hidden');
+      if (nextId && document.getElementById(nextId)) {
+        document.getElementById(nextId).style.display = 'block';
+      } else {
+        document.getElementById('completionMessage').style.display = 'block';
       }
+    }
+    
+    // Reset the quiz
+    function resetQuiz() {
+      document.querySelectorAll('.exercise').forEach(ex => {
+        ex.style.display = 'none';
+      });
+      
+      document.querySelectorAll('.feedback').forEach(fb => {
+        fb.className = 'feedback';
+        fb.innerHTML = '';
+      });
+      
+      document.querySelectorAll('.solution').forEach(sol => {
+        sol.classList.remove('show');
+      });
+      
+      document.querySelectorAll('.btn-next').forEach(btn => {
+        btn.style.display = 'none';
+      });
+      
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      document.getElementById('question1').style.display = 'block';
+      document.getElementById('completionMessage').style.display = 'none';
     }
     
     // Load Multiple Choice by default
