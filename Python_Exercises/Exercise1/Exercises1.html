@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(145deg, #1e2a38, #2c3e50);
+      font-family: 'Fira Code', monospace;
+      color: #ecf0f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+    .quiz-wrapper {
+      display: flex;
+      gap: 20px;
+      width: 900px;
+      max-width: 95%;
+    }
+    .category-selector {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 200px;
+    }
+    .category-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #2c3e50;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      text-align: left;
+    }
+    .category-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .category-btn.active {
+      background-color: #3498db;
+    }
+    .card {
+      background-color: #34495e;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      flex: 1;
+      overflow: auto;
+      max-height: 80vh;
+    }
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+    }
+    .loading-spinner {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .error-message {
+      color: #e74c3c;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    /* Styles from MSQ page to maintain consistency */
+    .code-container {
+      background-color: #2c3e50;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      line-height: 1.8;
+    }
+    .exercise-title {
+      color: #f39c12;
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .exercise {
+      margin-bottom: 25px;
+      border-bottom: 1px solid #3d566e;
+      padding-bottom: 20px;
+    }
+    .exercise:last-child {
+      border-bottom: none;
+    }
+    .button-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #27ae60;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    button:hover {
+      background-color: #2ecc71;
+      transform: translateY(-2px);
+    }
+    .toggle-button {
+      background-color: #7f8c8d;
+    }
+    .toggle-button:hover {
+      background-color: #95a5a6;
+    }
+    .next-button {
+      background-color: #3498db;
+    }
+    .next-button:hover {
+      background-color: #2980b9;
+    }
+    .answer-box {
+      display: none;
+      background-color: #1f2d3a;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #f39c12;
+    }
+    .show {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+    .final-result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+    }
+    .result-message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .correct {
+      color: #2ecc71;
+    }
+    .incorrect {
+      color: #e74c3c;
+    }
+    .icon {
+      font-size: 16px;
+    }
+    .option {
+      margin: 8px 0;
+      padding: 10px;
+      background-color: #2c3e50;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .option:hover {
+      background-color: #3d566e;
+    }
+    .option.selected {
+      background-color: #3498db;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-wrapper">
+    <div class="category-selector">
+      <button class="category-btn active" onclick="loadCategory('msq')">
+        <i class="fas fa-list-ol"></i> Multiple Choice
+      </button>
+      <button class="category-btn" onclick="loadCategory('truefalse')">
+        <i class="fas fa-check-circle"></i> True/False
+      </button>
+      <button class="category-btn" onclick="loadCategory('output')">
+        <i class="fas fa-terminal"></i> Output Prediction
+      </button>
+      <button class="category-btn" onclick="loadCategory('missing')">
+        <i class="fas fa-puzzle-piece"></i> Missing Code
+      </button>
+    </div>
+    
+    <div class="card" id="quiz-container">
+      <div class="loading">
+        <i class="fas fa-spinner loading-spinner"></i>
+        <p>Loading Multiple Choice Questions...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Category URLs
+    const categoryUrls = {
+      msq: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/msq.html',
+      truefalse: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/truefalse.html',
+      output: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/output.html',
+      missing: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/missing.html'
+    };
+    
+    // Load a specific category
+    function loadCategory(category) {
+      // Highlight active button
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+      
+      // Show loading state
+      const quizContainer = document.getElementById('quiz-container');
+      quizContainer.innerHTML = `
+        <div class="loading">
+          <i class="fas fa-spinner loading-spinner"></i>
+          <p>Loading ${getCategoryName(category)} Questions...</p>
+        </div>
+      `;
+      
+      // Fetch the content
+      fetch(categoryUrls[category])
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(html => {
+          // Inject the content
+          quizContainer.innerHTML = html;
+          
+          // Reattach event listeners
+          reattachEventListeners();
+        })
+        .catch(error => {
+          console.error('Error loading content:', error);
+          quizContainer.innerHTML = `
+            <div class="error-message">
+              <i class="fas fa-exclamation-triangle"></i>
+              <h3>Error loading content</h3>
+              <p>Failed to load ${getCategoryName(category)} questions.</p>
+              <p>Please try again later.</p>
+            </div>
+          `;
+        });
+    }
+    
+    function getCategoryName(category) {
+      switch(category) {
+        case 'msq': return 'Multiple Choice';
+        case 'truefalse': return 'True/False';
+        case 'output': return 'Output Prediction';
+        case 'missing': return 'Missing Code';
+        default: return 'Quiz';
+      }
+    }
+    
+    function reattachEventListeners() {
+      // Reattach all necessary event listeners for the loaded content
+      document.querySelectorAll('.option').forEach(option => {
+        option.addEventListener('click', function() {
+          selectOption(this, this.getAttribute('data-question-id'));
+        });
+      });
+      
+      document.querySelectorAll('[onclick^="checkMSQAnswer"]').forEach(btn => {
+        const match = btn.getAttribute('onclick').match(/checkMSQAnswer\((\d+), '([A-Z])'/);
+        if (match) {
+          btn.addEventListener('click', function() {
+            checkMSQAnswer(parseInt(match[1]), match[2]);
+          });
+        }
+      });
+      
+      document.querySelectorAll('[onclick^="toggleAnswer"]').forEach(btn => {
+        const answerId = btn.getAttribute('onclick').match(/toggleAnswer\('([^']+)'/)[1];
+        btn.addEventListener('click', function() {
+          toggleAnswer(answerId);
+        });
+      });
+      
+      document.querySelectorAll('[onclick^="nextExercise"]').forEach(btn => {
+        const match = btn.getAttribute('onclick').match(/nextExercise\('([^']+)', (\d+)\)/);
+        if (match) {
+          btn.addEventListener('click', function() {
+            nextExercise(match[1], parseInt(match[2]));
+          });
+        }
+      });
+    }
+    
+    // Option selection for MSQ
+    function selectOption(element, questionId) {
+      // Remove selection from all options in this question
+      const questionContainer = element.closest('.exercise');
+      questionContainer.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Select clicked option
+      element.classList.add('selected');
+    }
+    
+    // Check MSQ answer
+    function checkMSQAnswer(exerciseNum, correctAnswer) {
+      const exercise = document.getElementById(`msq-exercise${exerciseNum}`);
+      if (!exercise) return;
+      
+      const selectedOption = exercise.querySelector('.option.selected');
+      const resultDiv = exercise.querySelector('.result-message');
+      const nextBtn = exercise.querySelector('.next-button');
+      
+      if (!selectedOption) {
+        resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i><span>Please select an option!</span>';
+        resultDiv.className = 'result-message incorrect';
+        return;
+      }
+      
+      const selectedAnswer = selectedOption.textContent.charAt(0);
+      
+      if (selectedAnswer === correctAnswer) {
+        resultDiv.innerHTML = '<i class="fas fa-check-circle icon"></i><span>✓ Correct!</span>';
+        resultDiv.className = 'result-message correct';
+        if (nextBtn) nextBtn.classList.remove('hidden');
+      } else {
+        resultDiv.innerHTML = '<i class="fas fa-times-circle icon"></i><span>✗ Try again!</span>';
+        resultDiv.className = 'result-message incorrect';
+        if (nextBtn) nextBtn.classList.add('hidden');
+      }
+    }
+    
+    // Toggle answer visibility
+    function toggleAnswer(answerId) {
+      const answerBox = document.getElementById(answerId);
+      if (!answerBox) return;
+      
+      const btn = event.currentTarget;
+      const icon = btn.querySelector('i');
+      
+      if (answerBox.classList.contains('hidden')) {
+        answerBox.classList.remove('hidden');
+        answerBox.classList.add('show');
+        icon.className = 'far fa-eye-slash icon';
+        btn.innerHTML = '<i class="far fa-eye-slash icon"></i> Hide Answer';
+      } else {
+        answerBox.classList.add('hidden');
+        answerBox.classList.remove('show');
+        icon.className = 'far fa-eye icon';
+        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+      }
+    }
+    
+    // Move to next exercise
+    function nextExercise(category, currentEx) {
+      // Hide current exercise
+      const currentExercise = document.getElementById(`${category}-exercise${currentEx}`);
+      if (currentExercise) currentExercise.classList.add('hidden');
+      
+      // Show next exercise or completion message
+      const nextEx = currentEx + 1;
+      const nextExercise = document.getElementById(`${category}-exercise${nextEx}`);
+      const completionMessage = document.getElementById('completionMessage');
+      
+      if (nextExercise) {
+        nextExercise.classList.remove('hidden');
+      } else if (completionMessage) {
+        completionMessage.classList.remove('hidden');
+      }
+    }
+    
+    // Load Multiple Choice by default
+    window.addEventListener('DOMContentLoaded', () => {
+      loadCategory('msq');
+    });
+  </script>
+</body>
+</html>

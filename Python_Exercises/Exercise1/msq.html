@@ -10,632 +10,454 @@
       background: linear-gradient(145deg, #1e2a38, #2c3e50);
       font-family: 'Fira Code', monospace;
       color: #ecf0f1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
       margin: 0;
+      padding: 20px;
     }
-    .quiz-wrapper {
+    
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #3d566e;
+    }
+    
+    .header h1 {
+      color: #f39c12;
       display: flex;
-      gap: 20px;
-      width: 900px;
-      max-width: 95%;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 5px;
     }
-    .category-selector {
+    
+    .header p {
+      color: #bdc3c7;
+      font-size: 16px;
+    }
+    
+    .exercise {
+      background-color: #34495e;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .exercise:hover {
+      transform: translateY(-3px);
+    }
+    
+    .question {
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      color: #ecf0f1;
+    }
+    
+    .options-container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      width: 200px;
+      gap: 12px;
     }
-    .card {
-      background-color: #34495e;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      flex: 1;
-    }
-    .category-btn {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      background-color: #2c3e50;
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 16px;
-      text-align: left;
-      text-decoration: none;
-    }
-    .category-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .category-btn.active {
-      background-color: #3498db;
-    }
-    .code-container {
+    
+    .option {
       background-color: #2c3e50;
       padding: 15px;
       border-radius: 8px;
-      margin: 15px 0;
-      line-height: 1.8;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
     }
-    .code-line {
-      white-space: pre;
-      margin-bottom: 0;
-      font-family: 'Fira Code', monospace;
-      font-size: 15px;
+    
+    .option:hover {
+      background-color: #3d566e;
+      border-color: #3498db;
     }
-    .input-box {
-      padding: 8px;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
+    
+    .option.selected {
+      background-color: #3498db;
+      border-color: #3498db;
+    }
+    
+    .option-letter {
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
       background-color: #1f2d3a;
-      color: #ecf0f1;
-      text-align: center;
-      margin: 0 3px;
-      min-width: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #27ae60;
-      border: none;
+    
+    .option.selected .option-letter {
+      background-color: #1a5276;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .btn {
+      padding: 12px 24px;
       border-radius: 8px;
-      color: white;
+      border: none;
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
       cursor: pointer;
       transition: all 0.3s ease;
-      margin-right: 10px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    button:hover {
+    
+    .btn-primary {
+      background-color: #27ae60;
+      color: white;
+    }
+    
+    .btn-primary:hover {
       background-color: #2ecc71;
       transform: translateY(-2px);
     }
-    .toggle-button {
+    
+    .btn-secondary {
       background-color: #7f8c8d;
+      color: white;
     }
-    .toggle-button:hover {
+    
+    .btn-secondary:hover {
       background-color: #95a5a6;
+      transform: translateY(-2px);
     }
-    .next-button {
+    
+    .btn-next {
       background-color: #3498db;
+      color: white;
     }
-    .next-button:hover {
+    
+    .btn-next:hover {
       background-color: #2980b9;
+      transform: translateY(-2px);
     }
-    .answer-box {
-      display: none;
-      background-color: #1f2d3a;
-      padding: 15px;
+    
+    .feedback {
       margin-top: 20px;
+      padding: 15px;
       border-radius: 8px;
-      font-size: 16px;
-      color: #f39c12;
+      display: none;
     }
-    .show {
+    
+    .feedback.show {
       display: block;
     }
-    .hidden {
+    
+    .correct-feedback {
+      background-color: rgba(46, 204, 113, 0.2);
+      border-left: 4px solid #2ecc71;
+      color: #2ecc71;
+    }
+    
+    .incorrect-feedback {
+      background-color: rgba(231, 76, 60, 0.2);
+      border-left: 4px solid #e74c3c;
+      color: #e74c3c;
+    }
+    
+    .solution {
+      background-color: rgba(52, 152, 219, 0.2);
+      border-left: 4px solid #3498db;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
       display: none;
     }
-    .final-result {
-      text-align: center;
-      font-size: 20px;
-      font-weight: bold;
-      color: #2ecc71;
+    
+    .solution.show {
+      display: block;
     }
-    .exercise-title {
-      color: #f39c12;
-      margin-bottom: 20px;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    .exercise {
-      margin-bottom: 25px;
-      border-bottom: 1px solid #3d566e;
-      padding-bottom: 20px;
-    }
-    .exercise:last-child {
-      border-bottom: none;
-    }
-    .button-group {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .correct-answer {
-      color: #2ecc71;
-      font-weight: bold;
-    }
-    .result-message {
-      margin-top: 15px;
-      font-weight: bold;
-      font-size: 18px;
+    
+    .solution h4 {
+      margin-top: 0;
+      color: #3498db;
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    .correct {
-      color: #2ecc71;
-    }
-    .incorrect {
-      color: #e74c3c;
-    }
-    .icon {
-      font-size: 16px;
-    }
-    .option {
-      margin: 8px 0;
-      padding: 10px;
+    
+    .progress-container {
+      width: 100%;
       background-color: #2c3e50;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.2s;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      height: 10px;
     }
-    .option:hover {
-      background-color: #3d566e;
-    }
-    .option.selected {
+    
+    .progress-bar {
+      height: 100%;
+      border-radius: 8px;
       background-color: #3498db;
+      transition: width 0.4s ease;
     }
-    .back-btn {
-      background-color: #7f8c8d;
-      text-decoration: none;
-      margin-bottom: 20px;
-    }
-    .back-btn:hover {
-      background-color: #95a5a6;
+    
+    @media (max-width: 768px) {
+      .quiz-container {
+        padding: 15px;
+      }
+      
+      .exercise {
+        padding: 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="quiz-wrapper">
-    <div class="category-selector">
+  <div class="quiz-container">
+    <div class="header">
+      <h1><i class="fas fa-list-ol"></i> Multiple Choice Questions</h1>
+      <p>Test your Python knowledge with these interactive questions</p>
     </div>
     
-    <div class="card" id="quiz-container">
-      <h2 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Questions</h2>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar" style="width: 10%"></div>
+    </div>
+    
+    <!-- Question 1 -->
+    <div class="exercise" id="question1">
+      <div class="question">
+        Which of the following correctly prints "Hello, World!" in Python?
+      </div>
       
-      <div id="msq-exercises">
-        <!-- MSQ Exercise 1 -->
-        <div class="exercise" id="msq-exercise1">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>Which of the following correctly prints "Hello, World!" in Python?</p>
-            <div class="option" onclick="selectOption(this, 'msq1')">A) print Hello, World!</div>
-            <div class="option" onclick="selectOption(this, 'msq1')">B) print("Hello, World!")</div>
-            <div class="option" onclick="selectOption(this, 'msq1')">C) display("Hello, World!")</div>
-            <div class="option" onclick="selectOption(this, 'msq1')">D) echo "Hello, World!"</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(1, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer1')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn1" class="next-button hidden" onclick="nextExercise('msq', 1)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result1" class="result-message"></div>
-          <div id="msq-answer1" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) print("Hello, World!")</p>
-            <p><i class="fas fa-info-circle"></i> In Python, print() is a function that requires parentheses.</p>
-          </div>
+      <div class="options-container">
+        <div class="option" onclick="selectOption(this, 'question1')">
+          <span class="option-letter">A</span>
+          <span>print Hello, World!</span>
         </div>
-        
-        <!-- MSQ Exercise 2 -->
-        <div class="exercise hidden" id="msq-exercise2">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>What is the main purpose of the print() function?</p>
-            <div class="option" onclick="selectOption(this, 'msq2')">A) To create a new variable</div>
-            <div class="option" onclick="selectOption(this, 'msq2')">B) To get input from the user</div>
-            <div class="option" onclick="selectOption(this, 'msq2')">C) To show output on the screen</div>
-            <div class="option" onclick="selectOption(this, 'msq2')">D) To close the program</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(2, 'C')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer2')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn2" class="next-button hidden" onclick="nextExercise('msq', 2)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result2" class="result-message"></div>
-          <div id="msq-answer2" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>C) To show output on the screen</p>
-            <p><i class="fas fa-info-circle"></i> The print() function displays output to the console.</p>
-          </div>
+        <div class="option" onclick="selectOption(this, 'question1')">
+          <span class="option-letter">B</span>
+          <span>print("Hello, World!")</span>
         </div>
-
-        <!-- MSQ Exercise 3 -->
-        <div class="exercise hidden" id="msq-exercise3">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>Which of the following will cause a syntax error?</p>
-            <div class="option" onclick="selectOption(this, 'msq3')">A) print("Age:", 10)</div>
-            <div class="option" onclick="selectOption(this, 'msq3')">B) print("Age: " + str(10))</div>
-            <div class="option" onclick="selectOption(this, 'msq3')">C) print("Age: " 10)</div>
-            <div class="option" onclick="selectOption(this, 'msq3')">D) print("Age:", str(10))</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(3, 'C')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer3')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn3" class="next-button hidden" onclick="nextExercise('msq', 3)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result3" class="result-message"></div>
-          <div id="msq-answer3" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>C) print("Age: " 10)</p>
-            <p><i class="fas fa-info-circle"></i> Missing comma or concatenation operator between string and number.</p>
-          </div>
+        <div class="option" onclick="selectOption(this, 'question1')">
+          <span class="option-letter">C</span>
+          <span>display("Hello, World!")</span>
         </div>
-
-        <!-- MSQ Exercise 4 -->
-        <div class="exercise hidden" id="msq-exercise4">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>What is the default ending character of the print() function?</p>
-            <div class="option" onclick="selectOption(this, 'msq4')">A) !</div>
-            <div class="option" onclick="selectOption(this, 'msq4')">B) .</div>
-            <div class="option" onclick="selectOption(this, 'msq4')">C) A new line (\n)</div>
-            <div class="option" onclick="selectOption(this, 'msq4')">D) A space</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(4, 'C')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer4')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn4" class="next-button hidden" onclick="nextExercise('msq', 4)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result4" class="result-message"></div>
-          <div id="msq-answer4" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>C) A new line (\n)</p>
-            <p><i class="fas fa-info-circle"></i> By default, print() ends with a newline character.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 5 -->
-        <div class="exercise hidden" id="msq-exercise5">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>Which escape character is used to create a new line in a string?</p>
-            <div class="option" onclick="selectOption(this, 'msq5')">A) \t</div>
-            <div class="option" onclick="selectOption(this, 'msq5')">B) \n</div>
-            <div class="option" onclick="selectOption(this, 'msq5')">C) \\</div>
-            <div class="option" onclick="selectOption(this, 'msq5')">D) \"</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(5, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer5')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn5" class="next-button hidden" onclick="nextExercise('msq', 5)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result5" class="result-message"></div>
-          <div id="msq-answer5" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) \n</p>
-            <p><i class="fas fa-info-circle"></i> The \n escape sequence creates a new line.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 6 -->
-        <div class="exercise hidden" id="msq-exercise6">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>How can you print without moving to a new line?</p>
-            <div class="option" onclick="selectOption(this, 'msq6')">A) print("Hello", skipline=False)</div>
-            <div class="option" onclick="selectOption(this, 'msq6')">B) print("Hello", end=" ")</div>
-            <div class="option" onclick="selectOption(this, 'msq6')">C) print("Hello", close="no")</div>
-            <div class="option" onclick="selectOption(this, 'msq6')">D) print("Hello", stop="\n")</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(6, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer6')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn6" class="next-button hidden" onclick="nextExercise('msq', 6)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result6" class="result-message"></div>
-          <div id="msq-answer6" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) print("Hello", end=" ")</p>
-            <p><i class="fas fa-info-circle"></i> The end parameter controls what's printed at the end.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 7 -->
-        <div class="exercise hidden" id="msq-exercise7">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>What is the output of print("3" + "4")?</p>
-            <div class="option" onclick="selectOption(this, 'msq7')">A) 7</div>
-            <div class="option" onclick="selectOption(this, 'msq7')">B) 34</div>
-            <div class="option" onclick="selectOption(this, 'msq7')">C) 3 4</div>
-            <div class="option" onclick="selectOption(this, 'msq7')">D) Error</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(7, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer7')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn7" class="next-button hidden" onclick="nextExercise('msq', 7)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result7" class="result-message"></div>
-          <div id="msq-answer7" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) 34</p>
-            <p><i class="fas fa-info-circle"></i> The + operator concatenates strings.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 8 -->
-        <div class="exercise hidden" id="msq-exercise8">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>Which of the following will print two values with a space between them?</p>
-            <div class="option" onclick="selectOption(this, 'msq8')">A) print("Hello" + "World")</div>
-            <div class="option" onclick="selectOption(this, 'msq8')">B) print("Hello", "World")</div>
-            <div class="option" onclick="selectOption(this, 'msq8')">C) print("Hello" "World")</div>
-            <div class="option" onclick="selectOption(this, 'msq8')">D) print("Hello".concat("World"))</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(8, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer8')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn8" class="next-button hidden" onclick="nextExercise('msq', 8)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result8" class="result-message"></div>
-          <div id="msq-answer8" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) print("Hello", "World")</p>
-            <p><i class="fas fa-info-circle"></i> The comma in print() adds a space between arguments.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 9 -->
-        <div class="exercise hidden" id="msq-exercise9">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>Which of the following prints:<br>Line1<br>Line2</p>
-            <div class="option" onclick="selectOption(this, 'msq9')">A) print("Line1 Line2")</div>
-            <div class="option" onclick="selectOption(this, 'msq9')">B) print("Line1\nLine2")</div>
-            <div class="option" onclick="selectOption(this, 'msq9')">C) print("Line1/tLine2")</div>
-            <div class="option" onclick="selectOption(this, 'msq9')">D) print("Line1 Line2")</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(9, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer9')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn9" class="next-button hidden" onclick="nextExercise('msq', 9)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result9" class="result-message"></div>
-          <div id="msq-answer9" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) print("Line1\nLine2")</p>
-            <p><i class="fas fa-info-circle"></i> \n creates a new line in the output.</p>
-          </div>
-        </div>
-
-        <!-- MSQ Exercise 10 -->
-        <div class="exercise hidden" id="msq-exercise10">
-          <h3 class="exercise-title"><i class="fas fa-list-ol"></i> Multiple Choice Question</h3>
-          <div class="code-container">
-            <p>What is the output of print("Python", 3, "Rocks!")?</p>
-            <div class="option" onclick="selectOption(this, 'msq10')">A) Python3Rocks!</div>
-            <div class="option" onclick="selectOption(this, 'msq10')">B) Python 3 Rocks!</div>
-            <div class="option" onclick="selectOption(this, 'msq10')">C) Python, 3, Rocks!</div>
-            <div class="option" onclick="selectOption(this, 'msq10')">D) Error</div>
-          </div>
-          <div class="button-group">
-            <button onclick="checkMSQAnswer(10, 'B')">
-              <i class="fas fa-paper-plane icon"></i> Submit Answer
-            </button>
-            <button class="toggle-button" onclick="toggleAnswer('msq-answer10')">
-              <i class="far fa-eye icon"></i> Show Answer
-            </button>
-            <button id="msq-nextBtn10" class="next-button hidden" onclick="nextExercise('msq', 10)">
-              <i class="fas fa-arrow-right icon"></i> Next
-            </button>
-          </div>
-          <div id="msq-result10" class="result-message"></div>
-          <div id="msq-answer10" class="answer-box hidden">
-            <h3><i class="fas fa-check-circle" style="color: #2ecc71;"></i> Correct Answer:</h3>
-            <p>B) Python 3 Rocks!</p>
-            <p><i class="fas fa-info-circle"></i> print() adds spaces between arguments by default.</p>
-          </div>
+        <div class="option" onclick="selectOption(this, 'question1')">
+          <span class="option-letter">D</span>
+          <span>echo "Hello, World!"</span>
         </div>
       </div>
       
-      <!-- Final completion message -->
-      <div id="completionMessage" class="exercise hidden">
-        <h3 class="final-result"><i class="fas fa-trophy"></i> All exercises completed! <i class="fas fa-trophy"></i></h3>
-        <button onclick="resetQuiz()">
-          <i class="fas fa-redo icon"></i> Start Over
+      <div class="controls">
+        <button class="btn btn-primary" onclick="checkAnswer('question1', 'B')">
+          <i class="fas fa-paper-plane"></i> Submit Answer
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSolution('solution1')">
+          <i class="fas fa-lightbulb"></i> Show Solution
+        </button>
+        <button class="btn btn-next" id="nextBtn1" style="display: none;" onclick="nextQuestion('question1', 'question2')">
+          <i class="fas fa-arrow-right"></i> Next Question
         </button>
       </div>
+      
+      <div id="feedback1" class="feedback"></div>
+      
+      <div class="solution" id="solution1">
+        <h4><i class="fas fa-check-circle"></i> Correct Answer: B) print("Hello, World!")</h4>
+        <p>In Python, <code>print()</code> is a function that requires parentheses to call it. This is the correct syntax for printing output to the console in Python 3.</p>
+      </div>
+    </div>
+    
+    <!-- Question 2 -->
+    <div class="exercise" id="question2" style="display: none;">
+      <div class="question">
+        What is the main purpose of the print() function?
+      </div>
+      
+      <div class="options-container">
+        <div class="option" onclick="selectOption(this, 'question2')">
+          <span class="option-letter">A</span>
+          <span>To create a new variable</span>
+        </div>
+        <div class="option" onclick="selectOption(this, 'question2')">
+          <span class="option-letter">B</span>
+          <span>To get input from the user</span>
+        </div>
+        <div class="option" onclick="selectOption(this, 'question2')">
+          <span class="option-letter">C</span>
+          <span>To show output on the screen</span>
+        </div>
+        <div class="option" onclick="selectOption(this, 'question2')">
+          <span class="option-letter">D</span>
+          <span>To close the program</span>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <button class="btn btn-primary" onclick="checkAnswer('question2', 'C')">
+          <i class="fas fa-paper-plane"></i> Submit Answer
+        </button>
+        <button class="btn btn-secondary" onclick="toggleSolution('solution2')">
+          <i class="fas fa-lightbulb"></i> Show Solution
+        </button>
+        <button class="btn btn-next" id="nextBtn2" style="display: none;" onclick="nextQuestion('question2', 'question3')">
+          <i class="fas fa-arrow-right"></i> Next Question
+        </button>
+      </div>
+      
+      <div id="feedback2" class="feedback"></div>
+      
+      <div class="solution" id="solution2">
+        <h4><i class="fas fa-check-circle"></i> Correct Answer: C) To show output on the screen</h4>
+        <p>The <code>print()</code> function is used to display output to the console. It's one of the most fundamental functions in Python for displaying information to users.</p>
+      </div>
+    </div>
+    
+    <!-- Add more questions following the same pattern -->
+    
+    <!-- Completion Message -->
+    <div class="exercise" id="completionMessage" style="display: none; text-align: center;">
+      <h2><i class="fas fa-trophy"></i> Quiz Completed! <i class="fas fa-trophy"></i></h2>
+      <p>You've finished all the questions. Great job!</p>
+      <button class="btn btn-primary" onclick="resetQuiz()">
+        <i class="fas fa-redo"></i> Start Again
+      </button>
     </div>
   </div>
 
   <script>
-    let currentExerciseNum = 1;
+    let currentQuestion = 1;
+    const totalQuestions = 2; // Update this with your total number of questions
     
-    // Option selection for MSQ
+    // Update progress bar
+    function updateProgress() {
+      const progress = (currentQuestion / totalQuestions) * 100;
+      document.getElementById('progressBar').style.width = `${progress}%`;
+    }
+    
+    // Select an option
     function selectOption(element, questionId) {
-      // Remove selection from all options in this question
-      document.querySelectorAll(`[onclick*="${questionId}"]`).forEach(opt => {
+      const questionContainer = document.getElementById(questionId);
+      questionContainer.querySelectorAll('.option').forEach(opt => {
         opt.classList.remove('selected');
       });
-      
-      // Select clicked option
       element.classList.add('selected');
     }
     
-    // Check MSQ answer
-    function checkMSQAnswer(exerciseNum, correctAnswer) {
-      const selectedOption = document.querySelector(`#msq-exercise${exerciseNum} .option.selected`);
-      const resultDiv = document.getElementById(`msq-result${exerciseNum}`);
-      const nextBtn = document.getElementById(`msq-nextBtn${exerciseNum}`);
+    // Check answer
+    function checkAnswer(questionId, correctAnswer) {
+      const questionContainer = document.getElementById(questionId);
+      const selectedOption = questionContainer.querySelector('.option.selected');
+      const feedbackDiv = questionContainer.querySelector('.feedback');
+      const nextBtn = questionContainer.querySelector('.btn-next');
       
       if (!selectedOption) {
-        resultDiv.innerHTML = '<i class="fas fa-exclamation-circle icon"></i><span>Please select an option!</span>';
-        resultDiv.className = 'result-message incorrect';
+        feedbackDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please select an answer before submitting.';
+        feedbackDiv.className = 'feedback incorrect-feedback show';
         return;
       }
       
-      const selectedAnswer = selectedOption.textContent.charAt(0);
+      const selectedLetter = selectedOption.querySelector('.option-letter').textContent;
       
-      if (selectedAnswer === correctAnswer) {
-        resultDiv.innerHTML = '<i class="fas fa-check-circle icon"></i><span>✓ Correct!</span>';
-        resultDiv.className = 'result-message correct';
-        nextBtn.classList.remove('hidden');
+      if (selectedLetter === correctAnswer) {
+        feedbackDiv.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
+        feedbackDiv.className = 'feedback correct-feedback show';
+        nextBtn.style.display = 'flex';
       } else {
-        resultDiv.innerHTML = '<i class="fas fa-times-circle icon"></i><span>✗ Try again!</span>';
-        resultDiv.className = 'result-message incorrect';
-        nextBtn.classList.add('hidden');
+        feedbackDiv.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. Try again or view the solution.';
+        feedbackDiv.className = 'feedback incorrect-feedback show';
+        nextBtn.style.display = 'none';
       }
     }
     
-    // Toggle answer visibility
-    function toggleAnswer(answerId) {
-      const answerBox = document.getElementById(answerId);
+    // Toggle solution visibility
+    function toggleSolution(solutionId) {
+      const solution = document.getElementById(solutionId);
       const btn = event.currentTarget;
       const icon = btn.querySelector('i');
       
-      if (answerBox.classList.contains('hidden')) {
-        answerBox.classList.remove('hidden');
-        answerBox.classList.add('show');
-        icon.className = 'far fa-eye-slash icon';
-        btn.innerHTML = '<i class="far fa-eye-slash icon"></i> Hide Answer';
+      if (solution.classList.contains('show')) {
+        solution.classList.remove('show');
+        icon.className = 'fas fa-lightbulb';
+        btn.innerHTML = '<i class="fas fa-lightbulb"></i> Show Solution';
       } else {
-        answerBox.classList.add('hidden');
-        answerBox.classList.remove('show');
-        icon.className = 'far fa-eye icon';
-        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
+        solution.classList.add('show');
+        icon.className = 'fas fa-eye-slash';
+        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Solution';
       }
     }
     
-    // Move to next exercise
-    function nextExercise(category, currentEx) {
-      // Hide current exercise
-      document.getElementById(`${category}-exercise${currentEx}`).classList.add('hidden');
+    // Move to next question
+    function nextQuestion(currentId, nextId) {
+      document.getElementById(currentId).style.display = 'none';
       
-      // Show next exercise or completion message
-      const nextEx = currentEx + 1;
-      if (document.getElementById(`${category}-exercise${nextEx}`)) {
-        document.getElementById(`${category}-exercise${nextEx}`).classList.remove('hidden');
-        currentExerciseNum = nextEx;
+      if (nextId && document.getElementById(nextId)) {
+        document.getElementById(nextId).style.display = 'block';
+        currentQuestion++;
+        updateProgress();
       } else {
-        document.getElementById('completionMessage').classList.remove('hidden');
+        document.getElementById('completionMessage').style.display = 'block';
       }
     }
     
     // Reset the quiz
     function resetQuiz() {
-      // Hide all exercises and completion message
       document.querySelectorAll('.exercise').forEach(ex => {
-        ex.classList.add('hidden');
+        ex.style.display = 'none';
       });
       
-      // Reset all answer boxes
-      document.querySelectorAll('.answer-box').forEach(box => {
-        box.classList.add('hidden');
-        box.classList.remove('show');
+      document.querySelectorAll('.feedback').forEach(fb => {
+        fb.className = 'feedback';
+        fb.innerHTML = '';
       });
       
-      // Reset all input fields
-      document.querySelectorAll('.input-box').forEach(input => {
-        input.value = '';
+      document.querySelectorAll('.solution').forEach(sol => {
+        sol.classList.remove('show');
       });
       
-      // Reset all result messages
-      document.querySelectorAll('.result-message').forEach(msg => {
-        msg.innerHTML = '';
-        msg.className = 'result-message';
+      document.querySelectorAll('.btn-next').forEach(btn => {
+        btn.style.display = 'none';
       });
       
-      // Reset all next buttons
-      document.querySelectorAll('.next-button').forEach(btn => {
-        btn.classList.add('hidden');
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('selected');
       });
       
-      // Reset toggle buttons
-      document.querySelectorAll('.toggle-button').forEach(btn => {
-        btn.innerHTML = '<i class="far fa-eye icon"></i> Show Answer';
-      });
-      
-      // Reset selected options
-      document.querySelectorAll('.option').forEach(el => {
-        el.classList.remove('selected');
-      });
-      
-      // Show first exercise
-      document.getElementById('msq-exercise1').classList.remove('hidden');
-      currentExerciseNum = 1;
-      
-      // Hide completion message
-      document.getElementById('completionMessage').classList.add('hidden');
+      document.getElementById('question1').style.display = 'block';
+      document.getElementById('completionMessage').style.display = 'none';
+      currentQuestion = 1;
+      updateProgress();
     }
     
-    // Initialize with first exercise
-    window.onload = function() {
-      document.getElementById('msq-exercise1').classList.remove('hidden');
-    };
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+    });
   </script>
 </body>
 </html>
