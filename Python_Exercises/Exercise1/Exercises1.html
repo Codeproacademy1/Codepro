@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Quiz</title>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -80,8 +81,6 @@
       text-align: center;
       padding: 20px;
     }
-    
-    /* Styles from MSQ page to maintain consistency */
     .code-container {
       background-color: #2c3e50;
       padding: 15px;
@@ -194,8 +193,6 @@
     .option.selected {
       background-color: #3498db;
     }
-
-    /* MSQ specific styles */
     .quiz-container {
       max-width: 800px;
       margin: 0 auto;
@@ -338,21 +335,36 @@
       background-color: #3498db;
       transition: width 0.4s ease;
     }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .quiz-wrapper {
+        flex-direction: column;
+      }
+      .category-selector {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 10px;
+      }
+      .category-btn {
+        white-space: nowrap;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="quiz-wrapper">
     <div class="category-selector">
-      <button class="category-btn active" onclick="loadCategory('msq')">
+      <button class="category-btn active" onclick="loadCategory('msq', event)">
         <i class="fas fa-list-ol"></i> Multiple Choice
       </button>
-      <button class="category-btn" onclick="loadCategory('truefalse')">
+      <button class="category-btn" onclick="loadCategory('truefalse', event)">
         <i class="fas fa-check-circle"></i> True/False
       </button>
-      <button class="category-btn" onclick="loadCategory('output')">
+      <button class="category-btn" onclick="loadCategory('output', event)">
         <i class="fas fa-terminal"></i> Output Prediction
       </button>
-      <button class="category-btn" onclick="loadCategory('missing')">
+      <button class="category-btn" onclick="loadCategory('missing', event)">
         <i class="fas fa-puzzle-piece"></i> Missing Code
       </button>
     </div>
@@ -366,6 +378,13 @@
   </div>
 
   <script>
+    // Quiz state
+    const quizState = {
+      currentCategory: 'msq',
+      answeredQuestions: 0,
+      correctAnswers: 0
+    };
+
     // Category URLs
     const categoryUrls = {
       msq: 'https://codeproacademy1.github.io/Codepro/Python_Exercises/Exercise1/msq.html',
@@ -375,12 +394,19 @@
     };
     
     // Load a specific category
-    function loadCategory(category) {
+    function loadCategory(category, event) {
+      // Update quiz state
+      quizState.currentCategory = category;
+      quizState.answeredQuestions = 0;
+      quizState.correctAnswers = 0;
+      
       // Highlight active button
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.currentTarget.classList.add('active');
+      if (event) {
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+      }
       
       // Show loading state
       const quizContainer = document.getElementById('quiz-container');
@@ -395,7 +421,7 @@
       fetch(categoryUrls[category])
         .then(response => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`HTTP error! status: ${response.status}`);
           }
           return response.text();
         })
@@ -403,8 +429,14 @@
           // Inject the content
           quizContainer.innerHTML = html;
           
-          // Reattach event listeners
-          reattachEventListeners();
+          // Initialize the quiz
+          initializeQuiz();
+          
+          // Show first question
+          const firstQuestion = document.querySelector('.exercise');
+          if (firstQuestion) {
+            firstQuestion.style.display = 'block';
+          }
         })
         .catch(error => {
           console.error('Error loading content:', error);
@@ -413,67 +445,87 @@
               <i class="fas fa-exclamation-triangle"></i>
               <h3>Error loading content</h3>
               <p>Failed to load ${getCategoryName(category)} questions.</p>
-              <p>Please try again later.</p>
+              <p><small>${error.message}</small></p>
+              <button onclick="loadCategory('${category}')" class="btn-primary">
+                <i class="fas fa-sync-alt"></i> Try Again
+              </button>
             </div>
           `;
         });
     }
     
     function getCategoryName(category) {
-      switch(category) {
-        case 'msq': return 'Multiple Choice';
-        case 'truefalse': return 'True/False';
-        case 'output': return 'Output Prediction';
-        case 'missing': return 'Missing Code';
-        default: return 'Quiz';
-      }
+      const names = {
+        msq: 'Multiple Choice',
+        truefalse: 'True/False',
+        output: 'Output Prediction',
+        missing: 'Missing Code'
+      };
+      return names[category] || 'Quiz';
     }
     
-    function reattachEventListeners() {
-      // Reattach option selection listeners
-      document.querySelectorAll('.option').forEach(option => {
-        option.addEventListener('click', function() {
-          const questionId = this.closest('.exercise').id;
-          selectOption(this, questionId);
-        });
+    function initializeQuiz() {
+      // Hide all questions except first one
+      const questions = document.querySelectorAll('.exercise');
+      questions.forEach((q, index) => {
+        q.style.display = index === 0 ? 'block' : 'none';
+        q.id = `question${index + 1}`;
       });
       
-      // Reattach answer check listeners
-      document.querySelectorAll('.btn-primary').forEach(btn => {
+      // Initialize progress bar
+      updateProgressBar();
+      
+      // Set up event listeners using event delegation
+      document.getElementById('quiz-container').addEventListener('click', handleQuizEvents);
+    }
+    
+    function handleQuizEvents(event) {
+      const target = event.target;
+      
+      // Option selection
+      if (target.classList.contains('option') || target.closest('.option')) {
+        const option = target.classList.contains('option') ? target : target.closest('.option');
+        const questionId = option.closest('.exercise').id;
+        selectOption(option, questionId);
+      }
+      
+      // Check answer button
+      else if (target.classList.contains('btn-primary') || target.closest('.btn-primary')) {
+        const btn = target.classList.contains('btn-primary') ? target : target.closest('.btn-primary');
         const questionId = btn.closest('.exercise').id;
-        const correctAnswer = btn.getAttribute('onclick')?.match(/checkAnswer\('([^']+)', '([^']+)'/)?.[2];
+        const correctAnswer = btn.dataset.correctAnswer;
         if (questionId && correctAnswer) {
-          btn.addEventListener('click', function() {
-            checkAnswer(questionId, correctAnswer);
-          });
+          checkAnswer(questionId, correctAnswer);
         }
-      });
+      }
       
-      // Reattach solution toggle listeners
-      document.querySelectorAll('.btn-secondary').forEach(btn => {
-        const solutionId = btn.getAttribute('onclick')?.match(/toggleSolution\('([^']+)'/)?.[1];
+      // Show solution button
+      else if (target.classList.contains('btn-secondary') || target.closest('.btn-secondary')) {
+        const btn = target.classList.contains('btn-secondary') ? target : target.closest('.btn-secondary');
+        const solutionId = btn.dataset.solutionId;
         if (solutionId) {
-          btn.addEventListener('click', function() {
-            toggleSolution(solutionId);
-          });
+          toggleSolution(solutionId, btn);
         }
-      });
+      }
       
-      // Reattach next question listeners
-      document.querySelectorAll('.btn-next').forEach(btn => {
-        const match = btn.getAttribute('onclick')?.match(/nextQuestion\('([^']+)', '([^']+)'/);
-        if (match) {
-          btn.addEventListener('click', function() {
-            nextQuestion(match[1], match[2]);
-          });
-        }
-      });
+      // Next question button
+      else if (target.classList.contains('btn-next') || target.closest('.btn-next')) {
+        const btn = target.classList.contains('btn-next') ? target : target.closest('.btn-next');
+        const currentId = btn.closest('.exercise').id;
+        const nextId = `question${parseInt(currentId.replace('question', '')) + 1}`;
+        nextQuestion(currentId, nextId);
+      }
+      
+      // Reset quiz button
+      else if (target.classList.contains('btn-reset') || target.closest('.btn-reset')) {
+        resetQuiz();
+      }
     }
     
     // Option selection for MSQ
     function selectOption(element, questionId) {
       // Remove selection from all options in this question
-      const questionContainer = element.closest('.exercise');
+      const questionContainer = document.getElementById(questionId);
       questionContainer.querySelectorAll('.option').forEach(opt => {
         opt.classList.remove('selected');
       });
@@ -497,31 +549,37 @@
       
       const selectedLetter = selectedOption.querySelector('.option-letter').textContent;
       
+      // Update quiz stats
+      quizState.answeredQuestions++;
+      
       if (selectedLetter === correctAnswer) {
+        quizState.correctAnswers++;
         feedbackDiv.innerHTML = '<i class="fas fa-check-circle"></i> Correct! Well done.';
         feedbackDiv.className = 'feedback correct-feedback show';
         if (nextBtn) nextBtn.style.display = 'flex';
       } else {
-        feedbackDiv.innerHTML = '<i class="fas fa-times-circle"></i> Incorrect. Try again or view the solution.';
+        feedbackDiv.innerHTML = `<i class="fas fa-times-circle"></i> Incorrect. The correct answer is ${correctAnswer}.`;
         feedbackDiv.className = 'feedback incorrect-feedback show';
         if (nextBtn) nextBtn.style.display = 'none';
       }
+      
+      // Update progress
+      updateProgressBar();
     }
     
     // Toggle solution visibility
-    function toggleSolution(solutionId) {
+    function toggleSolution(solutionId, button) {
       const solution = document.getElementById(solutionId);
-      const btn = event.currentTarget;
-      const icon = btn.querySelector('i');
+      const icon = button.querySelector('i');
       
       if (solution.classList.contains('show')) {
         solution.classList.remove('show');
         icon.className = 'fas fa-lightbulb';
-        btn.innerHTML = '<i class="fas fa-lightbulb"></i> Show Solution';
+        button.innerHTML = '<i class="fas fa-lightbulb"></i> Show Solution';
       } else {
         solution.classList.add('show');
         icon.className = 'fas fa-eye-slash';
-        btn.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Solution';
+        button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Solution';
       }
     }
     
@@ -532,35 +590,48 @@
       if (nextId && document.getElementById(nextId)) {
         document.getElementById(nextId).style.display = 'block';
       } else {
-        document.getElementById('completionMessage').style.display = 'block';
+        showCompletionMessage();
+      }
+    }
+    
+    // Show completion message
+    function showCompletionMessage() {
+      const quizContainer = document.getElementById('quiz-container');
+      const score = Math.round((quizState.correctAnswers / quizState.answeredQuestions) * 100) || 0;
+      
+      quizContainer.innerHTML = `
+        <div class="final-result">
+          <h2><i class="fas fa-trophy"></i> Quiz Completed!</h2>
+          <p>You answered ${quizState.correctAnswers} out of ${quizState.answeredQuestions} questions correctly.</p>
+          <div class="progress-container">
+            <div class="progress-bar" style="width: ${score}%"></div>
+          </div>
+          <p>Score: ${score}%</p>
+          <div class="button-group">
+            <button class="btn-reset" onclick="resetQuiz()">
+              <i class="fas fa-redo"></i> Try Again
+            </button>
+            <button class="btn-secondary" onclick="loadCategory('${quizState.currentCategory}')">
+              <i class="fas fa-sync-alt"></i> Reload Quiz
+            </button>
+          </div>
+        </div>
+      `;
+    }
+    
+    // Update progress bar
+    function updateProgressBar() {
+      const progressBar = document.querySelector('.progress-bar');
+      if (progressBar) {
+        const totalQuestions = document.querySelectorAll('.exercise').length;
+        const progress = ((quizState.answeredQuestions) / totalQuestions) * 100;
+        progressBar.style.width = `${progress}%`;
       }
     }
     
     // Reset the quiz
     function resetQuiz() {
-      document.querySelectorAll('.exercise').forEach(ex => {
-        ex.style.display = 'none';
-      });
-      
-      document.querySelectorAll('.feedback').forEach(fb => {
-        fb.className = 'feedback';
-        fb.innerHTML = '';
-      });
-      
-      document.querySelectorAll('.solution').forEach(sol => {
-        sol.classList.remove('show');
-      });
-      
-      document.querySelectorAll('.btn-next').forEach(btn => {
-        btn.style.display = 'none';
-      });
-      
-      document.querySelectorAll('.option').forEach(opt => {
-        opt.classList.remove('selected');
-      });
-      
-      document.getElementById('question1').style.display = 'block';
-      document.getElementById('completionMessage').style.display = 'none';
+      loadCategory(quizState.currentCategory);
     }
     
     // Load Multiple Choice by default
