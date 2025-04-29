@@ -2,318 +2,259 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Python Session 1: Learning print()</title>
+  <title>Python Beginner Assignments</title>
   <style>
-    /* 1) BODY & GLOBAL STYLES */
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #e9f3fb;
+      background-color: #f5fff7;
       margin: 0;
-      padding: 20px;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
     }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-top: 0;
-    }
-    h2, h3 {
-      color: #2c3e50;
-      margin-top: 0;
-    }
-    /* 2) NAVBAR STYLE */
-    .navbar {
-      display: flex;
-      justify-content: center;
-      background-color: #2c3e50;
-      padding: 10px 0;
-      border-radius: 12px;
-      margin-bottom: 30px;
-    }
-    .navbar button {
-      background-color: #00b894;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 0 15px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    .navbar button:hover {
-      background-color: #019875;
-    }
-    /* 3) VIDEO SECTION */
-    .video-section {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
-      height: 0;
-      overflow: hidden;
+    
+    .container {
       max-width: 800px;
       margin: 0 auto;
+      padding: 30px;
     }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
     }
-    /* 4) EXAMPLE SECTIONS */
-    .section {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
       position: relative;
+      display: inline-block;
     }
-    pre {
-      background: #272822;
-      color: #f8f8f2;
-      padding: 15px;
-      border-radius: 10px;
-      overflow-x: auto;
-      margin-top: 10px;
-    }
-    code {
-      font-family: Consolas, monospace;
-      font-size: 14px;
-    }
-    button.copy-btn {
+    
+    h1:after {
+      content: "";
       position: absolute;
-      top: 15px;
-      right: 20px;
-      background-color: #00b894;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
     }
-    button.copy-btn:hover {
-      background-color: #019875;
-    }
-    /* Title with an icon */
-    .icon-title {
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
       display: flex;
       align-items: center;
-      font-size: 22px;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 25px;
+      margin-bottom: 30px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-5px);
+    }
+    
+    .task {
       font-weight: bold;
-      color: #2c3e50;
-      margin-bottom: 15px;
-    }
-    .icon-title img {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
-    }
-    .example-number {
-      background-color: #00b894;
-      color: white;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      display: inline-flex;
+      color: var(--secondary);
+      margin: 15px 0 10px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      margin-right: 10px;
     }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+    }
+    
+    .steps li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+    }
+    
     .output {
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 6px;
-      margin-top: 10px;
-      border-left: 4px solid #00b894;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      line-height: 1.5;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
-
-  <!-- MAIN CONTENT -->
-  <div id="examples">
-    <h1>🐍 Python Session 1: Learning print()</h1>
+  <div class="container">
+    <header>
+      <h1>Python Beginner Assignments</h1>
+      <p>Practice your Python skills with these fun exercises!</p>
+    </header>
     
-    <!-- VIDEO SECTION -->
-    <div class="video-section">
-      <h2>Video Tutorial</h2>
-      <div class="video-container">
-        <!-- Replace with your actual video embed code -->
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
-                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">👋</span> Assignment 1: Say Hello to Everyone</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a Python program that prints a greeting to 3 friends on the same line.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Open your Python editor (IDLE, VS Code, etc.)</li>
+          <li>Use the <code>print()</code> function</li>
+          <li>Print "Hello" followed by three friends' names in one line</li>
+          <li>Separate the names with commas inside the print() function</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">Hello Ali Mona Sara</div>
+          <div class="note">Remember: Use your own friends' names, not the ones in the example!</div>
+        </div>
       </div>
-      <p>Watch this video first to understand the basics of the print() function in Python.</p>
-    </div>
-
-    <!-- Example 1 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">1</span>
-        Printing Simple Text with Double Quotes
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">✍️</span> Assignment 2: Write Your Favorite Quote</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print your favorite quote using triple quotes for multi-line formatting.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Choose a meaningful quote you love (from a book, movie, or person)</li>
+          <li>Write it between triple quotes (''' or """)</li>
+          <li>Use the <code>print()</code> function to display it</li>
+          <li>Bonus: Make the quote span multiple lines</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">Dream big and dare to fail.
+- Norman Vaughan</div>
+          <div class="note">Tip: The output will keep the same line breaks as in your code.</div>
+        </div>
       </div>
-      <button class="copy-btn" onclick="copyCode('code1')">📋 Copy</button>
-      <pre><code id="code1">print("Hello, world!")</code></pre>
-      <div class="output"><strong>Output:</strong> Hello, world!</div>
-      <p>You can use double quotes " to print a text message.</p>
-    </div>
-
-    <!-- Example 2 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">2</span>
-        Printing Simple Text with Single Quotes
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🎨</span> Assignment 3: Emoji Fun</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print a creative sentence that includes at least 2 different emojis.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Think of a fun sentence about your hobbies or interests</li>
+          <li>Find 2 emojis that match your sentence</li>
+          <li>Use Windows key + . or Mac control + command + space to insert emojis</li>
+          <li>Print your sentence with emojis using <code>print()</code></li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">I love pizza 🍕 and coding 💻!</div>
+          <div class="note">Pro Tip: Emojis make your programs more fun and expressive!</div>
+        </div>
       </div>
-      <button class="copy-btn" onclick="copyCode('code2')">📋 Copy</button>
-      <pre><code id="code2">print('Python is fun!')</code></pre>
-      <div class="output"><strong>Output:</strong> Python is fun!</div>
-      <p>You can also use single quotes ' to print text.</p>
-    </div>
-
-    <!-- Example 3 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">3</span>
-        Printing a Sentence Using Triple Double Quotes
-      </div>
-      <button class="copy-btn" onclick="copyCode('code3')">📋 Copy</button>
-      <pre><code id="code3">print("""Welcome to Python!
-Let's learn together.""")</code></pre>
-      <div class="output"><strong>Output:</strong><br>Welcome to Python!<br>Let's learn together.</div>
-      <p>Triple double quotes allow you to print sentences on multiple lines.</p>
-    </div>
-
-    <!-- Example 4 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">4</span>
-        Printing a Sentence Using Triple Single Quotes
-      </div>
-      <button class="copy-btn" onclick="copyCode('code4')">📋 Copy</button>
-      <pre><code id="code4">print('''This is Python class.
-Have fun coding!''')</code></pre>
-      <div class="output"><strong>Output:</strong><br>This is Python class.<br>Have fun coding!</div>
-      <p>Triple single quotes also let you print multiple lines.</p>
-    </div>
-
-    <!-- Example 5 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">5</span>
-        Printing a Number (Not Text!)
-      </div>
-      <button class="copy-btn" onclick="copyCode('code5')">📋 Copy</button>
-      <pre><code id="code5">print(5 + 5)</code></pre>
-      <div class="output"><strong>Output:</strong> 10</div>
-      <p>If you type a number without quotes, Python will treat it like math!</p>
-    </div>
-
-    <!-- Example 6 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">6</span>
-        Printing a Text that Looks Like Math
-      </div>
-      <button class="copy-btn" onclick="copyCode('code6')">📋 Copy</button>
-      <pre><code id="code6">print("5 + 5")</code></pre>
-      <div class="output"><strong>Output:</strong> 5 + 5</div>
-      <p>If you use quotes around numbers and symbols, Python prints it as text!</p>
-    </div>
-
-    <!-- Example 7 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">7</span>
-        Printing Two Messages in One Line
-      </div>
-      <button class="copy-btn" onclick="copyCode('code7')">📋 Copy</button>
-      <pre><code id="code7">print("Hello", "World")</code></pre>
-      <div class="output"><strong>Output:</strong> Hello World</div>
-      <p>You can print multiple things together by separating them with commas.</p>
-    </div>
-
-    <!-- Example 8 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">8</span>
-        Printing Numbers and Text Together
-      </div>
-      <button class="copy-btn" onclick="copyCode('code8')">📋 Copy</button>
-      <pre><code id="code8">print("I am", 12, "years old")</code></pre>
-      <div class="output"><strong>Output:</strong> I am 12 years old</div>
-      <p>Mix text and numbers in the same print() by using commas.</p>
-    </div>
-
-    <!-- Example 9 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">9</span>
-        Printing Emojis
-      </div>
-      <button class="copy-btn" onclick="copyCode('code9')">📋 Copy</button>
-      <pre><code id="code9">print("Python is awesome! 🐍")</code></pre>
-      <div class="output"><strong>Output:</strong> Python is awesome! 🐍</div>
-      <p>You can print emojis by putting them inside quotes.</p>
-    </div>
-
-    <!-- Example 10 -->
-    <div class="section">
-      <div class="icon-title">
-        <span class="example-number">10</span>
-        Printing a Simple ASCII Art
-      </div>
-      <button class="copy-btn" onclick="copyCode('code10')">📋 Copy</button>
-      <pre><code id="code10">print("""
- ^_^
-(o o)
-(")")
-""")</code></pre>
-      <div class="output"><strong>Output:</strong><br>
-      <pre> ^_^
-(o o)
-(")")</pre>
-      </div>
-      <p>You can create simple shapes by printing text art.</p>
-    </div>
+    </main>
+    
+    <footer>
+      <p>Happy coding! Practice these assignments to become a Python pro.</p>
+    </footer>
   </div>
-
-  <!-- JAVASCRIPT SECTION -->
-  <script>
-    // Function to copy code from the examples
-    function copyCode(id) {
-      const code = document.getElementById(id).textContent;
-      const textarea = document.createElement("textarea");
-      textarea.value = code;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      alert("✅ Code copied!");
-    }
-    
-    // Function to show examples section
-    function showSection(section) {
-      document.getElementById('examples').style.display = 'block';
-    }
-    
-    // Display the Examples section by default on page load
-    document.addEventListener("DOMContentLoaded", function() {
-      showSection('examples');
-    });
-  </script>
 </body>
 </html>
