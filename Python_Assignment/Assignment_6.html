@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Math Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Math Assignments</h1>
+      <p>Practice mathematical operations and comparisons in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">🧮</span> Assignment 1: Simple Calculator</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create a calculator that performs basic operations on two numbers.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for two numbers</li>
+          <li>Convert both to integers</li>
+          <li>Print the results of addition, subtraction, multiplication, and division</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter first number: 10
+Enter second number: 5
+Addition: 15
+Subtraction: 5
+Multiplication: 50
+Division: 2.0</div>
+          <div class="note">Remember division returns a float in Python 3!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔢</span> Assignment 2: Even or Odd</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Determine if a number is even or odd using the modulo operator.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for a number</li>
+          <li>Convert to integer</li>
+          <li>Use <code>% 2</code> to check if even (result 0) or odd (result 1)</li>
+          <li>Print "Even" or "Odd"</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number: 7
+Odd</div>
+          <div class="note">Modulo (%) gives the remainder after division - perfect for checking even/odd!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">➗</span> Assignment 3: Bigger Half</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Calculate the floor division of a number by 2.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for a number</li>
+          <li>Convert to integer</li>
+          <li>Use <code>//</code> operator to divide by 2</li>
+          <li>Print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number: 7
+3</div>
+          <div class="note">Floor division (//) drops any remainder and returns an integer.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">⚡</span> Assignment 4: Power Challenge</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Calculate a base number raised to an exponent.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask for a base number</li>
+          <li>Ask for an exponent</li>
+          <li>Convert both to integers</li>
+          <li>Use <code>**</code> operator to calculate the power</li>
+          <li>Print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter base: 2
+Enter exponent: 8
+256</div>
+          <div class="note">The <code>**</code> operator performs exponentiation in Python.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">📏</span> Assignment 5: Distance Calculation</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Calculate the absolute difference between two numbers.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask for a starting number</li>
+          <li>Ask for an ending number</li>
+          <li>Convert both to integers</li>
+          <li>Use <code>abs()</code> to find the positive difference</li>
+          <li>Print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter start: 15
+Enter end: 30
+15</div>
+          <div class="note"><code>abs()</code> always returns a positive number, regardless of input order.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔵</span> Assignment 6: Rounding Practice</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Round a decimal number to the nearest integer.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for a decimal number</li>
+          <li>Convert to float</li>
+          <li>Use <code>round()</code> to round to nearest integer</li>
+          <li>Print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a decimal number: 3.7
+4</div>
+          <div class="note"><code>round()</code> uses "banker's rounding" - rounds to nearest even number when exactly halfway between.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">⚖️</span> Assignment 7: Compare Two Numbers</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Determine which of two numbers is larger.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Get two numbers from the user</li>
+          <li>Convert both to integers</li>
+          <li>Use <code>></code> operator to compare them</li>
+          <li>Print <code>True</code> if first is larger, <code>False</code> otherwise</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter first number: 15
+Enter second number: 20
+False</div>
+          <div class="note">Comparison operators return boolean values (<code>True</code>/<code>False</code>).</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Practice these to master mathematical operations in Python!</p>
+    </footer>
+  </div>
+</body>
+</html>

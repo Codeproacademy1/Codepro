@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Beginner Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 25px;
+      margin-bottom: 30px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-5px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 15px 0 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+    }
+    
+    .steps li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+    }
+    
+    .output {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      line-height: 1.5;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Beginner Assignments</h1>
+      <p>Practice your Python skills with these fun exercises!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">👤</span> Assignment 1: Create Your Profile</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print your name (as a string), your age (as a number), and whether you like Python (True/False).</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use <code>print()</code> with your name in quotes</li>
+          <li>Print your age as a number without quotes</li>
+          <li>Print <code>True</code> or <code>False</code> about liking Python</li>
+          <li>Run your program to see the output</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">My name is Sara
+15
+True</div>
+          <div class="note">Remember: Numbers don't need quotes, but text (strings) do!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">➕</span> Assignment 2: Math Fun</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print the result of adding, subtracting, multiplying, and dividing two numbers.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Choose any two numbers to work with</li>
+          <li>Use <code>print()</code> with math operations inside</li>
+          <li>Try different combinations of +, -, *, and /</li>
+          <li>Bonus: Try using different numbers each time</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">8
+8
+8
+4.0</div>
+          <div class="note">Notice how division gives a decimal (float) result!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔍</span> Assignment 3: Guess the Type</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Use <code>type()</code> to check the type of a number, a string, and a Boolean.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use <code>type()</code> with a number (like 100)</li>
+          <li>Use <code>type()</code> with text in quotes (like "Python")</li>
+          <li>Use <code>type()</code> with <code>True</code> or <code>False</code></li>
+          <li>Print all three results</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">&lt;class 'int'&gt;
+&lt;class 'str'&gt;
+&lt;class 'bool'&gt;</div>
+          <div class="note">This shows Python's different data types: int (integer), str (string), and bool (Boolean).</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Happy coding! Try experimenting with different values in these assignments.</p>
+    </footer>
+  </div>
+</body>
+</html>

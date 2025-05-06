@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Dictionaries for Beginners</title>
+  <style>
+    /* 1) BODY & GLOBAL STYLES */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9f3fb;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    h2, h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    /* 2) NAVBAR STYLE */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #2c3e50;
+      padding: 10px 0;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    .navbar button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .navbar button:hover {
+      background-color: #019875;
+    }
+    /* 3) VIDEO SECTION */
+    .video-section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    /* 4) EXAMPLE SECTIONS */
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    button.copy-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.copy-btn:hover {
+      background-color: #019875;
+    }
+    /* Title with an icon */
+    .icon-title {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .example-number {
+      background-color: #00b894;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+    .output {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #00b894;
+    }
+    .note {
+      background-color: #fff8e1;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    .warning {
+      background-color: #ffebee;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #f44336;
+    }
+    .indent {
+      margin-left: 20px;
+    }
+    .method-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .method-table th, .method-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    .method-table th {
+      background-color: #00b894;
+      color: white;
+    }
+    .method-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <!-- MAIN CONTENT -->
+  <div id="examples">
+    <h1>🐍 Python Dictionaries</h1>
+    
+    <!-- VIDEO SECTION -->
+    <div class="video-section">
+      <h2>Video Tutorial</h2>
+      <div class="video-container">
+        <!-- Replace with your actual video embed code -->
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+      </div>
+      <p>Watch this video to learn about Python dictionaries - key-value pair collections.</p>
+    </div>
+
+    <!-- Example 1 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">1</span>
+        What is a Dictionary?
+      </div>
+      <p>A dictionary stores data in key-value pairs:</p>
+      <ul>
+        <li>Written with <code>{}</code> curly braces</li>
+        <li>Keys must be unique and immutable (strings, numbers, tuples)</li>
+        <li>Values can be any data type</li>
+      </ul>
+      <button class="copy-btn" onclick="copyCode('code1')">📋 Copy</button>
+      <pre><code id="code1">student = {
+    "name": "Sara",
+    "age": 15,
+    "grade": "A"
+}
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Sara', 'age': 15, 'grade': 'A'}
+      </div>
+    </div>
+
+    <!-- Example 2 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">2</span>
+        Access Dictionary Items
+      </div>
+      <button class="copy-btn" onclick="copyCode('code2')">📋 Copy</button>
+      <pre><code id="code2"># Method 1: Square brackets
+print(student["name"]) # Sara
+
+# Method 2: get() method
+print(student.get("age")) # 15</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Sara<br>
+        15
+      </div>
+      <div class="note">
+        <strong>Note:</strong> <code>get()</code> is safer as it returns <code>None</code> if key doesn't exist.
+      </div>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">3</span>
+        Change Dictionary Items
+      </div>
+      <button class="copy-btn" onclick="copyCode('code3')">📋 Copy</button>
+      <pre><code id="code3">student["age"] = 16
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Sara', 'age': 16, 'grade': 'A'}
+      </div>
+    </div>
+
+    <!-- Example 4 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">4</span>
+        Add Dictionary Items
+      </div>
+      <button class="copy-btn" onclick="copyCode('code4')">📋 Copy</button>
+      <pre><code id="code4">student["city"] = "Cairo"
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Sara', 'age': 16, 'grade': 'A', 'city': 'Cairo'}
+      </div>
+    </div>
+
+    <!-- Example 5 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">5</span>
+        Remove Dictionary Items
+      </div>
+      <h3>a. Using pop()</h3>
+      <p>Remove item by key.</p>
+      <button class="copy-btn" onclick="copyCode('code5a')">📋 Copy</button>
+      <pre><code id="code5a">student.pop("grade")
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Sara', 'age': 16, 'city': 'Cairo'}
+      </div>
+
+      <h3>b. Using popitem()</h3>
+      <p>Remove the last inserted item.</p>
+      <button class="copy-btn" onclick="copyCode('code5b')">📋 Copy</button>
+      <pre><code id="code5b">student.popitem()
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Sara', 'age': 16}
+      </div>
+
+      <h3>c. Using clear()</h3>
+      <p>Empty the dictionary.</p>
+      <button class="copy-btn" onclick="copyCode('code5c')">📋 Copy</button>
+      <pre><code id="code5c">student.clear()
+print(student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {}
+      </div>
+    </div>
+
+    <!-- Example 6 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">6</span>
+        Copy Dictionaries
+      </div>
+      <h3>a. Using copy()</h3>
+      <p>Create a copy of the dictionary.</p>
+      <button class="copy-btn" onclick="copyCode('code6a')">📋 Copy</button>
+      <pre><code id="code6a">student = {"name": "Sara", "age": 15}
+new_student = student.copy()
+new_student["age"] = 16
+print("Original:", student)
+print("Copy:", new_student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Original: {'name': 'Sara', 'age': 15}<br>
+        Copy: {'name': 'Sara', 'age': 16}
+      </div>
+
+      <h3>b. Using fromkeys()</h3>
+      <p>Create dictionary from keys.</p>
+      <button class="copy-btn" onclick="copyCode('code6b')">📋 Copy</button>
+      <pre><code id="code6b">keys = ("name", "age", "grade")
+new_student = dict.fromkeys(keys, "Unknown")
+print(new_student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        {'name': 'Unknown', 'age': 'Unknown', 'grade': 'Unknown'}
+      </div>
+    </div>
+
+    <!-- Example 7 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">7</span>
+        Other Useful Methods
+      </div>
+      <button class="copy-btn" onclick="copyCode('code7')">📋 Copy</button>
+      <pre><code id="code7">student = {"name": "Sara", "age": 15, "grade": "A"}
+
+# items()
+print("Items:", student.items())
+
+# keys()
+print("Keys:", student.keys())
+
+# values()
+print("Values:", student.values())
+
+# setdefault()
+student.setdefault("gender", "Female")
+print("After setdefault:", student)
+
+# update()
+student.update({"age": 17, "city": "Giza"})
+print("After update:", student)</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Items: dict_items([('name', 'Sara'), ('age', 15), ('grade', 'A')])<br>
+        Keys: dict_keys(['name', 'age', 'grade'])<br>
+        Values: dict_values(['Sara', 15, 'A'])<br>
+        After setdefault: {'name': 'Sara', 'age': 15, 'grade': 'A', 'gender': 'Female'}<br>
+        After update: {'name': 'Sara', 'age': 17, 'grade': 'A', 'gender': 'Female', 'city': 'Giza'}
+      </div>
+    </div>
+
+    <!-- Example 8 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">8</span>
+        Nested Dictionaries
+      </div>
+      <button class="copy-btn" onclick="copyCode('code8')">📋 Copy</button>
+      <pre><code id="code8">students = {
+    "student1": {
+        "name": "Ali",
+        "age": 15
+    },
+    "student2": {
+        "name": "Mona",
+        "age": 14
+    }
+}
+
+print(students["student1"]["name"]) # Ali
+print(students["student2"]["age"]) # 14</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Ali<br>
+        14
+      </div>
+      <p>Dictionaries can contain other dictionaries for complex data structures.</p>
+    </div>
+
+    <!-- Dictionary Methods Reference -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">9</span>
+        Dictionary Methods Cheat Sheet
+      </div>
+      <table class="method-table">
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+        <tr>
+          <td>clear()</td>
+          <td>Removes all items</td>
+          <td>dict.clear()</td>
+        </tr>
+        <tr>
+          <td>copy()</td>
+          <td>Returns a copy</td>
+          <td>new = dict.copy()</td>
+        </tr>
+        <tr>
+          <td>fromkeys()</td>
+          <td>Creates dict from keys</td>
+          <td>dict.fromkeys(keys, value)</td>
+        </tr>
+        <tr>
+          <td>get()</td>
+          <td>Returns value for key</td>
+          <td>dict.get(key)</td>
+        </tr>
+        <tr>
+          <td>items()</td>
+          <td>Returns key-value pairs</td>
+          <td>dict.items()</td>
+        </tr>
+        <tr>
+          <td>keys()</td>
+          <td>Returns keys</td>
+          <td>dict.keys()</td>
+        </tr>
+        <tr>
+          <td>pop()</td>
+          <td>Removes item by key</td>
+          <td>dict.pop(key)</td>
+        </tr>
+        <tr>
+          <td>popitem()</td>
+          <td>Removes last inserted item</td>
+          <td>dict.popitem()</td>
+        </tr>
+        <tr>
+          <td>setdefault()</td>
+          <td>Sets default value for key</td>
+          <td>dict.setdefault(key, value)</td>
+        </tr>
+        <tr>
+          <td>update()</td>
+          <td>Updates dictionary</td>
+          <td>dict.update(other_dict)</td>
+        </tr>
+        <tr>
+          <td>values()</td>
+          <td>Returns values</td>
+          <td>dict.values()</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT SECTION -->
+  <script>
+    // Function to copy code from the examples
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("✅ Code copied!");
+    }
+    
+    // Function to show examples section
+    function showSection(section) {
+      document.getElementById('examples').style.display = 'block';
+    }
+    
+    // Display the Examples section by default on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      showSection('examples');
+    });
+  </script>
+</body>
+</html>

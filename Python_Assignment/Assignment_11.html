@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Set Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Set Assignments</h1>
+      <p>Practice working with unordered unique collections in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">🦁</span> Assignment 1: Create a Set</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create and modify a set of animals.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a set containing 5 different animals</li>
+          <li>Print the original set</li>
+          <li>Add one more animal using <code>add()</code></li>
+          <li>Print the updated set</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Original animals: {'lion', 'tiger', 'bear', 'wolf', 'fox'}
+Updated animals: {'lion', 'tiger', 'bear', 'wolf', 'fox', 'elephant'}</div>
+          <div class="note">Sets automatically remove duplicates and are unordered.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">❌</span> Assignment 2: Remove Safely</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Safely remove items from a set without raising errors.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Start with your animal set from Assignment 1</li>
+          <li>Use <code>discard()</code> to remove an animal</li>
+          <li>Try removing an animal that doesn't exist (no error should occur)</li>
+          <li>Print the modified set</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Transformation:</div>
+          <div class="output">Original: {'lion', 'tiger', 'bear', 'wolf', 'fox', 'elephant'}
+After discard: {'lion', 'tiger', 'wolf', 'fox', 'elephant'}</div>
+          <div class="note"><code>discard()</code> is safe, while <code>remove()</code> raises errors for missing items.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">➖</span> Assignment 3: Find Difference</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Compare two sets to find their differences.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create two different sets of animals (e.g., jungle and forest animals)</li>
+          <li>Use <code>difference()</code> or <code>-</code> operator to find animals in first set but not second</li>
+          <li>Print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Jungle animals: {'lion', 'tiger', 'elephant', 'monkey'}
+Forest animals: {'bear', 'wolf', 'fox', 'deer'}
+Difference: {'lion', 'tiger', 'elephant', 'monkey'}</div>
+          <div class="note">Set difference shows what's unique to the first set.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">⊆</span> Assignment 4: Check Membership</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Check subset relationships between sets.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create two sets where one is a subset of the other</li>
+          <li>Use <code>issubset()</code> to check if one set is contained in another</li>
+          <li>Print the result (True or False)</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Set A: {'a', 'b'}
+Set B: {'a', 'b', 'c', 'd'}
+Is A subset of B? True</div>
+          <div class="note">Also try <code>issuperset()</code> for the inverse relationship.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">⊕</span> Assignment 5: Symmetric Difference</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Find elements that are in exactly one set.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create two sets with some overlapping elements</li>
+          <li>Use <code>symmetric_difference()</code> or <code>^</code> operator</li>
+          <li>Print the elements that are in one set but not both</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Set X: {1, 2, 3, 4}
+Set Y: {3, 4, 5, 6}
+Symmetric Difference: {1, 2, 5, 6}</div>
+          <div class="note">This shows elements that are unique to each set.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">✂️</span> Assignment 6: Clear and Copy</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Demonstrate set copying and clearing operations.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a copy of your animal set using <code>copy()</code></li>
+          <li>Clear the original set using <code>clear()</code></li>
+          <li>Print both sets to show the difference</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Original (after clear): set()
+Copy: {'lion', 'tiger', 'wolf', 'fox', 'elephant'}</div>
+          <div class="note"><code>copy()</code> creates a new independent set object.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Practice these to master Python's powerful set operations!</p>
+    </footer>
+  </div>
+</body>
+</html>

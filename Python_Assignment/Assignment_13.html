@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Loop Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Loop Assignments</h1>
+      <p>Practice iteration and loops in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">🍎</span> Assignment 1: Print Items</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Iterate through a list of fruits using a loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a list of 5 fruits</li>
+          <li>Use a <code>for</code> loop to go through each fruit</li>
+          <li>Print each fruit inside the loop</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">apple
+banana
+orange
+grape
+mango</div>
+          <div class="note">Use <code>for fruit in fruits:</code> to iterate through the list.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔢</span> Assignment 2: Numbers with Range</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print numbers using range in a loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use <code>range(1, 11)</code> in a <code>for</code> loop</li>
+          <li>Print each number inside the loop</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</div>
+          <div class="note">Range stops before the end number (11 in this case).</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">📖</span> Assignment 3: Loop Dictionary</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Iterate through a dictionary's keys and values.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a dictionary with name, age, and city</li>
+          <li>Use <code>for key, value in dictionary.items():</code></li>
+          <li>Print both key and value for each item</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">name: Sarah
+age: 15
+city: Boston</div>
+          <div class="note"><code>.items()</code> gives you both keys and values together.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔤</span> Assignment 4: String Letters</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print each letter in a word using a loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user to input a word</li>
+          <li>Use a <code>for</code> loop to iterate through the word</li>
+          <li>Print each letter on a new line</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a word: hello
+h
+e
+l
+l
+o</div>
+          <div class="note">Strings are iterable just like lists in Python.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">2️⃣4️⃣6️⃣</span> Assignment 5: Even Numbers Only</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print even numbers using range and conditional.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use <code>range(1, 21)</code> in a <code>for</code> loop</li>
+          <li>Add an <code>if</code> statement to check if number is even (<code>num % 2 == 0</code>)</li>
+          <li>Print only the even numbers</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">2
+4
+6
+8
+10
+12
+14
+16
+18
+20</div>
+          <div class="note">You can also use <code>range(2, 21, 2)</code> to get evens directly.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🎨</span> Assignment 6: Nested Loops Fun</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create all combinations of colors and shapes using nested loops.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a list of 2 colors (e.g., ['red', 'blue'])</li>
+          <li>Create a list of 2 shapes (e.g., ['circle', 'square'])</li>
+          <li>Use nested <code>for</code> loops (one for colors, one for shapes)</li>
+          <li>Print each color-shape combination</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">red circle
+red square
+blue circle
+blue square</div>
+          <div class="note">The outer loop runs completely for each iteration of the inner loop.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔍</span> Assignment 7: Search Inside Loop</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Check if a number exists in a list using a loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a predefined list of numbers (e.g., [5, 10, 15, 20])</li>
+          <li>Ask the user to input a number</li>
+          <li>Use a loop to check if the number exists in the list</li>
+          <li>Print "Found" or "Not found" based on the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number: 15
+Found</div>
+          <div class="note">In practice, you'd use <code>if num in numbers:</code>, but this shows the loop logic.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Master these looping concepts to automate repetitive tasks in Python!</p>
+    </footer>
+  </div>
+</body>
+</html>

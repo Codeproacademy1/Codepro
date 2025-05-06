@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Variable Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.8rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 25px;
+      margin-bottom: 30px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-5px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 15px 0 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+    }
+    
+    .steps li {
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+    }
+    
+    .output {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      line-height: 1.5;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Variable Assignments</h1>
+      <p>Master variables and data types with these practical exercises!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">📝</span> Assignment 1: Create a Student Profile</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Store your information in variables and print them in one sentence.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create three variables: <code>name</code>, <code>age</code>, and <code>is_student</code></li>
+          <li>Assign your personal information to these variables</li>
+          <li>Print them together in one <code>print()</code> statement</li>
+          <li>Use commas to separate the different parts</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">Name: Sara Age: 15 Student: True</div>
+          <div class="note">Variables let you store information to use later in your program.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">🎩</span> Assignment 2: Variable Change Magic</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Demonstrate how variables can change values during program execution.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a variable with an initial number value</li>
+          <li>Print its value</li>
+          <li>Assign a new value to the same variable</li>
+          <li>Print it again to see the change</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">5
+10</div>
+          <div class="note">Variables are called 'variable' because their values can vary!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔎</span> Assignment 3: Type Checking Fun</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Discover Python's different data types using the <code>type()</code> function.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create three variables: one with text, one with a number, one with True/False</li>
+          <li>Use <code>type()</code> to check each variable's data type</li>
+          <li>Print the results to see what Python reports</li>
+          <li>Notice the different type names</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">&lt;class 'str'&gt;
+&lt;class 'int'&gt;
+&lt;class 'bool'&gt;</div>
+          <div class="note">Python uses these types: str (text), int (whole numbers), bool (True/False).</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Keep practicing! Variables are the building blocks of all programs.</p>
+    </footer>
+  </div>
+</body>
+</html>

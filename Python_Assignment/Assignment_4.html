@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Input Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Input Assignments</h1>
+      <p>Practice working with user input and basic operations!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">👋</span> Assignment 1: Greeting the User</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Ask for the user's name and print a personalized welcome message.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use <code>input()</code> to ask for the user's name</li>
+          <li>Store the input in a variable</li>
+          <li>Print a greeting message using the name</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">What is your name? Sarah
+Hello Sarah !</div>
+          <div class="note">The <code>input()</code> function lets your program interact with users!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">✖️</span> Assignment 2: Double the Number</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Get a number from the user and print its double.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user to enter a number</li>
+          <li>Convert the input to an integer using <code>int()</code></li>
+          <li>Multiply the number by 2 and print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number: 7
+14</div>
+          <div class="note">Remember to convert strings to numbers before doing math!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">➕</span> Assignment 3: Sum Two Numbers</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Ask for two numbers and print their sum.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Get the first number and convert to integer</li>
+          <li>Get the second number and convert to integer</li>
+          <li>Add them together and print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">First number: 5
+Second number: 3
+8</div>
+          <div class="note">You can store multiple inputs in different variables.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">🎂</span> Assignment 4: Age Next Year</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Ask for the user's age and tell them how old they'll be next year.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user to enter their current age</li>
+          <li>Convert the input to an integer</li>
+          <li>Add 1 to the age and print the future age</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">How old are you? 12
+Next year you will be 13</div>
+          <div class="note">You can do math with variables after converting them to numbers.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">💰</span> Assignment 5: Float Practice</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Calculate a new price by adding 10.5 to the original price.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask for the price of an item</li>
+          <li>Convert the input to a float using <code>float()</code></li>
+          <li>Add 10.5 to the price and print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter price: 24.99
+New price is: 35.49</div>
+          <div class="note">Use <code>float()</code> for decimal numbers!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔠</span> Assignment 6: Length of a Word</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Count how many letters are in a word the user provides.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user to type any word</li>
+          <li>Use <code>len()</code> to count the letters</li>
+          <li>Print the length of the word</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Type a word: elephant
+8</div>
+          <div class="note">The <code>len()</code> function works on strings to count characters.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Practice these to become comfortable with Python input and operations!</p>
+    </footer>
+  </div>
+</body>
+</html>

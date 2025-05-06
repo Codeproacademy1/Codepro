@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python While Loop Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python While Loop Assignments</h1>
+      <p>Practice indefinite iteration with these while loop exercises!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">⬆️</span> Assignment 1: Counting Up</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print numbers from 1 to 5 using a while loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Initialize a counter variable at 1</li>
+          <li>Create a while loop that runs while counter ≤ 5</li>
+          <li>Print the current counter value</li>
+          <li>Increment the counter by 1 each iteration</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">1
+2
+3
+4
+5</div>
+          <div class="note">Don't forget to increment your counter or you'll create an infinite loop!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">⬇️</span> Assignment 2: Countdown</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print numbers from 10 down to 1 using a while loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Initialize a counter variable at 10</li>
+          <li>Create a while loop that runs while counter ≥ 1</li>
+          <li>Print the current counter value</li>
+          <li>Decrement the counter by 1 each iteration</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">10
+9
+8
+7
+6
+5
+4
+3
+2
+1</div>
+          <div class="note">This is similar to counting up but with different start/end conditions.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔒</span> Assignment 3: Password Checker</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Keep asking for a password until the correct one is entered.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Set a password (e.g., "python123")</li>
+          <li>Use a while loop to repeatedly ask for input</li>
+          <li>Break the loop only when the correct password is entered</li>
+          <li>Print "Access granted" when correct</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter password: hello
+Enter password: test
+Enter password: python123
+Access granted!</div>
+          <div class="note">Use <code>while True:</code> with a <code>break</code> statement for this pattern.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">⏭️</span> Assignment 4: Skip Number</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Print numbers 1-10 but skip number 5 using a while loop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Initialize a counter at 1</li>
+          <li>Create a while loop for counter ≤ 10</li>
+          <li>Use <code>continue</code> to skip when counter is 5</li>
+          <li>Print numbers and increment counter</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">1
+2
+3
+4
+6
+7
+8
+9
+10</div>
+          <div class="note"><code>continue</code> jumps to the next iteration without executing remaining code.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">✖️</span> Assignment 5: Multiply by 2</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Start from 1 and keep multiplying by 2 until exceeding 100.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Initialize a variable at 1</li>
+          <li>Create a while loop that runs while number ≤ 100</li>
+          <li>Print the current number</li>
+          <li>Multiply the number by 2 each iteration</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">1
+2
+4
+8
+16
+32
+64</div>
+          <div class="note">This demonstrates exponential growth in a loop.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">📊</span> Assignment 6: Collecting Inputs</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Collect numbers from user until they enter 0, then count them.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Initialize a counter at 0</li>
+          <li>Create a while loop that runs until user enters 0</li>
+          <li>Increment counter for each number entered</li>
+          <li>After loop ends, print total count (excluding the 0)</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number (0 to stop): 5
+Enter a number (0 to stop): 3
+Enter a number (0 to stop): 8
+Enter a number (0 to stop): 0
+You entered 3 numbers</div>
+          <div class="note">This pattern is useful for collecting variable amounts of user input.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">⏹️</span> Assignment 7: Break on Specific Letter</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Ask for letters until user enters "z", then stop.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a while loop that runs indefinitely</li>
+          <li>Ask user to enter a letter each iteration</li>
+          <li>Use <code>break</code> when letter is "z"</li>
+          <li>Print "Stopped" after loop ends</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a letter (z to stop): a
+Enter a letter (z to stop): b
+Enter a letter (z to stop): z
+Stopped</div>
+          <div class="note">The <code>break</code> statement immediately exits the loop.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Practice these while loop patterns to handle indefinite iteration in Python!</p>
+    </footer>
+  </div>
+</body>
+</html>

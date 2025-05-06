@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Tuple Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Tuple Assignments</h1>
+      <p>Practice working with immutable sequences in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">🍓</span> Assignment 1: Create a Fruit Tuple</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create and access elements in an immutable tuple.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a tuple containing 5 different fruits</li>
+          <li>Print the entire tuple</li>
+          <li>Print just the second fruit (remember indexing starts at 0)</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">All fruits: ('apple', 'banana', 'orange', 'grape', 'mango')
+Second fruit: banana</div>
+          <div class="note">Tuples use parentheses () while lists use square brackets [].</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔄</span> Assignment 2: Update Trick</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Modify a tuple by converting it to a list and back.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Start with your fruit tuple from Assignment 1</li>
+          <li>Convert it to a list using <code>list()</code></li>
+          <li>Change the third item in the list</li>
+          <li>Convert back to a tuple using <code>tuple()</code></li>
+          <li>Print the modified tuple</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Transformation:</div>
+          <div class="output">Original: ('apple', 'banana', 'orange', 'grape', 'mango')
+Modified: ('apple', 'banana', 'pear', 'grape', 'mango')</div>
+          <div class="note">This is how we "modify" tuples since they're immutable.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🌈</span> Assignment 3: Unpack Colors</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Demonstrate tuple unpacking with color values.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a tuple with 3 color names</li>
+          <li>Unpack the tuple into three separate variables</li>
+          <li>Print each color variable</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Color 1: red
+Color 2: green
+Color 3: blue</div>
+          <div class="note">Unpacking is useful for assigning multiple variables at once.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔢</span> Assignment 4: Count and Index</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Use tuple methods to count occurrences and find positions.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a tuple with repeated values like (1, 2, 3, 2, 4, 2, 5)</li>
+          <li>Use <code>count()</code> to find how many times 2 appears</li>
+          <li>Use <code>index()</code> to find the position of the first 3</li>
+          <li>Print both results</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Number of 2's: 3
+Position of 3: 2</div>
+          <div class="note">These are the two main methods available for tuples.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">➕</span> Assignment 5: Join Two Tuples</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Combine two tuples into a new tuple.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create two separate tuples (e.g., fruits and vegetables)</li>
+          <li>Combine them using the + operator</li>
+          <li>Print the new combined tuple</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">Fruits: ('apple', 'banana')
+Veggies: ('carrot', 'lettuce')
+Combined: ('apple', 'banana', 'carrot', 'lettuce')</div>
+          <div class="note">The + operator creates a new tuple without modifying the originals.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔍</span> Assignment 6: Search in Tuple</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Check if an item exists in your fruit tuple.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Use your original fruit tuple</li>
+          <li>Ask the user to enter a fruit name</li>
+          <li>Use the <code>in</code> operator to check if it exists</li>
+          <li>Print True or False based on the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a fruit: banana
+True</div>
+          <div class="note">Membership testing works the same for tuples as it does for lists.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">🏙️</span> Assignment 7: One-Item Tuple Practice</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create and identify a single-element tuple.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a tuple containing just one city name</li>
+          <li>Print the tuple</li>
+          <li>Use <code>type()</code> to confirm it's a tuple</li>
+          <li>Print the type</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Output:</div>
+          <div class="output">My city: ('Paris',)
+Type: &lt;class 'tuple'&gt;</div>
+          <div class="note">Don't forget the comma - <code>('Paris',)</code> not <code>('Paris')</code>!</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Practice these to master Python's immutable sequences!</p>
+    </footer>
+  </div>
+</body>
+</html>

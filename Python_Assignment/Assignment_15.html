@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Function Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Function Assignments</h1>
+      <p>Practice writing reusable functions in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">👋</span> Assignment 1: Greeting Function</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that takes a name and prints a personalized greeting.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>greet</code> that takes one parameter</li>
+          <li>Inside the function, print a greeting message using the parameter</li>
+          <li>Call the function with different names to test it</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">greet("Alice")
+# Output: Hello Alice, nice to meet you!</div>
+          <div class="note">Functions help avoid repeating the same code with different values.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">➕</span> Assignment 2: Sum of Two Numbers</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that calculates and returns the sum of two numbers.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>add_numbers</code> with two parameters</li>
+          <li>Inside the function, return the sum of the parameters</li>
+          <li>Call the function and print the returned value</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">result = add_numbers(5, 3)
+print(result)  # Output: 8</div>
+          <div class="note">The <code>return</code> statement sends a value back to the caller.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔢</span> Assignment 3: Even or Odd</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that checks if a number is even or odd.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>check_even_odd</code> with one parameter</li>
+          <li>Use modulo operator (%) to determine even/odd</li>
+          <li>Return "Even" or "Odd" based on the check</li>
+          <li>Call the function with different numbers</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print(check_even_odd(4))  # Output: Even
+print(check_even_odd(7))  # Output: Odd</div>
+          <div class="note">Even numbers have remainder 0 when divided by 2.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">📋</span> Assignment 4: List Printer</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that prints all items in a list.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>print_list</code> with one parameter</li>
+          <li>Use a for loop to iterate through the list</li>
+          <li>Print each item on a separate line</li>
+          <li>Test with different lists</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print_list(['apple', 'banana', 'cherry'])
+# Output: 
+# apple
+# banana
+# cherry</div>
+          <div class="note">This function works with any list you pass to it.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">🏆</span> Assignment 5: Biggest Number</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that returns the larger of two numbers.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>find_bigger</code> with two parameters</li>
+          <li>Compare the two numbers using <code>></code> operator</li>
+          <li>Return the larger number</li>
+          <li>Handle the case when numbers are equal</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print(find_bigger(5, 8))  # Output: 8
+print(find_bigger(3, 3))  # Output: Numbers are equal</div>
+          <div class="note">You can use conditional statements inside functions.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔒</span> Assignment 6: Password Checker</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that repeatedly asks for a password until correct.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>check_password</code> with no parameters</li>
+          <li>Set a correct password (e.g., "python123")</li>
+          <li>Use a while loop to keep asking for input</li>
+          <li>Return when correct password is entered</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">check_password()
+# Interaction:
+# Enter password: hello
+# Enter password: test
+# Enter password: python123
+# Access granted!</div>
+          <div class="note">This combines functions with while loops and user input.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔤</span> Assignment 7: Count Letters</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that counts letters in a string.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>count_letters</code> with one parameter</li>
+          <li>Use <code>len()</code> to count characters</li>
+          <li>Return the count</li>
+          <li>Test with different strings</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print(count_letters("Hello"))  # Output: 5
+print(count_letters("Python"))  # Output: 6</div>
+          <div class="note">Remember: spaces and punctuation are also counted as characters.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 8 -->
+      <div class="assignment">
+        <h2><span class="emoji">📖</span> Assignment 8: Dictionary Printer</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that prints dictionary keys and values.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>print_dict</code> with one parameter</li>
+          <li>Use a for loop with <code>.items()</code> to iterate</li>
+          <li>Print each key-value pair</li>
+          <li>Test with different dictionaries</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print_dict({'name': 'Alice', 'age': 25})
+# Output:
+# name: Alice
+# age: 25</div>
+          <div class="note">The <code>.items()</code> method gives you both keys and values.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 9 -->
+      <div class="assignment">
+        <h2><span class="emoji">✨</span> Assignment 9: Set Uniqueness</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a function that verifies all items in a set are unique.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Define a function called <code>check_unique</code> with one parameter</li>
+          <li>Compare the set's length with the length of the original collection</li>
+          <li>Return True if all items are unique, False otherwise</li>
+          <li>Test with different sets</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Usage:</div>
+          <div class="output">print(check_unique({1, 2, 3}))  # Output: True
+print(check_unique({1, 2, 2}))  # Output: False</div>
+          <div class="note">Sets automatically remove duplicates, so length comparison works.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Master these function patterns to write modular, reusable Python code!</p>
+    </footer>
+  </div>
+</body>
+</html>

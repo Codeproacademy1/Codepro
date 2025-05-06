@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Match Statement for Beginners</title>
+  <style>
+    /* 1) BODY & GLOBAL STYLES */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #e9f3fb;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    h2, h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+    /* 2) NAVBAR STYLE */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: #2c3e50;
+      padding: 10px 0;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+    .navbar button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    .navbar button:hover {
+      background-color: #019875;
+    }
+    /* 3) VIDEO SECTION */
+    .video-section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+    /* 4) EXAMPLE SECTIONS */
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    button.copy-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button.copy-btn:hover {
+      background-color: #019875;
+    }
+    /* Title with an icon */
+    .icon-title {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .example-number {
+      background-color: #00b894;
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+    .output {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #00b894;
+    }
+    .note {
+      background-color: #fff8e1;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    .warning {
+      background-color: #ffebee;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 10px;
+      border-left: 4px solid #f44336;
+    }
+    .indent {
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- MAIN CONTENT -->
+  <div id="examples">
+    <h1>🐍 Python Match Statement</h1>
+    
+    <!-- VIDEO SECTION -->
+    <div class="video-section">
+      <h2>Video Tutorial</h2>
+      <div class="video-container">
+        <!-- Replace with your actual video embed code -->
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
+      </div>
+      <p>Watch this video to learn about Python's powerful match statement.</p>
+    </div>
+
+    <!-- Example 1 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">1</span>
+        What is Match Statement?
+      </div>
+      <p>The <code>match</code> statement is like a super-powered <code>if-elif-else</code>. It checks a value against many possible patterns.</p>
+      <div class="note">
+        <strong>Note:</strong> Match statements require Python 3.10 or newer.
+      </div>
+    </div>
+
+    <!-- Example 2 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">2</span>
+        Simple Match Example
+      </div>
+      <button class="copy-btn" onclick="copyCode('code2')">📋 Copy</button>
+      <pre><code id="code2">color = "red"
+match color:
+    case "red":
+        print("Color is Red!")
+    case "blue":
+        print("Color is Blue!")
+    case _:
+        print("Unknown Color!")</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Color is Red!
+      </div>
+      <p>Python checks the value of <code>color</code> and runs the matching case.</p>
+    </div>
+
+    <!-- Example 3 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">3</span>
+        Match with Input
+      </div>
+      <button class="copy-btn" onclick="copyCode('code3')">📋 Copy</button>
+      <pre><code id="code3">day = input("Enter a day: ")
+match day:
+    case "Monday":
+        print("Start of the week!")
+    case "Friday":
+        print("Almost weekend!")
+    case _:
+        print("Just another day")</code></pre>
+      <div class="output">
+        <strong>Example Output:</strong><br>
+        Enter a day: <em>Friday</em><br>
+        Almost weekend!
+      </div>
+    </div>
+
+    <!-- Example 4 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">4</span>
+        Match with Numbers
+      </div>
+      <button class="copy-btn" onclick="copyCode('code4')">📋 Copy</button>
+      <pre><code id="code4">num = int(input("Enter a number: "))
+match num:
+    case 1:
+        print("One")
+    case 2:
+        print("Two")
+    case _:
+        print("Something else")</code></pre>
+      <div class="output">
+        <strong>Example Output:</strong><br>
+        Enter a number: <em>2</em><br>
+        Two
+      </div>
+    </div>
+
+    <!-- Example 5 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">5</span>
+        Match with Casting
+      </div>
+      <button class="copy-btn" onclick="copyCode('code5')">📋 Copy</button>
+      <pre><code id="code5">age = int(input("Enter your age: "))
+match age:
+    case 18:
+        print("You are 18!")
+    case 21:
+        print("You are 21!")
+    case _:
+        print("Another age")</code></pre>
+      <div class="output">
+        <strong>Example Output:</strong><br>
+        Enter your age: <em>21</em><br>
+        You are 21!
+      </div>
+      <div class="note">
+        <strong>Remember:</strong> Always cast input if you're expecting numbers!
+      </div>
+    </div>
+
+    <!-- Example 6 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">6</span>
+        Match and Operators (Inside Cases)
+      </div>
+      <button class="copy-btn" onclick="copyCode('code6')">📋 Copy</button>
+      <pre><code id="code6">score = int(input("Enter your score: "))
+match score:
+    case _ if score >= 90:
+        print("Excellent!")
+    case _ if score >= 75:
+        print("Good!")
+    case _:
+        print("Keep trying!")</code></pre>
+      <div class="output">
+        <strong>Example Output:</strong><br>
+        Enter your score: <em>85</em><br>
+        Good!
+      </div>
+      <p>Use <code>case _ if condition:</code> to add conditions inside cases.</p>
+    </div>
+
+    <!-- Example 7 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">7</span>
+        Default Case: _
+      </div>
+      <p>The <code>case _:</code> is the "catch-all" that runs when nothing else matches.</p>
+      <button class="copy-btn" onclick="copyCode('code7')">📋 Copy</button>
+      <pre><code id="code7">fruit = "banana"
+match fruit:
+    case "apple":
+        print("It's an apple")
+    case "orange":
+        print("It's an orange")
+    case _:
+        print("Unknown fruit")</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Unknown fruit
+      </div>
+    </div>
+
+    <!-- Example 8 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">8</span>
+        Common Mistake: Forgetting match or case
+      </div>
+      <div class="warning">
+        <strong>Wrong:</strong>
+        <pre><code>switch value:  # Python doesn't have "switch"
+    case "something":
+        print("done")</code></pre>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code8')">📋 Copy</button>
+      <pre><code id="code8">value = "hello"
+match value:  # Correct syntax
+    case "hello":
+        print("done")</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        done
+      </div>
+    </div>
+
+    <!-- Example 9 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">9</span>
+        Match with Strings and Membership
+      </div>
+      <button class="copy-btn" onclick="copyCode('code9')">📋 Copy</button>
+      <pre><code id="code9">text = input("Type something: ")
+match text:
+    case _ if "hello" in text:
+        print("You said hello!")
+    case _:
+        print("No hello found.")</code></pre>
+      <div class="output">
+        <strong>Example Output:</strong><br>
+        Type something: <em>hello world</em><br>
+        You said hello!
+      </div>
+    </div>
+
+    <!-- Example 10 -->
+    <div class="section">
+      <div class="icon-title">
+        <span class="example-number">10</span>
+        Match with Identity Operators
+      </div>
+      <button class="copy-btn" onclick="copyCode('code10')">📋 Copy</button>
+      <pre><code id="code10">a = "Python"
+b = "Python"
+c = "Java"
+
+match a:
+    case _ if a is b:
+        print("Same object as b")
+    case _ if a is not c:
+        print("Different object from c")</code></pre>
+      <div class="output">
+        <strong>Output:</strong><br>
+        Same object as b
+      </div>
+      <p>While not common, you can use <code>is</code> and <code>is not</code> in match guards.</p>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT SECTION -->
+  <script>
+    // Function to copy code from the examples
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      const textarea = document.createElement("textarea");
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+      alert("✅ Code copied!");
+    }
+    
+    // Function to show examples section
+    function showSection(section) {
+      document.getElementById('examples').style.display = 'block';
+    }
+    
+    // Display the Examples section by default on page load
+    document.addEventListener("DOMContentLoaded", function() {
+      showSection('examples');
+    });
+  </script>
+</body>
+</html>

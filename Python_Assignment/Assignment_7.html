@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Conditional Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Conditional Assignments</h1>
+      <p>Practice if/else statements and conditional logic in Python!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">👶👨</span> Assignment 1: Age Checker</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Determine if someone is an adult (18+) or minor based on their age.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for their age</li>
+          <li>Convert the input to an integer</li>
+          <li>Use an if/else statement to check if age ≥ 18</li>
+          <li>Print "Adult" or "Minor"</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter your age: 16
+Minor</div>
+          <div class="note">Conditional statements let your program make decisions!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">⚖️</span> Assignment 2: Number Bigger</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Compare two numbers and determine which is larger.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask for two numbers</li>
+          <li>Convert both to integers</li>
+          <li>Use if/elif/else to compare them</li>
+          <li>Print which number is larger (or if equal)</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter first number: 15
+Enter second number: 20
+20 is bigger than 15</div>
+          <div class="note">You can chain multiple conditions with elif statements.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">📛</span> Assignment 3: Name Checker</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Check if the entered name matches a specific value.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for their name</li>
+          <li>Use an if statement to check if name equals "Kareem"</li>
+          <li>If true, print "Welcome!"</li>
+          <li>Bonus: Add an else case</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter your name: Kareem
+Welcome!</div>
+          <div class="note">Use == to compare values in Python.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔒</span> Assignment 4: Password Checker</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create a simple password verification system.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for a password</li>
+          <li>Use an if statement to check if it matches "1234"</li>
+          <li>If correct, print "Access Granted"</li>
+          <li>Bonus: Add an else case for wrong passwords</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter password: 1234
+Access Granted.</div>
+          <div class="note">In real applications, never use simple passwords like this!</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">🔢</span> Assignment 5: Even or Odd</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Determine if a number is even or odd using modulo.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user for a number</li>
+          <li>Convert to integer</li>
+          <li>Use modulo operator (%) to check remainder when divided by 2</li>
+          <li>Print "Even" or "Odd" based on result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a number: 7
+Odd</div>
+          <div class="note">Even numbers have remainder 0 when divided by 2.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">🐍</span> Assignment 6: Favorite Word</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Check if a sentence contains the word "Python".</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Ask the user to enter a sentence</li>
+          <li>Use the <code>in</code> keyword to check for "Python"</li>
+          <li>Print a message if found</li>
+          <li>Bonus: Make it case-insensitive</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Interaction:</div>
+          <div class="output">Enter a sentence: I love Python programming
+Found 'Python'!</div>
+          <div class="note">The <code>in</code> operator checks for substrings in Python.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 7 -->
+      <div class="assignment">
+        <h2><span class="emoji">🆔</span> Assignment 7: Identity Test</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Demonstrate the difference between value and identity comparison.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create two variables with the same string value</li>
+          <li>Use <code>is</code> to check if they reference the same object</li>
+          <li>Use <code>==</code> to check if they have the same value</li>
+          <li>Print both results</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Expected Output:</div>
+          <div class="output">Identity check: False
+Value check: True</div>
+          <div class="note"><code>is</code> checks object identity, while <code>==</code> checks value equality.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Master these conditional concepts to build smarter Python programs!</p>
+    </footer>
+  </div>
+</body>
+</html>
