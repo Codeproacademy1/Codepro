@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Button with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --button-color: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .wiring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .wiring-table th, .wiring-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .wiring-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .wiring-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .wiring-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .code-explanation {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .code-explanation th, .code-explanation td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .code-explanation th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .code-explanation tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .code-explanation tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .button-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .button-visual {
+            width: 80px;
+            height: 80px;
+            background-color: var(--button-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+        }
+        
+        .button-visual:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .status-display {
+            background-color: #34495e;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-top: 1rem;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .pressed {
+            background-color: var(--success-color);
+        }
+        
+        .released {
+            background-color: var(--button-color);
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .component-card {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .component-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--button-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">🔘</span> What is a Push Button?</h1>
+            <p class="subtitle">Digital Input with Raspberry Pi Pico W</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>Push Button Basics</h2>
+            <p>A push button is a simple input device. When pressed, it completes a circuit and sends a signal to the microcontroller (the Pico).</p>
+            <p>You can use buttons to:</p>
+            <ul>
+                <li>Trigger actions (turn LED on/off)</li>
+                <li>Select menu options</li>
+                <li>Control motors or other outputs</li>
+                <li>Create interactive projects</li>
+            </ul>
+            
+            <div class="button-demo">
+                <div class="button-visual" id="buttonVisual">Press Me</div>
+                <div class="status-display" id="statusDisplay">Button Released</div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧰</span> What You Need:</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-icon">⚡</div>
+                    <h3>Raspberry Pi Pico W</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔘</div>
+                    <h3>Push button</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔌</div>
+                    <h3>10kΩ resistor</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🧪</div>
+                    <h3>Breadboard</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔗</div>
+                    <h3>Jumper wires</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">💻</div>
+                    <h3>Thonny IDE</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">⚙️</span> Button Wiring with Pico</h2>
+            
+            <table class="wiring-table">
+                <thead>
+                    <tr>
+                        <th>Button Pin</th>
+                        <th>Connect To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>One side</td>
+                        <td>GP14 (e.g. Pin 19)</td>
+                    </tr>
+                    <tr>
+                        <td>Other side</td>
+                        <td>GND (e.g. Pin 18)</td>
+                    </tr>
+                    <tr>
+                        <td>Add a 10kΩ resistor</td>
+                        <td>Between GP14 and GND (pull-down)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>✅ You can also skip the physical resistor and use an internal pull-down in code.</strong></p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🧑‍💻</span> MicroPython Code: Detect Button Press</h2>
+            <div class="highlight">
+                <pre><code>from machine import Pin
+from time import sleep
+
+button = Pin(14, Pin.IN, Pin.PULL_DOWN)  # Use GP14 with internal pull-down
+
+while True:
+    if button.value() == 1:
+        print("Button Pressed!")
+    else:
+        print("Button Released")
+    sleep(0.2)</code></pre>
+            </div>
+            
+            <h3><span class="emoji">🧠</span> Explanation:</h3>
+            <table class="code-explanation">
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>What It Does</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Pin(14, Pin.IN)</code></td>
+                        <td>Sets GPIO14 as input</td>
+                    </tr>
+                    <tr>
+                        <td><code>Pin.PULL_DOWN</code></td>
+                        <td>Activates internal resistor</td>
+                    </tr>
+                    <tr>
+                        <td><code>button.value()</code></td>
+                        <td>Reads the current state: 1 = pressed, 0 = released</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-4">
+            <h2><span class="emoji">🔄</span> Example: Control an LED with a Button</h2>
+            <div class="highlight">
+                <pre><code>from machine import Pin
+from time import sleep
+
+led = Pin(15, Pin.OUT)
+button = Pin(14, Pin.IN, Pin.PULL_DOWN)
+
+while True:
+    if button.value():
+        led.on()
+    else:
+        led.off()
+    sleep(0.1)</code></pre>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>🧪 Try changing it to toggle the LED on each press!</strong></p>
+                <pre><code># Toggle version
+from machine import Pin
+from time import sleep
+
+led = Pin(15, Pin.OUT)
+button = Pin(14, Pin.IN, Pin.PULL_DOWN)
+led_state = False
+
+while True:
+    if button.value():
+        led_state = not led_state  # Toggle state
+        led.value(led_state)
+        while button.value():  # Wait for release
+            sleep(0.01)
+    sleep(0.1)</code></pre>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">💡</span> Project Ideas Using Buttons</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">💡</div>
+                    <h3>Turn LED on/off</h3>
+                    <p>Simple toggle with button</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🔢</div>
+                    <h3>Counter display</h3>
+                    <p>Show count on LCD or console</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🔐</div>
+                    <h3>Password entry</h3>
+                    <p>Enter codes via button sequence</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">⏱️</div>
+                    <h3>Reaction game</h3>
+                    <p>Test response time using button press</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🚪</div>
+                    <h3>Control a servo lock</h3>
+                    <p>Button triggers motor to open door</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W Button Tutorial</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Button demo interaction
+            const buttonVisual = document.getElementById('buttonVisual');
+            const statusDisplay = document.getElementById('statusDisplay');
+            
+            buttonVisual.addEventListener('mousedown', function() {
+                this.classList.remove('released');
+                this.classList.add('pressed');
+                statusDisplay.textContent = 'Button Pressed!';
+            });
+            
+            buttonVisual.addEventListener('mouseup', function() {
+                this.classList.remove('pressed');
+                this.classList.add('released');
+                statusDisplay.textContent = 'Button Released';
+            });
+            
+            buttonVisual.addEventListener('mouseleave', function() {
+                this.classList.remove('pressed');
+                this.classList.add('released');
+                statusDisplay.textContent = 'Button Released';
+            });
+            
+            // Initialize button state
+            buttonVisual.classList.add('released');
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code')?.innerText || this.innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

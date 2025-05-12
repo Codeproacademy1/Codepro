@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Common Mistakes - Part 3</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --error: #e53935;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    .mistake {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--error);
+    }
+    
+    .mistake-title {
+      font-weight: bold;
+      color: var(--error);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .mistake-title:before {
+      content: "❌";
+      margin-right: 10px;
+    }
+    
+    .incorrect {
+      background: #ffebee;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--error);
+      position: relative;
+    }
+    
+    .correct {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--success);
+      position: relative;
+    }
+    
+    .explanation {
+      background: #e3f2fd;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+    
+    .explanation:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Variable Mistakes</h1>
+      <p>Common errors when working with variables in Python</p>
+    </header>
+    
+    <main>
+      <!-- Mistake 1 -->
+      <div class="mistake">
+        <div class="mistake-title">Unclosed String in Variable Assignment</div>
+        <div class="incorrect">x = "Sara</div>
+        <div class="correct">x = "Sara"</div>
+        <div class="explanation">
+          String literals must be enclosed in matching quotes. Missing the closing quote will result in a <code>SyntaxError: EOL while scanning string literal</code>.
+        </div>
+      </div>
+      
+      <!-- Mistake 2 -->
+      <div class="mistake">
+        <div class="mistake-title">Invalid Variable Name Starting with Number</div>
+        <div class="incorrect">2name = "Ali"</div>
+        <div class="correct">name2 = "Ali"  # or _2name, name_2</div>
+        <div class="explanation">
+          Variable names cannot start with numbers in Python. They must start with a letter or underscore, followed by letters, numbers, or underscores.
+        </div>
+      </div>
+      
+      <!-- Mistake 3 -->
+      <div class="mistake">
+        <div class="mistake-title">Using Undefined Variable</div>
+        <div class="incorrect">print(name)</div>
+        <div class="correct">name = "John"  # Define first
+print(name)</div>
+        <div class="explanation">
+          Python raises a <code>NameError</code> when you try to use a variable that hasn't been defined yet. Always assign values to variables before using them.
+        </div>
+      </div>
+      
+      <!-- Mistake 4 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Comma Between Print Arguments</div>
+        <div class="incorrect">print("Hello" name)</div>
+        <div class="correct">print("Hello", name)</div>
+        <div class="explanation">
+          When printing multiple items, they must be separated by commas. Without the comma, Python thinks you're trying to concatenate strings (which would need a + operator).
+        </div>
+      </div>
+      
+      <!-- Mistake 5 -->
+      <div class="mistake">
+        <div class="mistake-title">Dynamic Typing Confusion</div>
+        <div class="incorrect">x = 5
+x = "hello"
+# Now x + 5 causes error</div>
+        <div class="correct">x = 5
+x = str(x) + "hello"  # Explicit conversion</div>
+        <div class="explanation">
+          Python is dynamically typed, so variables can change type. But operations between incompatible types (like number + string) still need explicit conversion.
+        </div>
+      </div>
+      
+      <!-- Mistake 6 -->
+      <div class="mistake">
+        <div class="mistake-title">Case-Sensitive Function Name</div>
+        <div class="incorrect">Print(x)</div>
+        <div class="correct">print(x)</div>
+        <div class="explanation">
+          Python is case-sensitive. The built-in function is <code>print()</code> with lowercase 'p'. <code>Print()</code> would raise a <code>NameError</code> unless you defined it yourself.
+        </div>
+      </div>
+      
+      <!-- Mistake 7 -->
+      <div class="mistake">
+        <div class="mistake-title">Spaces in Variable Names</div>
+        <div class="incorrect">my variable = 10</div>
+        <div class="correct">my_variable = 10  # or myVariable</div>
+        <div class="explanation">
+          Variable names cannot contain spaces. Use underscores (<code>_</code>) for word separation (snake_case) or camelCase for multi-word variables.
+        </div>
+      </div>
+      
+      <!-- Mistake 8 -->
+      <div class="mistake">
+        <div class="mistake-title">Incomplete Variable Assignment</div>
+        <div class="incorrect">x = </div>
+        <div class="correct">x = None  # or some default value</div>
+        <div class="explanation">
+          An equals sign must have both a variable name and a value. If you need a placeholder, use <code>None</code> or some default value.
+        </div>
+      </div>
+      
+      <!-- Mistake 9 -->
+      <div class="mistake">
+        <div class="mistake-title">Forgetting to Print Function Results</div>
+        <div class="incorrect">type(5)  # Output disappears</div>
+        <div class="correct">print(type(5))  # Shows &lt;class 'int'&gt;</div>
+        <div class="explanation">
+          In interactive mode, Python shows results automatically, but in scripts you need <code>print()</code> to see output. <code>type()</code> returns a value that won't be shown without printing.
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Tip: Pay attention to error messages - they often tell you exactly what's wrong!</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measuring Temperature with Arduino (LM35)</title>
+    <style>
+        :root {
+            --primary: #E65100;
+            --secondary: #EF6C00;
+            --accent: #FFD54F;
+            --light: #FFF3E0;
+            --dark: #BF360C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .sensor-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌡️ Measuring Temperature with Arduino (LM35)</h1>
+        <p>Learn to measure precise temperatures with analog sensors</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is the LM35 Temperature Sensor?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>The LM35 is an analog temperature sensor that outputs a voltage proportional to temperature.</p>
+            <p><strong>Output = 10 mV per °C</strong></p>
+            <p>So, if it outputs 250 mV, the temperature is 25°C</p>
+        </div>
+        
+        <h3>📦 LM35 Pinout (3 Pins):</h3>
+        <table>
+            <tr>
+                <th>Pin</th>
+                <th>Name</th>
+                <th>Connect To</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>VCC</td>
+                <td>+5V (Arduino)</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>VOUT</td>
+                <td>A0 (Analog pin)</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>GND</td>
+                <td>GND (Arduino)</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">LM35 temperature sensor</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+            <div class="material-item">Optional: LCD display</div>
+        </div>
+        
+        <h3>🔌 Circuit Diagram (Text Description)</h3>
+        <div class="circuit-diagram">
+            LM35 VCC → Arduino 5V<br>
+            LM35 GND → Arduino GND<br>
+            LM35 VOUT → Arduino A0
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Arduino Code – Read & Display Temperature</h2>
+        
+        <h3>🧾 Basic Code Using Serial Monitor:</h3>
+        <div class="code-block">
+            <span class="code-keyword">int</span> sensorPin = <span class="code-value">A0</span>;<br>
+            <span class="code-keyword">float</span> voltage, temperature;<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-keyword">int</span> sensorValue = <span class="code-function">analogRead</span>(sensorPin);<br><br>
+            
+            &nbsp;&nbsp;voltage = sensorValue * (<span class="code-value">5.0</span> / <span class="code-value">1023.0</span>);      <span class="code-comment">// Convert ADC value to voltage</span><br>
+            &nbsp;&nbsp;temperature = voltage * <span class="code-value">100</span>;                 <span class="code-comment">// LM35 gives 10mV per °C</span><br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Temperature: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(temperature);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">" °C"</span>);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);<br>
+            }
+        </div>
+        
+        <h3>🔎 Explanation:</h3>
+        <ul>
+            <li><code>analogRead()</code> gives value from 0 to 1023 (10-bit)</li>
+            <li>Arduino's ADC range is 0–5V</li>
+            <li>Formula: <code>voltage = analogRead × (5.0 / 1023.0)</code></li>
+            <li>Temperature conversion: <code>temperature (°C) = voltage × 100</code></li>
+        </ul>
+        
+        <h3>🔹 Optional: Display Temperature on LCD</h3>
+        <div class="info-box">
+            <p>If you've already connected an LCD 16x2, you can add this code inside loop():</p>
+        </div>
+        <div class="code-block">
+            lcd.<span class="code-function">setCursor</span>(<span class="code-value">0</span>, <span class="code-value">0</span>);<br>
+            lcd.<span class="code-function">print</span>(<span class="code-value">"Temp: "</span>);<br>
+            lcd.<span class="code-function">print</span>(temperature);<br>
+            lcd.<span class="code-function">print</span>(<span class="code-value">" C"</span>);
+        </div>
+        
+        <h3>🔁 Alternatives: DHT11 or DHT22</h3>
+        <div class="info-box">
+            <p>If using DHT11 or DHT22, use the DHT library and follow this:</p>
+        </div>
+        <div class="code-block">
+            <span class="code-include">#include</span> <span class="code-value">"DHT.h"</span><br><br>
+            
+            <span class="code-include">#define</span> DHTPIN <span class="code-value">2</span>     <br>
+            <span class="code-include">#define</span> DHTTYPE DHT11   <span class="code-comment">// or DHT22</span><br><br>
+            
+            DHT <span class="code-function">dht</span>(DHTPIN, DHTTYPE);<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            &nbsp;&nbsp;dht.<span class="code-function">begin</span>();<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-keyword">float</span> temp = dht.<span class="code-function">readTemperature</span>();<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Temp: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(temp);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">" C"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">2000</span>);<br>
+            }
+        </div>
+        <div class="info-box">
+            <p>DHT11 also supports humidity reading.</p>
+        </div>
+        
+        <div class="project-ideas">
+            <h3>🎯 Project Ideas:</h3>
+            <table>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Room Temperature Monitor</td>
+                    <td>Show temperature on LCD</td>
+                </tr>
+                <tr>
+                    <td>Smart Fan</td>
+                    <td>Turn fan on/off based on temp</td>
+                </tr>
+                <tr>
+                    <td>IoT Thermometer</td>
+                    <td>Send data to the cloud using ESP8266</td>
+                </tr>
+                <tr>
+                    <td>Temp Alarm</td>
+                    <td>Buzzer alerts when temp > 30°C</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Control a servo fan based on temperature</li>
+            <li>Log data to SD card or Serial Plotter</li>
+            <li>Create a Temp + Humidity monitor using DHT11</li>
+            <li>Build a temperature-controlled LED system (blue=low, red=high)</li>
+            <li>Make a temperature data logger with timestamps</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Key Point</th>
+            </tr>
+            <tr>
+                <td>LM35 Sensor</td>
+                <td>Analog sensor; 10mV = 1°C</td>
+            </tr>
+            <tr>
+                <td>analogRead</td>
+                <td>Converts signal from sensor to digital value</td>
+            </tr>
+            <tr>
+                <td>LCD or Serial</td>
+                <td>Used to show the temperature reading</td>
+            </tr>
+            <tr>
+                <td>Projects</td>
+                <td>Room monitor, smart fan, alert system</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino Temperature Monitoring Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

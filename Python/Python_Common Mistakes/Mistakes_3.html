@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Common Mistakes - Part 2</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --error: #e53935;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 40px;
+      text-align: center;
+    }
+    
+    .mistake {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--error);
+    }
+    
+    .mistake-title {
+      font-weight: bold;
+      color: var(--error);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .mistake-title:before {
+      content: "❌";
+      margin-right: 10px;
+    }
+    
+    .incorrect {
+      background: #ffebee;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--error);
+      position: relative;
+    }
+    
+    .correct {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--success);
+      position: relative;
+    }
+    
+    .explanation {
+      background: #e3f2fd;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+    
+    .explanation:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>More Python Common Mistakes</h1>
+      <p>Additional frequent errors beginners make in Python</p>
+    </header>
+    
+    <main>
+      <!-- Mistake 1 -->
+      <div class="mistake">
+        <div class="mistake-title">Type Mixing in Operations</div>
+        <div class="incorrect">print(5 + "5")</div>
+        <div class="correct">print(5 + int("5"))  # or print(str(5) + "5")</div>
+        <div class="explanation">
+          Python doesn't automatically convert between types. You must explicitly convert strings to numbers (with <code>int()</code> or <code>float()</code>) or numbers to strings (with <code>str()</code>) for operations.
+        </div>
+      </div>
+      
+      <!-- Mistake 2 -->
+      <div class="mistake">
+        <div class="mistake-title">Unclosed String Literal</div>
+        <div class="incorrect">print("Hello)</div>
+        <div class="correct">print("Hello")</div>
+        <div class="explanation">
+          Every opening quote needs a matching closing quote of the same type (single or double). Python will give a "SyntaxError: EOL while scanning string literal".
+        </div>
+      </div>
+      
+      <!-- Mistake 3 -->
+      <div class="mistake">
+        <div class="mistake-title">String vs Math Expression</div>
+        <div class="incorrect">print('5+5')  # Outputs '5+5' as text</div>
+        <div class="correct">print(5+5)    # Outputs 10 as calculation</div>
+        <div class="explanation">
+          Quotes make everything inside them a string literal. For math operations, don't use quotes around the expression.
+        </div>
+      </div>
+      
+      <!-- Mistake 4 -->
+      <div class="mistake">
+        <div class="mistake-title">Boolean Case Sensitivity</div>
+        <div class="incorrect">print(true)</div>
+        <div class="correct">print(True)</div>
+        <div class="explanation">
+          Python's boolean values are case-sensitive keywords. <code>True</code> and <code>False</code> must be capitalized, unlike some other languages.
+        </div>
+      </div>
+      
+      <!-- Mistake 5 -->
+      <div class="mistake">
+        <div class="mistake-title">Boolean vs String</div>
+        <div class="incorrect">print("True")  # This is a string</div>
+        <div class="correct">print(True)    # This is a boolean</div>
+        <div class="explanation">
+          The quoted version is just text, while the unquoted version is the actual boolean value. This matters for logical operations and conditionals.
+        </div>
+      </div>
+      
+      <!-- Mistake 6 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Operator</div>
+        <div class="incorrect">print(5 5)</div>
+        <div class="correct">print(5 * 5)  # Or +, -, /</div>
+        <div class="explanation">
+          Python requires explicit operators between values. Two numbers next to each other without an operator is a syntax error.
+        </div>
+      </div>
+      
+      <!-- Mistake 7 -->
+      <div class="mistake">
+        <div class="mistake-title">Incomplete Expression</div>
+        <div class="incorrect">print(type(5+))</div>
+        <div class="correct">print(type(5+3))</div>
+        <div class="explanation">
+          The <code>+</code> operator is binary - it needs values on both sides. Python can't determine the type of an incomplete expression.
+        </div>
+      </div>
+      
+      <!-- Mistake 8 -->
+      <div class="mistake">
+        <div class="mistake-title">Division by Zero</div>
+        <div class="incorrect">print(5 / 0)</div>
+        <div class="correct">print(5 / 0.1)  # Or any non-zero value</div>
+        <div class="explanation">
+          Division by zero is mathematically undefined and raises a <code>ZeroDivisionError</code> in Python. Always check denominators before dividing.
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Remember: Understanding these mistakes will help you debug code faster!</p>
+    </footer>
+  </div>
+</body>
+</html>

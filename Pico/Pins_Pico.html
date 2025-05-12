@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi Pico W Pinout Reference</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --power-color: #e74c3c;
+            --gpio-color: #2ecc71;
+            --special-color: #f39c12;
+            --ground-color: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .pinout-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pinout-image {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pin-tables {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pin-table th {
+            text-align: left;
+            padding: 0.75rem;
+            background-color: var(--light-color);
+        }
+        
+        .pin-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .pin-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .power-pin {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid var(--power-color);
+        }
+        
+        .gpio-pin {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid var(--gpio-color);
+        }
+        
+        .special-pin {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 3px solid var(--special-color);
+        }
+        
+        .ground-pin {
+            background-color: rgba(127, 140, 141, 0.1);
+            border-left: 3px solid var(--ground-color);
+        }
+        
+        .pin-highlight {
+            font-weight: bold;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--special-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .pin-tables {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">📌</span> Raspberry Pi Pico W Pinout (40 Pins Total)</h1>
+            <p class="subtitle">Complete reference for GPIO, power, and special function pins</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2><span class="emoji">🔋</span> Power Pins</h2>
+            <p>The Pico W has several power-related pins for different voltage requirements and ground connections.</p>
+            
+            <table class="pin-table">
+                <thead>
+                    <tr>
+                        <th>Pin</th>
+                        <th>Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="power-pin">
+                        <td class="pin-highlight">36</td>
+                        <td>3V3 (OUT) - 3.3V output</td>
+                    </tr>
+                    <tr class="ground-pin">
+                        <td class="pin-highlight">39</td>
+                        <td>GND - Ground</td>
+                    </tr>
+                    <tr class="power-pin">
+                        <td class="pin-highlight">40</td>
+                        <td>VSYS (input 1.8–5.5V) - Main system input voltage</td>
+                    </tr>
+                    <tr class="power-pin">
+                        <td class="pin-highlight">37</td>
+                        <td>3V3_EN - Enables the 3.3V regulator</td>
+                    </tr>
+                    <tr class="power-pin">
+                        <td class="pin-highlight">38</td>
+                        <td>VBUS (from USB) - 5V from USB connection</td>
+                    </tr>
+                    <tr class="ground-pin">
+                        <td>3, 8, 13, 18, 23, 28, 33</td>
+                        <td>GND (Ground) - Multiple ground connections</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧠</span> GPIO Pins</h2>
+            <p>Most GPIOs are multi-purpose: they support PWM, ADC, UART, SPI, I2C, and Digital I/O.</p>
+            
+            <div class="pin-tables">
+                <table class="pin-table">
+                    <thead>
+                        <tr>
+                            <th>GPIO</th>
+                            <th>Pin Number</th>
+                            <th>Functions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP0</td>
+                            <td>1</td>
+                            <td>UART0 TX, SPI0 RX, I2C0 SDA</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP1</td>
+                            <td>2</td>
+                            <td>UART0 RX, SPI0 CSn, I2C0 SCL</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP2</td>
+                            <td>4</td>
+                            <td>SPI0 SCK, UART1 TX</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP3</td>
+                            <td>5</td>
+                            <td>SPI0 TX, UART1 RX</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP4</td>
+                            <td>6</td>
+                            <td>I2C1 SDA</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP5</td>
+                            <td>7</td>
+                            <td>I2C1 SCL</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP6</td>
+                            <td>9</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP7</td>
+                            <td>10</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP8</td>
+                            <td>11</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP9</td>
+                            <td>12</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP10</td>
+                            <td>14</td>
+                            <td>UART1 TX</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table class="pin-table">
+                    <thead>
+                        <tr>
+                            <th>GPIO</th>
+                            <th>Pin Number</th>
+                            <th>Functions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP11</td>
+                            <td>15</td>
+                            <td>UART1 RX</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP12</td>
+                            <td>16</td>
+                            <td>SPI1 RX</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP13</td>
+                            <td>17</td>
+                            <td>SPI1 CSn</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP14</td>
+                            <td>19</td>
+                            <td>SPI1 SCK</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP15</td>
+                            <td>20</td>
+                            <td>SPI1 TX</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP16</td>
+                            <td>21</td>
+                            <td>UART0 TX, I2C0 SDA</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP17</td>
+                            <td>22</td>
+                            <td>UART0 RX, I2C0 SCL</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP18</td>
+                            <td>24</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP19</td>
+                            <td>25</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP20</td>
+                            <td>26</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP21</td>
+                            <td>27</td>
+                            <td>PWM</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <table class="pin-table">
+                    <thead>
+                        <tr>
+                            <th>GPIO</th>
+                            <th>Pin Number</th>
+                            <th>Functions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP22</td>
+                            <td>29</td>
+                            <td>PWM</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP26</td>
+                            <td>31</td>
+                            <td>ADC0</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP27</td>
+                            <td>32</td>
+                            <td>ADC1</td>
+                        </tr>
+                        <tr class="gpio-pin">
+                            <td class="pin-highlight">GP28</td>
+                            <td>34</td>
+                            <td>ADC2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">📡</span> Special Pins</h2>
+            
+            <table class="pin-table">
+                <thead>
+                    <tr>
+                        <th>Pin</th>
+                        <th>Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="special-pin">
+                        <td class="pin-highlight">30</td>
+                        <td>RUN - Reset the Pico W (connect to ground to reset)</td>
+                    </tr>
+                    <tr class="special-pin">
+                        <td class="pin-highlight">GPIO24 & GPIO25</td>
+                        <td>Internal use (Wi-Fi chip & onboard LED)</td>
+                    </tr>
+                    <tr class="special-pin">
+                        <td class="pin-highlight">GPIO23</td>
+                        <td>Connected to Wi-Fi chip (do not use)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <p><strong>Important Note:</strong> GPIO23, GPIO24, and GPIO25 are used for the onboard Wi-Fi chip and LED. Avoid using these pins in your projects to prevent interference with the wireless functionality.</p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">📷</span> Pinout Diagram</h2>
+            
+            <div class="pinout-container">
+                <img src="https://www.raspberrypi.com/documentation/microcontrollers/images/pico-pinout.svg" alt="Pico W Pinout Diagram" class="pinout-image">
+            </div>
+            
+            <p style="text-align: center; margin-top: 1rem;">Official Raspberry Pi Pico W pinout diagram showing all 40 pins and their functions.</p>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W Pinout Reference</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Add pin highlighting on hover
+            const pinRows = document.querySelectorAll('.pin-table tr');
+            pinRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    const pinNum = this.querySelector('.pin-highlight');
+                    if (pinNum) {
+                        pinNum.style.color = this.classList.contains('power-pin') ? 'var(--power-color)' :
+                                              this.classList.contains('gpio-pin') ? 'var(--gpio-color)' :
+                                              this.classList.contains('special-pin') ? 'var(--special-color)' :
+                                              this.classList.contains('ground-pin') ? 'var(--ground-color)' :
+                                              'var(--primary-color)';
+                    }
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    const pinNum = this.querySelector('.pin-highlight');
+                    if (pinNum) {
+                        pinNum.style.color = '';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

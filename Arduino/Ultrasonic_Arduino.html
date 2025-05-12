@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Ultrasonic Sensors with Arduino</title>
+    <style>
+        :root {
+            --primary: #00796B;
+            --secondary: #009688;
+            --accent: #FFC107;
+            --light: #E0F2F1;
+            --dark: #004D40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .sensor-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sensor-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Using Ultrasonic Sensors (HC-SR04) with Arduino</h1>
+        <p>Learn how to measure distance using sound waves</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is an Ultrasonic Sensor?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>An ultrasonic sensor measures distance by sending out a sound wave and measuring the time it takes for the echo to return.</p>
+            <p>It works like a bat or sonar system.</p>
+        </div>
+        
+        <h3>🧠 How It Works:</h3>
+        <ol>
+            <li>The trigger pin sends out a high-frequency sound wave (40kHz)</li>
+            <li>The echo pin listens for the sound to bounce back</li>
+            <li>Arduino calculates distance based on the time delay</li>
+        </ol>
+        
+        <div class="info-box">
+            <p>Speed of sound ≈ 343 meters/second = 0.034 cm/µs</p>
+        </div>
+        
+        <h3>📦 HC-SR04 Sensor:</h3>
+        <table>
+            <tr>
+                <th>Pin</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>VCC</td>
+                <td>+5V Power</td>
+            </tr>
+            <tr>
+                <td>GND</td>
+                <td>Ground</td>
+            </tr>
+            <tr>
+                <td>TRIG</td>
+                <td>Trigger Pin (output signal)</td>
+            </tr>
+            <tr>
+                <td>ECHO</td>
+                <td>Echo Pin (input signal received)</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">1 x HC-SR04 ultrasonic sensor</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+        </div>
+        
+        <h3>🔌 Wiring the HC-SR04 to Arduino:</h3>
+        <table>
+            <tr>
+                <th>HC-SR04 Pin</th>
+                <th>Connect to Arduino</th>
+            </tr>
+            <tr>
+                <td>VCC</td>
+                <td>5V</td>
+            </tr>
+            <tr>
+                <td>GND</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>TRIG</td>
+                <td>Pin 9</td>
+            </tr>
+            <tr>
+                <td>ECHO</td>
+                <td>Pin 10</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Arduino Code – Measure Distance</h2>
+        
+        <h3>🧾 Basic Code Example:</h3>
+        <div class="code-block">
+            <span class="code-include">#define</span> trigPin <span class="code-value">9</span><br>
+            <span class="code-include">#define</span> echoPin <span class="code-value">10</span><br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(trigPin, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(echoPin, <span class="code-value">INPUT</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-comment">// Send 10µs pulse to trigger pin</span><br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(trigPin, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delayMicroseconds</span>(<span class="code-value">2</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(trigPin, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delayMicroseconds</span>(<span class="code-value">10</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(trigPin, <span class="code-value">LOW</span>);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment">// Read echo time</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">long</span> duration = <span class="code-function">pulseIn</span>(echoPin, <span class="code-value">HIGH</span>);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment">// Calculate distance in cm</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">float</span> distance = duration * <span class="code-value">0.034</span> / <span class="code-value">2</span>;<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Distance: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(distance);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">" cm"</span>);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">500</span>);<br>
+            }
+        </div>
+        
+        <h3>🧮 How Distance is Calculated:</h3>
+        <div class="info-box">
+            <p><code>distance = (duration × speed of sound) / 2</code></p>
+            <p><code>distance = (duration × 0.034 cm/µs) / 2</code></p>
+            <p>We divide by 2 because the signal travels to the object and back.</p>
+        </div>
+        
+        <div class="project-ideas">
+            <h3>🎯 Projects You Can Build:</h3>
+            <table>
+                <tr>
+                    <th>Project Idea</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Obstacle Avoidance Robot</td>
+                    <td>Use ultrasonic sensor to avoid objects</td>
+                </tr>
+                <tr>
+                    <td>Smart Parking System</td>
+                    <td>Detect if a car is in a parking spot</td>
+                </tr>
+                <tr>
+                    <td>Water Level Monitor</td>
+                    <td>Measure distance from water to sensor</td>
+                </tr>
+                <tr>
+                    <td>Touchless Switch</td>
+                    <td>Trigger an LED or servo when you wave your hand</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Combine ultrasonic + buzzer to beep when too close.</li>
+            <li>Display distance on LCD screen.</li>
+            <li>Use ultrasonic to open a door when someone approaches (servo + sensor).</li>
+            <li>Create a distance alarm that triggers when objects get within 10cm.</li>
+            <li>Make a simple radar system that scans left and right with a servo.</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Key Point</th>
+            </tr>
+            <tr>
+                <td>Ultrasonic Sensor</td>
+                <td>Measures distance using sound waves</td>
+            </tr>
+            <tr>
+                <td>TRIG / ECHO</td>
+                <td>Trigger sends sound; Echo receives it</td>
+            </tr>
+            <tr>
+                <td>Calculation</td>
+                <td>distance = duration × 0.034 / 2</td>
+            </tr>
+            <tr>
+                <td>Applications</td>
+                <td>Robots, automation, parking, proximity alert</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino Ultrasonic Sensor Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potentiometer with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --potentiometer-color: #8e44ad;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .pin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .pin-table th, .pin-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .pin-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .pin-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .pin-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .function-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .function-table th, .function-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .function-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .function-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .function-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .potentiometer-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+        
+        .potentiometer {
+            width: 100px;
+            height: 100px;
+            background-color: var(--potentiometer-color);
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .knob {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+        }
+        
+        .knob-handle {
+            width: 40px;
+            height: 6px;
+            background-color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: left center;
+            transform: translate(0, -50%) rotate(0deg);
+        }
+        
+        .value-display {
+            background-color: #34495e;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            margin-top: 1rem;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .component-card {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .component-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--potentiometer-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">🎚️</span> What is a Potentiometer?</h1>
+            <p class="subtitle">Using Variable Resistors with Raspberry Pi Pico W</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>Potentiometer Basics</h2>
+            <p>A potentiometer is a variable resistor. It allows you to manually change the voltage output by rotating its knob. You can use it to:</p>
+            <ul>
+                <li>Control brightness of LEDs</li>
+                <li>Adjust volume</li>
+                <li>Input analog values to the microcontroller</li>
+            </ul>
+            
+            <div class="potentiometer-demo">
+                <div class="potentiometer" id="potentiometer">
+                    <div class="knob">
+                        <div class="knob-handle" id="knobHandle"></div>
+                    </div>
+                </div>
+                <div class="value-display" id="valueDisplay">
+                    Value: 0 (0.00V)
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧰</span> What You Need:</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-icon">⚡</div>
+                    <h3>Raspberry Pi Pico W</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔘</div>
+                    <h3>Potentiometer (10kΩ)</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🔌</div>
+                    <h3>Jumper wires</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">🧪</div>
+                    <h3>Breadboard</h3>
+                </div>
+                <div class="component-card">
+                    <div class="component-icon">💻</div>
+                    <h3>Thonny IDE</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">⚙️</span> How a Potentiometer Works</h2>
+            <p>The potentiometer has 3 pins:</p>
+            
+            <table class="pin-table">
+                <thead>
+                    <tr>
+                        <th>Pin</th>
+                        <th>Connects to</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Left Pin</td>
+                        <td>GND (Ground)</td>
+                    </tr>
+                    <tr>
+                        <td>Middle Pin (wiper)</td>
+                        <td>GP26 (ADC0) on Pico</td>
+                    </tr>
+                    <tr>
+                        <td>Right Pin</td>
+                        <td>3.3V (Power)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>The middle pin gives a voltage between 0V and 3.3V depending on the rotation.</p>
+            
+            <h3><span class="emoji">📍</span> Wiring with Pico W</h3>
+            <table class="pin-table">
+                <thead>
+                    <tr>
+                        <th>Potentiometer Pin</th>
+                        <th>Pico Pin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GND (left)</td>
+                        <td>GND (e.g. Pin 38)</td>
+                    </tr>
+                    <tr>
+                        <td>VCC (right)</td>
+                        <td>3.3V (e.g. Pin 36)</td>
+                    </tr>
+                    <tr>
+                        <td>Signal (middle)</td>
+                        <td>GP26 (Pin 31)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🧑‍💻</span> MicroPython Code to Read Potentiometer</h2>
+            <div class="highlight">
+                <pre><code>from machine import ADC, Pin
+from time import sleep
+
+pot = ADC(26)  # GP26 = ADC0
+
+while True:
+    value = pot.read_u16()  # Reads 16-bit value (0 to 65535)
+    voltage = 3.3 * value / 65535
+    print("Raw:", value, "Voltage:", round(voltage, 2), "V")
+    sleep(0.5)</code></pre>
+            </div>
+            
+            <h3><span class="emoji">🧠</span> How It Works</h3>
+            <table class="function-table">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ADC(26)</code></td>
+                        <td>Sets up GP26 as Analog input</td>
+                    </tr>
+                    <tr>
+                        <td><code>read_u16()</code></td>
+                        <td>Reads analog value (0 to 65535)</td>
+                    </tr>
+                    <tr>
+                        <td>Voltage formula</td>
+                        <td>Converts the analog value to real volts</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-4">
+            <h2><span class="emoji">🌟</span> Project Ideas with Potentiometer</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">💡</div>
+                    <h3>LED Brightness Control</h3>
+                    <p>Use PWM to change brightness</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🔊</div>
+                    <h3>Volume Adjuster</h3>
+                    <p>For audio output using a DAC</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">📺</div>
+                    <h3>LCD Contrast Controller</h3>
+                    <p>Dynamically adjust display</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🎮</div>
+                    <h3>Game Paddle Controller</h3>
+                    <p>Like old arcade games</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🔄</span> Combine with Other Components</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">📟</div>
+                    <h3>LCD Screen</h3>
+                    <p>Show live potentiometer value</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">⚙️</div>
+                    <h3>Servo Motor</h3>
+                    <p>Control angle with pot rotation</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">💡</div>
+                    <h3>LED</h3>
+                    <p>Dim or brighten based on input</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W Potentiometer Tutorial</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Potentiometer demo interaction
+            const potentiometer = document.getElementById('potentiometer');
+            const knobHandle = document.getElementById('knobHandle');
+            const valueDisplay = document.getElementById('valueDisplay');
+            let isDragging = false;
+            let currentAngle = 0;
+            
+            potentiometer.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                updateAngle(e);
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    updateAngle(e);
+                }
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+            
+            function updateAngle(e) {
+                const rect = potentiometer.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * (180 / Math.PI);
+                
+                currentAngle = angle;
+                knobHandle.style.transform = `translate(0, -50%) rotate(${angle}deg)`;
+                
+                // Calculate value (0-65535) and voltage (0-3.3V)
+                const normalizedAngle = (angle + 180) % 360; // Convert to 0-360 range
+                const value = Math.round(normalizedAngle / 360 * 65535);
+                const voltage = (3.3 * value / 65535).toFixed(2);
+                
+                valueDisplay.textContent = `Value: ${value} (${voltage}V)`;
+            }
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code')?.innerText || this.innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

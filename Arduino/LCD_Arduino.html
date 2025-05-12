@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using 16x2 LCD with Arduino</title>
+    <style>
+        :root {
+            --primary: #1976D2;
+            --secondary: #2196F3;
+            --accent: #FFC107;
+            --light: #E3F2FD;
+            --dark: #0D47A1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .pinout-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .pinout-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .lcd-commands {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Using 16x2 LCD with Arduino</h1>
+        <p>Learn how to display text and data on LCD screens</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is an LCD?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>An LCD (Liquid Crystal Display) is a screen module used to display characters, numbers, or symbols.</p>
+            <p>The 16x2 LCD can show:</p>
+            <ul>
+                <li>2 rows</li>
+                <li>16 characters per row</li>
+            </ul>
+            <p>It communicates with Arduino using either:</p>
+            <ul>
+                <li><strong>Parallel (standard 16 pins)</strong> — more wires</li>
+                <li><strong>I2C (only 4 pins)</strong> — easier and cleaner</li>
+            </ul>
+            <p>This lesson uses the standard 16-pin LCD with the Hitachi HD44780 driver.</p>
+        </div>
+        
+        <h3>🔍 LCD 16x2 Pinout:</h3>
+        <table>
+            <tr>
+                <th>Pin #</th>
+                <th>Name</th>
+                <th>Function</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>GND</td>
+                <td>Ground</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>VCC</td>
+                <td>+5V Power</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>VO</td>
+                <td>Contrast (via potentiometer)</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>RS</td>
+                <td>Register Select</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>RW</td>
+                <td>Read/Write (GND for write)</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>E</td>
+                <td>Enable</td>
+            </tr>
+            <tr>
+                <td>7–14</td>
+                <td>D0–D7</td>
+                <td>Data lines (we use D4–D7)</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>A</td>
+                <td>LED Backlight (+)</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td>K</td>
+                <td>LED Backlight (– / GND)</td>
+            </tr>
+        </table>
+        
+        <div class="info-box">
+            <p>Usually we use 4-bit mode (only D4–D7) to save pins.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">16x2 LCD display</div>
+            <div class="material-item">1 x 10kΩ potentiometer (for contrast)</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+            <div class="material-item">(Optional: 220Ω resistor for backlight)</div>
+        </div>
+        
+        <h3>🔌 Wiring (Standard Parallel Mode):</h3>
+        <table>
+            <tr>
+                <th>LCD Pin</th>
+                <th>Connect To</th>
+            </tr>
+            <tr>
+                <td>1 (GND)</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>2 (VCC)</td>
+                <td>+5V</td>
+            </tr>
+            <tr>
+                <td>3 (VO)</td>
+                <td>Middle pin of Potentiometer (sides to GND & +5V)</td>
+            </tr>
+            <tr>
+                <td>4 (RS)</td>
+                <td>Pin 12 (Arduino)</td>
+            </tr>
+            <tr>
+                <td>5 (RW)</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>6 (E)</td>
+                <td>Pin 11 (Arduino)</td>
+            </tr>
+            <tr>
+                <td>11 (D4)</td>
+                <td>Pin 5</td>
+            </tr>
+            <tr>
+                <td>12 (D5)</td>
+                <td>Pin 4</td>
+            </tr>
+            <tr>
+                <td>13 (D6)</td>
+                <td>Pin 3</td>
+            </tr>
+            <tr>
+                <td>14 (D7)</td>
+                <td>Pin 2</td>
+            </tr>
+            <tr>
+                <td>15 (A)</td>
+                <td>+5V (through 220Ω resistor)</td>
+            </tr>
+            <tr>
+                <td>16 (K)</td>
+                <td>GND</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Arduino Code – Displaying Text</h2>
+        
+        <h3>🧾 Step 1: Include Library</h3>
+        <div class="info-box">
+            <p>Arduino comes with a built-in LiquidCrystal library.</p>
+        </div>
+        <div class="code-block">
+            <span class="code-include">#include</span> <<span class="code-value">LiquidCrystal.h</span>>
+        </div>
+        
+        <h3>🧾 Step 2: Define LCD Pins</h3>
+        <div class="code-block">
+            <span class="code-comment">// (RS, E, D4, D5, D6, D7)</span><br>
+            LiquidCrystal <span class="code-function">lcd</span>(<span class="code-value">12</span>, <span class="code-value">11</span>, <span class="code-value">5</span>, <span class="code-value">4</span>, <span class="code-value">3</span>, <span class="code-value">2</span>);
+        </div>
+        
+        <h3>🧾 Step 3: Setup and Print Text</h3>
+        <div class="code-block">
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">lcd.begin</span>(<span class="code-value">16</span>, <span class="code-value">2</span>);                <span class="code-comment">// Set up LCD with 16 columns and 2 rows</span><br>
+            &nbsp;&nbsp;<span class="code-function">lcd.print</span>(<span class="code-value">"Hello, world!"</span>);     <span class="code-comment">// Print on first row</span><br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">lcd.setCursor</span>(<span class="code-value">0</span>, <span class="code-value">1</span>);            <span class="code-comment">// Column 0, Row 1 (second row)</span><br>
+            &nbsp;&nbsp;<span class="code-function">lcd.print</span>(<span class="code-value">"Arduino Rocks!"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">2000</span>);<br>
+            }
+        </div>
+        
+        <h3>🔧 LCD Commands:</h3>
+        <div class="lcd-commands">
+            <table>
+                <tr>
+                    <th>Command</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>lcd.begin(16, 2)</code></td>
+                    <td>Initialize LCD size</td>
+                </tr>
+                <tr>
+                    <td><code>lcd.setCursor(x, y)</code></td>
+                    <td>Set cursor to column x, row y</td>
+                </tr>
+                <tr>
+                    <td><code>lcd.print("text")</code></td>
+                    <td>Print text to current position</td>
+                </tr>
+                <tr>
+                    <td><code>lcd.clear()</code></td>
+                    <td>Clears the screen</td>
+                </tr>
+                <tr>
+                    <td><code>lcd.blink()</code></td>
+                    <td>Turns on blinking cursor</td>
+                </tr>
+                <tr>
+                    <td><code>lcd.noBlink()</code></td>
+                    <td>Turns it off</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🎯 Student Challenges:</h2>
+        <ol>
+            <li>Display a counter that increases every second.</li>
+            <li>Scroll text from right to left.</li>
+            <li>Use a button to change the message on the screen.</li>
+            <li>Display sensor values (like temperature or distance).</li>
+            <li>Create a simple digital clock showing hours and minutes.</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Key Idea</th>
+            </tr>
+            <tr>
+                <td>LCD Display</td>
+                <td>Shows text using 2 rows × 16 characters</td>
+            </tr>
+            <tr>
+                <td>4-bit Mode</td>
+                <td>Uses only D4–D7 to save Arduino pins</td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td>Use LiquidCrystal to control the display</td>
+            </tr>
+            <tr>
+                <td>Uses</td>
+                <td>Menus, messages, sensor displays, clocks, etc.</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino LCD Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

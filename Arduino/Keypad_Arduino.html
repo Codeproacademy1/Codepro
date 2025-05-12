@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Keypads with Arduino</title>
+    <style>
+        :root {
+            --primary: #7B1FA2;
+            --secondary: #9C27B0;
+            --accent: #FF9800;
+            --light: #F3E5F5;
+            --dark: #4A148C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .keypad-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .keypad-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Using Keypads with Arduino</h1>
+        <p>Learn how to connect and program matrix keypads for user input</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is a Keypad?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>A keypad is a matrix of buttons arranged in rows and columns, allowing Arduino to detect multiple key presses using fewer pins.</p>
+            <p>The most common is the 4x4 keypad (16 buttons), but there's also a 4x3 keypad (like a phone dial pad).</p>
+        </div>
+        
+        <h3>🔍 How It Works:</h3>
+        <p>The keypad has:</p>
+        <ul>
+            <li><strong>Rows</strong> (R1, R2, R3, R4)</li>
+            <li><strong>Columns</strong> (C1, C2, C3, C4)</li>
+        </ul>
+        <p>When you press a key, it connects a specific row and column. Arduino scans these pins to detect which key was pressed.</p>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO (or similar)</div>
+            <div class="material-item">1 x 4x4 Keypad module</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+            <div class="material-item">(Optional) LCD to show pressed keys</div>
+        </div>
+        
+        <h3>🔌 Pin Mapping (4x4 Keypad)</h3>
+        <table>
+            <tr>
+                <th>Keypad Pin</th>
+                <th>Connect To Arduino</th>
+            </tr>
+            <tr>
+                <td>R1</td>
+                <td>Pin 9</td>
+            </tr>
+            <tr>
+                <td>R2</td>
+                <td>Pin 8</td>
+            </tr>
+            <tr>
+                <td>R3</td>
+                <td>Pin 7</td>
+            </tr>
+            <tr>
+                <td>R4</td>
+                <td>Pin 6</td>
+            </tr>
+            <tr>
+                <td>C1</td>
+                <td>Pin 5</td>
+            </tr>
+            <tr>
+                <td>C2</td>
+                <td>Pin 4</td>
+            </tr>
+            <tr>
+                <td>C3</td>
+                <td>Pin 3</td>
+            </tr>
+            <tr>
+                <td>C4</td>
+                <td>Pin 2</td>
+            </tr>
+        </table>
+        <p>If you're using a 4x3 keypad, just use 7 pins instead of 8.</p>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Install Keypad Library</h2>
+        
+        <h3>📦 Steps:</h3>
+        <ol>
+            <li>Open Arduino IDE.</li>
+            <li>Go to Sketch > Include Library > Manage Libraries</li>
+            <li>Search for "Keypad" by Mark Stanley</li>
+            <li>Install it</li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 4: Arduino Code Example</h2>
+        
+        <h3>🧾 Display Pressed Key in Serial Monitor</h3>
+        <div class="code-block">
+            <span class="code-include">#include</span> <<span class="code-value">Keypad.h</span>><br><br>
+            
+            <span class="code-keyword">const</span> <span class="code-keyword">byte</span> ROWS = <span class="code-value">4</span>; <span class="code-comment">// Four rows</span><br>
+            <span class="code-keyword">const</span> <span class="code-keyword">byte</span> COLS = <span class="code-value">4</span>; <span class="code-comment">// Four columns</span><br><br>
+            
+            <span class="code-comment">// Define the keymap</span><br>
+            <span class="code-keyword">char</span> keys[ROWS][COLS] = {<br>
+            &nbsp;&nbsp;{<span class="code-value">'1'</span>,<span class="code-value">'2'</span>,<span class="code-value">'3'</span>,<span class="code-value">'A'</span>},<br>
+            &nbsp;&nbsp;{<span class="code-value">'4'</span>,<span class="code-value">'5'</span>,<span class="code-value">'6'</span>,<span class="code-value">'B'</span>},<br>
+            &nbsp;&nbsp;{<span class="code-value">'7'</span>,<span class="code-value">'8'</span>,<span class="code-value">'9'</span>,<span class="code-value">'C'</span>},<br>
+            &nbsp;&nbsp;{<span class="code-value">'*'</span>,<span class="code-value">'0'</span>,<span class="code-value">'#'</span>,<span class="code-value">'D'</span>}<br>
+            };<br><br>
+            
+            <span class="code-comment">// Connect keypad ROW0, ROW1, ROW2, ROW3 to these Arduino pins:</span><br>
+            <span class="code-keyword">byte</span> rowPins[ROWS] = {<span class="code-value">9</span>, <span class="code-value">8</span>, <span class="code-value">7</span>, <span class="code-value">6</span>};<br>
+            <span class="code-comment">// Connect keypad COL0, COL1, COL2, COL3 to these Arduino pins:</span><br>
+            <span class="code-keyword">byte</span> colPins[COLS] = {<span class="code-value">5</span>, <span class="code-value">4</span>, <span class="code-value">3</span>, <span class="code-value">2</span>};<br><br>
+            
+            <span class="code-comment">// Create the keypad object</span><br>
+            Keypad keypad = <span class="code-function">Keypad</span>( <span class="code-function">makeKeymap</span>(keys), rowPins, colPins, ROWS, COLS );<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-keyword">char</span> key = keypad.<span class="code-function">getKey</span>();<br><br>
+            
+            &nbsp;&nbsp;<span class="code-keyword">if</span> (key) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Pressed: "</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.println</span>(key);<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <div class="project-ideas">
+            <h3>💡 What You Can Build With Keypad + Arduino:</h3>
+            <table>
+                <tr>
+                    <th>Project Idea</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Password Lock</td>
+                    <td>Only unlock something if the right code is typed</td>
+                </tr>
+                <tr>
+                    <td>Calculator</td>
+                    <td>Use keypad with LCD to do math</td>
+                </tr>
+                <tr>
+                    <td>Menu Navigation</td>
+                    <td>Scroll through options on LCD</td>
+                </tr>
+                <tr>
+                    <td>Access Control</td>
+                    <td>Use keypad to control relays or motors</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Make a 4-digit password system.</li>
+            <li>Combine keypad with LCD to show what's being typed.</li>
+            <li>Use keypad to control an LED pattern or servo motor.</li>
+            <li>Create a simple calculator that adds two numbers.</li>
+            <li>Build a menu system where different keys select different functions.</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Key Idea</th>
+            </tr>
+            <tr>
+                <td>Keypad</td>
+                <td>Matrix of buttons (4x4 or 4x3)</td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td>Use Keypad.h to handle scanning easily</td>
+            </tr>
+            <tr>
+                <td>Code</td>
+                <td>getKey() reads the pressed button</td>
+            </tr>
+            <tr>
+                <td>Projects</td>
+                <td>Password locks, menus, input systems</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino Keypad Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

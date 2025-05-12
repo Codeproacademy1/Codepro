@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Digital I/O Guide</title>
+    <style>
+        :root {
+            --primary: #00979d;
+            --secondary: #005b5f;
+            --light: #e0f7fa;
+            --dark: #002b2d;
+            --highlight: #b2ebf2;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--highlight);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--primary);
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .card.highlight {
+            border-left: 5px solid var(--primary);
+            background-color: var(--highlight);
+        }
+        
+        .code-block {
+            background-color: #f0f0f0;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .note {
+            background-color: #fffde7;
+            padding: 15px;
+            border-left: 4px solid #ffd600;
+            margin: 20px 0;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            padding: 15px;
+            border-left: 4px solid #f44336;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+        }
+        
+        .simulator {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+        
+        .circuit {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .circuit-components {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .led {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .led.on {
+            background-color: #ff3d00;
+            box-shadow: 0 0 20px #ff3d00;
+        }
+        
+        .button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            user-select: none;
+            box-shadow: 0 4px 0 #2E7D32, 0 6px 10px rgba(0,0,0,0.3);
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        
+        .button:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #2E7D32, 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .button.pressed {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #2E7D32, 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .simulator-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .wiring-diagram {
+            flex-grow: 1;
+            min-width: 300px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .card {
+                min-width: auto;
+            }
+            
+            .circuit {
+                justify-content: center;
+            }
+            
+            .circuit-components {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Arduino Digital I/O Guide</h1>
+        <p>Learn how to use digital input and output with Arduino</p>
+    </header>
+    
+    <section>
+        <h2>What is Digital I/O?</h2>
+        <p>Digital I/O (Input/Output) refers to using the Arduino pins to either:</p>
+        <ul>
+            <li>Read digital signals (like pressing a button – ON or OFF)</li>
+            <li>Send digital signals (like turning an LED ON or OFF)</li>
+        </ul>
+        <p>Each digital pin on the Arduino can act as:</p>
+        <ul>
+            <li><strong>INPUT</strong> – to read data</li>
+            <li><strong>OUTPUT</strong> – to send signals</li>
+        </ul>
+    </section>
+    
+    <div class="container">
+        <div class="card">
+            <h3>pinMode(pin, mode)</h3>
+            <p><strong>Purpose:</strong> Used to set the mode of a digital pin: INPUT, OUTPUT, or INPUT_PULLUP</p>
+            
+            <div class="code-block">
+                pinMode(pin, mode);
+            </div>
+            
+            <p><strong>Parameters:</strong></p>
+            <ul>
+                <li><code>pin</code>: The pin number (e.g., 13)</li>
+                <li><code>mode</code>:
+                    <ul>
+                        <li><code>INPUT</code> – for reading</li>
+                        <li><code>OUTPUT</code> – for sending</li>
+                        <li><code>INPUT_PULLUP</code> – input with internal resistor connected to HIGH</li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <p><strong>Example:</strong></p>
+            <div class="code-block">
+                pinMode(13, OUTPUT); // LED pin as output<br>
+                pinMode(7, INPUT);    // Button pin as input
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>digitalRead(pin)</h3>
+            <p><strong>Purpose:</strong> Reads a digital value (HIGH or LOW) from a digital pin.</p>
+            
+            <div class="code-block">
+                int value = digitalRead(pin);
+            </div>
+            
+            <p><strong>Returns:</strong></p>
+            <ul>
+                <li><code>HIGH (1)</code> if the pin has voltage</li>
+                <li><code>LOW (0)</code> if the pin is grounded or inactive</li>
+            </ul>
+            
+            <div class="warning">
+                <strong>Warning:</strong> If the pin is not connected to anything (floating), it may randomly return HIGH or LOW. Always connect with a pull-up or pull-down resistor (or use INPUT_PULLUP).
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3>digitalWrite(pin, value)</h3>
+            <p><strong>Purpose:</strong> Writes a digital value (HIGH or LOW) to a digital pin.</p>
+            
+            <div class="code-block">
+                digitalWrite(pin, value);
+            </div>
+            
+            <p><strong>Parameters:</strong></p>
+            <ul>
+                <li><code>pin</code>: The pin to write to</li>
+                <li><code>value</code>: <code>HIGH</code> to turn ON / 5V, <code>LOW</code> to turn OFF / 0V</li>
+            </ul>
+            
+            <p><strong>Example:</strong></p>
+            <div class="code-block">
+                digitalWrite(13, HIGH); // Turns ON LED<br>
+                digitalWrite(13, LOW);  // Turns OFF LED
+            </div>
+        </div>
+    </div>
+    
+    <section class="simulator">
+        <h2>Interactive Example: Button Controls LED</h2>
+        <p>Let's build a simple project: Press a button → Turn ON/OFF the LED.</p>
+        
+        <div class="circuit">
+            <div class="circuit-components">
+                <div id="led" class="led" title="LED connected to pin 13"></div>
+                <div id="button" class="button" title="Button connected to pin 7">PRESS</div>
+            </div>
+            
+            <div class="wiring-diagram">
+                <p><strong>Wiring Diagram:</strong></p>
+                <ul>
+                    <li>Button: One side to pin 7, other side to GND</li>
+                    <li>LED: Anode (+) to pin 13 (with 220Ω resistor), Cathode (–) to GND</li>
+                    <li>Using INPUT_PULLUP mode (internal pull-up resistor)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="simulator-controls">
+            <button id="run-btn">Run Simulation</button>
+            <button id="reset-btn">Reset</button>
+            <button id="press-btn">Press Button Programmatically</button>
+        </div>
+        
+        <p><strong>Code:</strong></p>
+        <div class="code-block" id="example-code">
+            int ledPin = 13;<br>
+            int buttonPin = 7;<br>
+            int buttonState = 0;<br><br>
+            
+            void setup() {<br>
+            &nbsp;&nbsp;pinMode(ledPin, OUTPUT);<br>
+            &nbsp;&nbsp;pinMode(buttonPin, INPUT_PULLUP); // Use internal pull-up resistor<br>
+            }<br><br>
+            
+            void loop() {<br>
+            &nbsp;&nbsp;buttonState = digitalRead(buttonPin);<br>
+            &nbsp;&nbsp;if (buttonState == LOW) { // Button pressed (pulled to GND)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;digitalWrite(ledPin, HIGH);<br>
+            &nbsp;&nbsp;} else {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;digitalWrite(ledPin, LOW);<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+    </section>
+    
+    <section>
+        <h2>Notes & Tips</h2>
+        <div class="note">
+            <p>When using <code>INPUT_PULLUP</code>, the logic is inverted: the button reads <code>LOW</code> when pressed (because it's connected to GND) and <code>HIGH</code> when released.</p>
+        </div>
+        
+        <p>You can use analog pins (A0–A5) as digital pins. Just refer to them like A0, A1, etc.</p>
+        
+        <div class="note">
+            <p>On some boards like Nano or Mini, A6 and A7 are analog input only.</p>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Related Functions</h2>
+        <ul>
+            <li><code>analogRead(pin)</code> – Reads analog voltage (0–1023)</li>
+            <li><code>analogWrite(pin, value)</code> – Writes PWM (like analog) output</li>
+            <li><code>delay(ms)</code> – Waits for specified milliseconds</li>
+        </ul>
+    </section>
+    
+    <section>
+        <h2>Summary Table</h2>
+        <table>
+            <tr>
+                <th>Function</th>
+                <th>Purpose</th>
+                <th>Returns/Action</th>
+            </tr>
+            <tr>
+                <td>pinMode()</td>
+                <td>Set pin as input or output</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>digitalRead()</td>
+                <td>Reads value from pin</td>
+                <td>HIGH or LOW</td>
+            </tr>
+            <tr>
+                <td>digitalWrite()</td>
+                <td>Writes value to pin</td>
+                <td>Sends HIGH (5V) or LOW (0V)</td>
+            </tr>
+        </table>
+    </section>
+    
+    <footer>
+        <p>© 2023 Arduino Digital I/O Guide | Educational Purpose</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const led = document.getElementById('led');
+            const button = document.getElementById('button');
+            const runBtn = document.getElementById('run-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const pressBtn = document.getElementById('press-btn');
+            const exampleCode = document.getElementById('example-code');
+            
+            let isSimulating = false;
+            let simulationInterval;
+            let isButtonPressed = false;
+            
+            // Original code for display
+            const originalCode = exampleCode.innerHTML;
+            
+            // Highlight code lines as they execute
+            const codeLines = originalCode.split('<br>');
+            
+            function highlightLine(lineIndex) {
+                exampleCode.innerHTML = codeLines.map((line, i) => {
+                    return i === lineIndex ? `<span style="background-color: yellow;">${line}</span>` : line;
+                }).join('<br>');
+            }
+            
+            function resetHighlight() {
+                exampleCode.innerHTML = originalCode;
+            }
+            
+            // Update LED based on button state
+            function updateLED() {
+                if (isButtonPressed) {
+                    led.classList.add('on');
+                } else {
+                    led.classList.remove('on');
+                }
+            }
+            
+            // Run simulation
+            runBtn.addEventListener('click', function() {
+                if (isSimulating) return;
+                
+                isSimulating = true;
+                let currentLine = 0;
+                
+                // Setup phase
+                highlightLine(3); // void setup() {
+                setTimeout(() => {
+                    highlightLine(4); // pinMode(ledPin, OUTPUT);
+                    setTimeout(() => {
+                        highlightLine(5); // pinMode(buttonPin, INPUT_PULLUP);
+                        setTimeout(() => {
+                            highlightLine(6); // }
+                            
+                            // Start loop
+                            setTimeout(() => {
+                                simulateLoop();
+                            }, 1000);
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            });
+            
+            function simulateLoop() {
+                let loopCount = 0;
+                
+                simulationInterval = setInterval(() => {
+                    if (loopCount >= 10) {
+                        clearInterval(simulationInterval);
+                        isSimulating = false;
+                        resetHighlight();
+                        return;
+                    }
+                    
+                    // Highlight the loop lines
+                    highlightLine(8); // void loop() {
+                    setTimeout(() => {
+                        highlightLine(9); // buttonState = digitalRead(buttonPin);
+                        
+                        // Update LED based on button state
+                        updateLED();
+                        
+                        setTimeout(() => {
+                            if (isButtonPressed) {
+                                highlightLine(10); // if (buttonState == LOW)
+                                setTimeout(() => {
+                                    highlightLine(11); // digitalWrite(ledPin, HIGH);
+                                    setTimeout(() => {
+                                        highlightLine(14); // }
+                                        loopCount++;
+                                    }, 500);
+                                }, 500);
+                            } else {
+                                highlightLine(10); // if (buttonState == LOW)
+                                setTimeout(() => {
+                                    highlightLine(12); // } else {
+                                    setTimeout(() => {
+                                        highlightLine(13); // digitalWrite(ledPin, LOW);
+                                        setTimeout(() => {
+                                            highlightLine(14); // }
+                                            loopCount++;
+                                        }, 500);
+                                    }, 500);
+                                }, 500);
+                            }
+                        }, 500);
+                    }, 500);
+                }, 2000);
+            }
+            
+            // Button press simulation
+            function pressButton() {
+                isButtonPressed = true;
+                button.classList.add('pressed');
+                updateLED();
+            }
+            
+            function releaseButton() {
+                isButtonPressed = false;
+                button.classList.remove('pressed');
+                updateLED();
+            }
+            
+            button.addEventListener('mousedown', pressButton);
+            button.addEventListener('mouseup', releaseButton);
+            button.addEventListener('mouseleave', function() {
+                if (isButtonPressed) {
+                    releaseButton();
+                }
+            });
+            
+            // Touch support for mobile devices
+            button.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                pressButton();
+            });
+            
+            button.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                releaseButton();
+            });
+            
+            // Programmatic button press
+            pressBtn.addEventListener('click', function() {
+                if (!isSimulating) {
+                    alert('Please start the simulation first');
+                    return;
+                }
+                
+                pressButton();
+                setTimeout(releaseButton, 1000);
+            });
+            
+            // Reset simulation
+            resetBtn.addEventListener('click', function() {
+                clearInterval(simulationInterval);
+                isSimulating = false;
+                isButtonPressed = false;
+                led.classList.remove('on');
+                button.classList.remove('pressed');
+                resetHighlight();
+            });
+        });
+    </script>
+</body>
+</html>

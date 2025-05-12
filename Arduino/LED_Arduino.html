@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding LEDs with Arduino</title>
+    <style>
+        :root {
+            --primary: #1565C0;
+            --secondary: #42A5F5;
+            --accent: #FF9800;
+            --light: #E3F2FD;
+            --dark: #0D47A1;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF3E0;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Understanding LEDs and Using Them with Arduino</h1>
+        <p>A complete beginner's guide to controlling LEDs with Arduino</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is an LED?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>LED stands for Light Emitting Diode.<br>
+            It is an electronic component that emits light when current passes through it in the correct direction.</p>
+        </div>
+        
+        <h3>🔍 Key Characteristics:</h3>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>Diode (one-way current flow)</td>
+            </tr>
+            <tr>
+                <td>Light Source</td>
+                <td>Yes, emits visible light or infrared</td>
+            </tr>
+            <tr>
+                <td>Direction</td>
+                <td>Current flows from Anode (+) to Cathode (–)</td>
+            </tr>
+            <tr>
+                <td>Current Rating</td>
+                <td>Typically around 20mA</td>
+            </tr>
+            <tr>
+                <td>Voltage Drop</td>
+                <td>Around 2V (depends on color)</td>
+            </tr>
+            <tr>
+                <td>Long Leg (Anode)</td>
+                <td>Connect to positive</td>
+            </tr>
+            <tr>
+                <td>Short Leg (Cathode)</td>
+                <td>Connect to ground (GND)</td>
+            </tr>
+        </table>
+        
+        <h3>🌈 LED Colors & Voltage:</h3>
+        <table>
+            <tr>
+                <th>Color</th>
+                <th>Typical Forward Voltage</th>
+            </tr>
+            <tr>
+                <td>Red</td>
+                <td>~1.8V</td>
+            </tr>
+            <tr>
+                <td>Green</td>
+                <td>~2.0V</td>
+            </tr>
+            <tr>
+                <td>Blue</td>
+                <td>~3.0V</td>
+            </tr>
+            <tr>
+                <td>White</td>
+                <td>~3.0V</td>
+            </tr>
+            <tr>
+                <td>Yellow</td>
+                <td>~2.0V</td>
+            </tr>
+        </table>
+        
+        <div class="warning-box">
+            <h3>⚠️ Why Use a Resistor?</h3>
+            <p>If you connect an LED directly to power (like 5V from Arduino) without a resistor, it can draw too much current and burn out.</p>
+            <p>A current-limiting resistor (usually 220Ω or 330Ω) is placed in series with the LED to protect it.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Wiring an LED to Arduino</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">1 x LED</div>
+            <div class="material-item">1 x 220Ω resistor</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+        </div>
+        
+        <h3>🔌 Circuit Diagram:</h3>
+        <div class="circuit-diagram">
+            <p>Arduino Pin 13 ─── [220Ω Resistor] ───> Anode (long leg) of LED</p>
+            <p>GND ─────────────────────────────────> Cathode (short leg) of LED</p>
+        </div>
+        
+        <h3>🛠 Wiring Steps:</h3>
+        <ol>
+            <li>Place the LED on the breadboard.</li>
+            <li>Connect a 220Ω resistor to pin 13 of Arduino.</li>
+            <li>Connect the other side of the resistor to the anode (long leg) of the LED.</li>
+            <li>Connect the cathode (short leg) of the LED to GND on Arduino.</li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Programming the LED with Arduino</h2>
+        
+        <div class="info-box">
+            <h3>🧠 What We'll Do:</h3>
+            <p>We'll write a simple program to blink the LED on and off every second.</p>
+        </div>
+        
+        <h3>📄 Code:</h3>
+        <div class="code-block">
+            <span class="code-keyword">int</span> ledPin = <span class="code-value">13</span>;  <span class="code-comment">// The pin where the LED is connected</span><br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(ledPin, <span class="code-value">OUTPUT</span>); <span class="code-comment">// Set the pin as an OUTPUT</span><br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">HIGH</span>); <span class="code-comment">// Turn ON the LED</span><br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);                <span class="code-comment">// Wait for 1 second</span><br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">LOW</span>);  <span class="code-comment">// Turn OFF the LED</span><br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);                <span class="code-comment">// Wait for 1 second</span><br>
+            }
+        </div>
+        
+        <div class="info-box">
+            <h3>💡 What Happens:</h3>
+            <ul>
+                <li><code>pinMode(ledPin, OUTPUT)</code>: Prepares the pin to send voltage</li>
+                <li><code>digitalWrite(HIGH)</code>: Sends 5V, turning the LED ON</li>
+                <li><code>delay(1000)</code>: Waits 1000 milliseconds = 1 second</li>
+                <li><code>digitalWrite(LOW)</code>: Turns LED OFF</li>
+            </ul>
+        </div>
+        
+        <div class="challenge">
+            <h3>📌 Challenge for Students:</h3>
+            <p>Can you make the LED:</p>
+            <ul>
+                <li>Blink faster (every 0.5 seconds)?</li>
+                <li>Stay on for 2 seconds, then off for 0.5 seconds?</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Key Point</th>
+            </tr>
+            <tr>
+                <td>LED</td>
+                <td>Emits light when powered correctly</td>
+            </tr>
+            <tr>
+                <td>Anode / Cathode</td>
+                <td>Long leg = + (Anode), Short leg = – (Cathode)</td>
+            </tr>
+            <tr>
+                <td>Resistor</td>
+                <td>Prevents the LED from burning out</td>
+            </tr>
+            <tr>
+                <td>Arduino Control</td>
+                <td>digitalWrite() + delay() for blinking</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino LED Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using WiFi with Arduino (ESP8266/ESP32)</title>
+    <style>
+        :root {
+            --primary: #0288D1;
+            --secondary: #03A9F4;
+            --accent: #FFC107;
+            --light: #E1F5FE;
+            --dark: #01579B;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📡 Using WiFi with Arduino (ESP8266/ESP32)</h1>
+        <p>Connect your projects to the Internet of Things</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What Is WiFi in Arduino?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>WiFi allows your Arduino-compatible board to connect to the internet or to a local network.</p>
+            <p>You can:</p>
+            <ul>
+                <li>Control Arduino from a phone/browser</li>
+                <li>Send data to cloud (e.g., temperature logs)</li>
+                <li>Receive commands or alerts online</li>
+            </ul>
+        </div>
+        
+        <h3>📦 Recommended Hardware:</h3>
+        <table>
+            <tr>
+                <th>Board</th>
+                <th>WiFi Built-In</th>
+                <th>USB Programmable</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>ESP8266 NodeMCU</td>
+                <td>✅ Yes</td>
+                <td>✅ Yes</td>
+                <td>Best for WiFi + basic projects</td>
+            </tr>
+            <tr>
+                <td>ESP32</td>
+                <td>✅ Yes</td>
+                <td>✅ Yes</td>
+                <td>More powerful, dual-core</td>
+            </tr>
+        </table>
+        
+        <div class="info-box">
+            <p>We'll use <strong>NodeMCU ESP8266</strong> in the examples below.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Install Board in Arduino IDE</h2>
+        
+        <h3>🧰 One-Time Setup (for ESP8266):</h3>
+        <ol>
+            <li>Open Arduino IDE</li>
+            <li>Go to: <strong>File > Preferences</strong></li>
+            <li>In "Additional Boards Manager URLs", add:
+                <div class="code-block" style="margin: 10px 0; padding: 10px;">
+                    https://arduino.esp8266.com/stable/package_esp8266com_index.json
+                </div>
+            </li>
+            <li>Then go to: <strong>Tools > Board > Boards Manager</strong></li>
+            <li>Search for <strong>ESP8266</strong> and click <strong>Install</strong></li>
+            <li>Now select <strong>NodeMCU 1.0 (ESP-12E Module)</strong> as your board</li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Basic WiFi Example – Connect to WiFi & Show IP</h2>
+        
+        <div class="code-block">
+            <span class="code-include">#include</span> <span class="code-value">&lt;ESP8266WiFi.h></span><br><br>
+            
+            <span class="code-keyword">const</span> <span class="code-keyword">char</span>* ssid = <span class="code-value">"YOUR_WIFI_NAME"</span>;<br>
+            <span class="code-keyword">const</span> <span class="code-keyword">char</span>* password = <span class="code-value">"YOUR_WIFI_PASSWORD"</span>;<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">115200</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">WiFi.begin</span>(ssid, password);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Connecting to WiFi..."</span>);<br>
+            &nbsp;&nbsp;<span class="code-keyword">while</span> (<span class="code-function">WiFi.status</span>() != WL_CONNECTED) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">500</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"."</span>);<br>
+            &nbsp;&nbsp;}<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"\nConnected!"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"IP Address: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-function">WiFi.localIP</span>());<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-comment">// Nothing here for now</span><br>
+            }
+        </div>
+        
+        <div class="info-box">
+            <p>Open <strong>Serial Monitor</strong>, set baud to <strong>115200</strong>, and see your device's IP once connected.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 4: Turn LED On/Off from Phone (Web Server)</h2>
+        
+        <div class="code-block">
+            <span class="code-include">#include</span> <span class="code-value">&lt;ESP8266WiFi.h></span><br><br>
+            
+            <span class="code-keyword">const</span> <span class="code-keyword">char</span>* ssid = <span class="code-value">"YOUR_WIFI_NAME"</span>;<br>
+            <span class="code-keyword">const</span> <span class="code-keyword">char</span>* password = <span class="code-value">"YOUR_WIFI_PASSWORD"</span>;<br><br>
+            
+            WiFiServer <span class="code-function">server</span>(<span class="code-value">80</span>);<br>
+            <span class="code-keyword">int</span> ledPin = <span class="code-value">D4</span>; <span class="code-comment">// Built-in LED</span><br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(ledPin, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">115200</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">WiFi.begin</span>(ssid, password);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-keyword">while</span> (<span class="code-function">WiFi.status</span>() != WL_CONNECTED) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">500</span>); <span class="code-function">Serial.print</span>(<span class="code-value">"."</span>);<br>
+            &nbsp;&nbsp;}<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"\nWiFi connected"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"IP address: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-function">WiFi.localIP</span>());<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">server.begin</span>();<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;WiFiClient client = <span class="code-function">server.available</span>();<br><br>
+            
+            &nbsp;&nbsp;<span class="code-keyword">if</span> (client) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">String</span> request = client.<span class="code-function">readStringUntil</span>(<span class="code-value">'\r'</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">flush</span>();<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (request.<span class="code-function">indexOf</span>(<span class="code-value">"/on"</span>) != -<span class="code-value">1</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (request.<span class="code-function">indexOf</span>(<span class="code-value">"/off"</span>) != -<span class="code-value">1</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">"HTTP/1.1 200 OK"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">"Content-Type: text/html"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">""</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">"&lt;h1>ESP8266 LED Control&lt;/h1>"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">"&lt;p>&lt;a href='/on'>ON&lt;/a>&lt;/p>"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;client.<span class="code-function">println</span>(<span class="code-value">"&lt;p>&lt;a href='/off'>OFF&lt;/a>&lt;/p>"</span>);<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <h3>🌐 How to Use:</h3>
+        <ol>
+            <li>Upload the code</li>
+            <li>Open Serial Monitor to find the IP address</li>
+            <li>Type it in your browser:
+                <ul>
+                    <li><code>http://your_ip_address/on</code> to turn LED ON</li>
+                    <li><code>http://your_ip_address/off</code> to turn LED OFF</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 5: Project Ideas with WiFi</h2>
+        
+        <div class="project-ideas">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>WiFi Light Controller</td>
+                    <td>Control home lights from phone</td>
+                </tr>
+                <tr>
+                    <td>Weather Station</td>
+                    <td>Send temperature to a cloud dashboard</td>
+                </tr>
+                <tr>
+                    <td>WiFi Door Lock</td>
+                    <td>Unlock using browser or mobile app</td>
+                </tr>
+                <tr>
+                    <td>Data Logger with Blynk</td>
+                    <td>Log sensor data and display in Blynk app</td>
+                </tr>
+                <tr>
+                    <td>Smart Irrigation System</td>
+                    <td>Monitor soil + control water pump via WiFi</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="challenge">
+            <h3>🧠 Student Challenges</h3>
+            <ol>
+                <li>Build a web-based temperature monitor (use DHT11 + ESP8266)</li>
+                <li>Create a login-protected web control panel</li>
+                <li>Send sensor data to ThingSpeak or Firebase</li>
+                <li>Make an IoT pet feeder with live camera feed</li>
+                <li>Develop a WiFi-controlled robotic car</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Detail</th>
+            </tr>
+            <tr>
+                <td>Board</td>
+                <td>ESP8266 NodeMCU or ESP32</td>
+            </tr>
+            <tr>
+                <td>Library</td>
+                <td>Use built-in ESP8266WiFi or WiFi.h</td>
+            </tr>
+            <tr>
+                <td>Communication</td>
+                <td>Web server or API to phone/browser</td>
+            </tr>
+            <tr>
+                <td>Project Uses</td>
+                <td>IoT, smart home, automation, remote control</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino WiFi Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Seven Segment Displays with Arduino</title>
+    <style>
+        :root {
+            --primary: #0277BD;
+            --secondary: #0288D1;
+            --accent: #FF6D00;
+            --light: #E1F5FE;
+            --dark: #01579B;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF3E0;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .segment-diagram {
+            text-align: center;
+            margin: 30px 0;
+            font-family: monospace;
+            line-height: 1.5;
+            font-size: 1.2rem;
+        }
+        
+        .segment-diagram .a {
+            color: #E53935;
+        }
+        
+        .segment-diagram .b {
+            color: #7B1FA2;
+        }
+        
+        .segment-diagram .c {
+            color: #1976D2;
+        }
+        
+        .segment-diagram .d {
+            color: #388E3C;
+        }
+        
+        .segment-diagram .e {
+            color: #FBC02D;
+        }
+        
+        .segment-diagram .f {
+            color: #E64A19;
+        }
+        
+        .segment-diagram .g {
+            color: #616161;
+        }
+        
+        .segment-diagram .dp {
+            color: #000000;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Using Seven Segment Displays with Arduino</h1>
+        <p>Learn how to display numbers and characters with 7-segment displays</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is a Seven Segment Display?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>A Seven Segment Display is an electronic component used to display numbers (0–9) and some letters.</p>
+            <p>It has seven LEDs (labeled a to g) arranged in a figure 8 shape, and an optional 8th LED for the dot (decimal point - dp).</p>
+            <p>Each LED can be turned ON or OFF individually to display a digit.</p>
+        </div>
+        
+        <h3>🔍 Segments Labeling:</h3>
+        <div class="segment-diagram">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="a">a</span></p>
+            <p>&nbsp;&nbsp;-----</p>
+            <p><span class="f">f</span> |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="b">b</span></p>
+            <p>&nbsp;&nbsp;|&nbsp;<span class="g">g</span>&nbsp;|</p>
+            <p>&nbsp;&nbsp;-----</p>
+            <p><span class="e">e</span> |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <span class="c">c</span></p>
+            <p>&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</p>
+            <p>&nbsp;&nbsp;----- &nbsp;• <span class="dp">dp</span></p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="d">d</span></p>
+        </div>
+        
+        <h3>🔹 Types of Seven Segment Displays</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Common Cathode</td>
+                <td>All grounds (–) are connected together</td>
+            </tr>
+            <tr>
+                <td>Common Anode</td>
+                <td>All positives (+) are connected together</td>
+            </tr>
+        </table>
+        <p>For beginners, we'll use Common Cathode (simpler with Arduino logic).</p>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">1 x Common Cathode 7-Segment Display</div>
+            <div class="material-item">8 x 220Ω resistors</div>
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+        </div>
+        
+        <h3>🔌 Pin Mapping</h3>
+        <table>
+            <tr>
+                <th>Segment</th>
+                <th>Arduino Pin Example</th>
+            </tr>
+            <tr>
+                <td>a</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>b</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>c</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>d</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>e</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>f</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>g</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>dp</td>
+                <td>9 (optional)</td>
+            </tr>
+        </table>
+        
+        <div class="warning-box">
+            <p><strong>Note:</strong> The exact pin numbers on the display (e.g., pin 1–10) vary by model. Use a datasheet or test it with a battery/resistor.</p>
+        </div>
+        
+        <h3>🔧 Wiring (Example – Common Cathode):</h3>
+        <div class="circuit-diagram">
+            <p>Connect each segment pin to Arduino digital pins through a 220Ω resistor.</p>
+            <p>Connect the common cathode pins to GND.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Code – Display Numbers on 7-Segment</h2>
+        
+        <h3>🧾 Step 1: Define Pins and Digits</h3>
+        <div class="code-block">
+            <span class="code-keyword">int</span> a = <span class="code-value">2</span>;<br>
+            <span class="code-keyword">int</span> b = <span class="code-value">3</span>;<br>
+            <span class="code-keyword">int</span> c = <span class="code-value">4</span>;<br>
+            <span class="code-keyword">int</span> d = <span class="code-value">5</span>;<br>
+            <span class="code-keyword">int</span> e = <span class="code-value">6</span>;<br>
+            <span class="code-keyword">int</span> f = <span class="code-value">7</span>;<br>
+            <span class="code-keyword">int</span> g = <span class="code-value">8</span>;<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(a, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(b, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(c, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(d, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(e, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(f, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(g, <span class="code-value">OUTPUT</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">displayDigit</span>(<span class="code-value">0</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">displayDigit</span>(<span class="code-value">1</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">displayDigit</span>(<span class="code-value">2</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">displayDigit</span>(<span class="code-value">3</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>);<br>
+            }
+        </div>
+        
+        <h3>🧾 Step 2: Create a Function to Display Digits</h3>
+        <div class="code-block">
+            <span class="code-keyword">void</span> <span class="code-function">displayDigit</span>(<span class="code-keyword">int</span> digit) {<br>
+            &nbsp;&nbsp;<span class="code-comment">// Off all segments first</span><br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(a, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(b, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(c, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(d, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(e, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(f, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(g, <span class="code-value">LOW</span>);<br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment">// Turn ON specific segments</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">switch</span> (digit) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-value">0</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(a, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(b, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(c, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(d, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(e, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(f, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-value">1</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(b, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(c, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-value">2</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(a, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(b, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(g, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(e, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(d, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">case</span> <span class="code-value">3</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(a, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(b, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(c, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(d, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(g, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">break</span>;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Add more cases for 4–9 as needed</span><br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <h3>🔢 Segment Map for Digits 0–9:</h3>
+        <table>
+            <tr>
+                <th>Digit</th>
+                <th>Segments (a-g)</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>a b c d e f</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>b c</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>a b g e d</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>a b c d g</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>f g b c</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>a f g c d</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>a f g e c d</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>a b c</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>a b c d e f g</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>a b c d f g</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Show numbers 0–9 in a loop.</li>
+            <li>Create a "counter" from 0 to 9 then reset.</li>
+            <li>Use a button to increase the digit every time it's pressed.</li>
+            <li>Display letters A, b, C, d, E, F (research the segment patterns).</li>
+            <li>Create a simple timer that counts up every second.</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Concept</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Seven Segment Display</td>
+                <td>Displays digits using 7 LEDs</td>
+            </tr>
+            <tr>
+                <td>Common Cathode</td>
+                <td>Shared ground; HIGH = ON</td>
+            </tr>
+            <tr>
+                <td>Arduino Control</td>
+                <td>Use digitalWrite() to light up segments</td>
+            </tr>
+            <tr>
+                <td>Resistors</td>
+                <td>Prevent LEDs in the display from burning out</td>
+            </tr>
+            <tr>
+                <td>Segment Mapping</td>
+                <td>Each digit requires specific segments to be lit</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino 7-Segment Display Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

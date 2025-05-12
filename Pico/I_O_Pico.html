@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microcontroller I/O with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --input-color: #9b59b6;
+            --output-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .io-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .io-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .input-card {
+            background-color: rgba(155, 89, 182, 0.1);
+            border-left: 4px solid var(--input-color);
+        }
+        
+        .output-card {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--output-color);
+        }
+        
+        .io-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .io-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .function-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .function-table th, .function-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .function-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .function-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .function-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .tips-list {
+            background-color: #e8f4f8;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
+        }
+        
+        .tips-list li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .io-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">🔌</span> What is I/O in Microcontrollers?</h1>
+            <p class="subtitle">Working with Input and Output on Raspberry Pi Pico W using MicroPython</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>Understanding I/O</h2>
+            <p>I/O (Input/Output) refers to how a microcontroller communicates with the outside world:</p>
+            
+            <div class="io-overview">
+                <div class="io-card input-card">
+                    <div class="io-icon">📥</div>
+                    <h3>Input</h3>
+                    <p>Reading data from external devices like:</p>
+                    <ul>
+                        <li>Buttons and switches</li>
+                        <li>Sensors (temperature, light, motion)</li>
+                        <li>Analog signals (using ADC)</li>
+                    </ul>
+                </div>
+                
+                <div class="io-card output-card">
+                    <div class="io-icon">📤</div>
+                    <h3>Output</h3>
+                    <p>Sending signals to control external devices like:</p>
+                    <ul>
+                        <li>LEDs and displays</li>
+                        <li>Buzzers and speakers</li>
+                        <li>Motors and actuators</li>
+                        <li>Other microcontrollers</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧠</span> Raspberry Pi Pico W I/O Overview</h2>
+            
+            <h3><span class="emoji">🟢</span> GPIO = General Purpose Input/Output</h3>
+            <ul>
+                <li>The Pico W has <strong>26 GPIO pins</strong></li>
+                <li>Each pin can be configured as:
+                    <ul>
+                        <li><strong>Input</strong> (to read signals)</li>
+                        <li><strong>Output</strong> (to send signals)</li>
+                    </ul>
+                </li>
+                <li>Many GPIOs support additional functions:
+                    <ul>
+                        <li><strong>PWM</strong> (Pulse Width Modulation)</li>
+                        <li><strong>I2C, SPI, UART</strong> communication protocols</li>
+                        <li><strong>Analog Input (ADC)</strong> on GP26–GP28</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">🧑‍💻</span> Setting Up I/O with MicroPython</h2>
+            
+            <h3>1️⃣ Configure a GPIO Pin as Output (e.g., LED)</h3>
+            <div class="highlight">
+                <pre><code>from machine import Pin
+led = Pin(15, Pin.OUT)   # GP15 as output
+led.on()   # Turn LED on
+led.off()  # Turn LED off</code></pre>
+            </div>
+            
+            <h3>2️⃣ Configure a GPIO Pin as Input (e.g., Button)</h3>
+            <div class="highlight">
+                <pre><code>button = Pin(14, Pin.IN, Pin.PULL_DOWN)  # GP14 as input with internal pull-down
+
+if button.value() == 1:
+    print("Button is pressed!")</code></pre>
+            </div>
+            
+            <h3><span class="emoji">🧪</span> Example: Input + Output</h3>
+            <p>Control an LED with a button:</p>
+            <div class="highlight">
+                <pre><code>from machine import Pin
+from time import sleep
+
+led = Pin(15, Pin.OUT)
+button = Pin(14, Pin.IN, Pin.PULL_DOWN)
+
+while True:
+    if button.value():
+        led.on()
+    else:
+        led.off()
+    sleep(0.1)</code></pre>
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">📋</span> Common GPIO Functions in MicroPython</h2>
+            
+            <table class="function-table">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Pin(n)</code></td>
+                        <td>Access GPIO pin number n</td>
+                    </tr>
+                    <tr>
+                        <td><code>Pin.OUT</code></td>
+                        <td>Set pin as output</td>
+                    </tr>
+                    <tr>
+                        <td><code>Pin.IN</code></td>
+                        <td>Set pin as input</td>
+                    </tr>
+                    <tr>
+                        <td><code>Pin.PULL_UP</code></td>
+                        <td>Enable internal pull-up resistor</td>
+                    </tr>
+                    <tr>
+                        <td><code>Pin.PULL_DOWN</code></td>
+                        <td>Enable internal pull-down resistor</td>
+                    </tr>
+                    <tr>
+                        <td><code>pin.on()</code></td>
+                        <td>Set pin HIGH (3.3V)</td>
+                    </tr>
+                    <tr>
+                        <td><code>pin.off()</code></td>
+                        <td>Set pin LOW (0V)</td>
+                    </tr>
+                    <tr>
+                        <td><code>pin.value()</code></td>
+                        <td>Read or write digital value (0 or 1)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">💡</span> Tips for Working with I/O on Pico W</h2>
+            
+            <div class="tips-list">
+                <ul>
+                    <li>Use resistors with inputs like buttons to avoid floating pins (or use <code>PULL_DOWN</code>/<code>PULL_UP</code>)</li>
+                    <li>Only <strong>GP26, GP27, GP28</strong> support analog input (ADC)</li>
+                    <li>You can safely draw <strong>~15mA per GPIO</strong> (max 50mA total recommended)</li>
+                    <li>Use PWM for analog-like output (dimming LEDs, servo control)</li>
+                    <li>For high-current devices, use transistors or motor drivers</li>
+                    <li>Double-check pin assignments to avoid conflicts with special functions</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">🛠</span> Example Projects Using I/O</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">💡</div>
+                    <h3>LED blink</h3>
+                    <p>Digital Output</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🔘</div>
+                    <h3>Button press counter</h3>
+                    <p>Digital Input</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">☀️</div>
+                    <h3>Light sensor (LDR) reader</h3>
+                    <p>Analog Input</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">⚙️</div>
+                    <h3>Servo motor control</h3>
+                    <p>PWM Output</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">📶</div>
+                    <h3>Wi-Fi button trigger</h3>
+                    <p>Input + Network</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W I/O Guide</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

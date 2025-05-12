@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi Pico W - Specifications</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .spec-item {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .spec-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .spec-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .feature-table th, .feature-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .feature-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .feature-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .feature-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .warning-note {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .pico-image {
+            max-width: 100%;
+            display: block;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .pinout-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .pinout-image {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .pinout-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">📦</span> Raspberry Pi Pico W – Specifications</h1>
+            <p class="subtitle">Technical details of the powerful microcontroller with Wi-Fi</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2><span class="emoji">🧠</span> Microcontroller</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">🖥️</div>
+                    <h3>Chipset</h3>
+                    <p>Raspberry Pi RP2040</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">⚡</div>
+                    <h3>CPU</h3>
+                    <p>Dual-core Arm Cortex-M0+ @ 133 MHz</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">💾</div>
+                    <h3>RAM</h3>
+                    <p>264 KB SRAM</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">💿</div>
+                    <h3>Flash Storage</h3>
+                    <p>2 MB QSPI Flash</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">📶</span> Wireless Connectivity</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">📡</div>
+                    <h3>Wi-Fi</h3>
+                    <p>2.4 GHz IEEE 802.11 b/g/n</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔌</div>
+                    <h3>Chip</h3>
+                    <p>Infineon CYW43439</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔒</div>
+                    <h3>Security</h3>
+                    <p>WPA2</p>
+                </div>
+            </div>
+            
+            <div class="warning-note">
+                <p><strong><span class="emoji">❗</span> Note:</strong> Bluetooth (though supported by the chip) is currently not enabled officially.</p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">🔌</span> GPIO & Interfaces</h2>
+            
+            <p>26 multifunction GPIO pins, including:</p>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">📊</div>
+                    <h3>Analog Inputs (ADC)</h3>
+                    <p>3 channels: GP26, GP27, GP28</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔄</div>
+                    <h3>SPI</h3>
+                    <p>2 Serial Peripheral Interfaces</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔗</div>
+                    <h3>I2C</h3>
+                    <p>2 Inter-Integrated Circuits</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">📨</div>
+                    <h3>UART</h3>
+                    <p>2 Serial interfaces</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🎛️</div>
+                    <h3>PWM</h3>
+                    <p>16 channels</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">⚡</div>
+                    <h3>GND pins</h3>
+                    <p>8 ground connections</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🐞</div>
+                    <h3>Debugging</h3>
+                    <p>3-pin SWD (Serial Wire Debug)</p>
+                </div>
+            </div>
+            
+            <div class="pinout-container">
+                <img src="https://www.raspberrypi.com/documentation/microcontrollers/images/pico-pinout.svg" alt="Pico W Pinout" class="pinout-image">
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">⚡</span> Power and USB</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">🔌</div>
+                    <h3>Micro USB port</h3>
+                    <p>For power and programming</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔋</div>
+                    <h3>Power input via:</h3>
+                    <ul>
+                        <li>VBUS (5V from USB)</li>
+                        <li>VSYS (1.8V to 5.5V input)</li>
+                    </ul>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">⚡</div>
+                    <h3>Onboard regulator</h3>
+                    <p>3.3V regulator</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔋</div>
+                    <h3>Power consumption</h3>
+                    <p>Low power (great for battery-powered projects)</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">📐</span> Physical Specs</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">📏</div>
+                    <h3>Dimensions</h3>
+                    <p>51mm × 21mm</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">⚖️</div>
+                    <h3>Weight</h3>
+                    <p>Approx. 4 grams</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🔘</div>
+                    <h3>Pins</h3>
+                    <p>40 pins (0.1" spacing) on the header</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">💡</div>
+                    <h3>Onboard LED</h3>
+                    <p>Connected to GP25</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">💻</span> Programming Support</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-item">
+                    <div class="spec-icon">🐍</div>
+                    <h3>MicroPython</h3>
+                    <p>Beginner-friendly Python implementation</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">{}</div>
+                    <h3>C/C++ SDK</h3>
+                    <p>For advanced programming</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">⚡</div>
+                    <h3>CircuitPython</h3>
+                    <p>Alternative Python implementation</p>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-icon">🛠️</div>
+                    <h3>Development Tools</h3>
+                    <p>Works with Thonny IDE, Arduino IDE, or command-line tools</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🌟</span> Key Features</h2>
+            
+            <table class="feature-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="feature-icon">🧠</span> RP2040 Chip</td>
+                        <td>Designed by Raspberry Pi, efficient and powerful</td>
+                    </tr>
+                    <tr>
+                        <td><span class="feature-icon">📶</span> Wi-Fi Enabled</td>
+                        <td>Pico W adds Wi-Fi for IoT capabilities</td>
+                    </tr>
+                    <tr>
+                        <td><span class="feature-icon">⚡</span> Power Flexibility</td>
+                        <td>Can run from USB, battery, or power supply (1.8–5.5V via VSYS)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="feature-icon">🧑‍💻</span> Easy Programming</td>
+                        <td>Get started with MicroPython in minutes</td>
+                    </tr>
+                    <tr>
+                        <td><span class="feature-icon">🧩</span> Breadboard Friendly</td>
+                        <td>DIP-style design, perfect for prototyping</td>
+                    </tr>
+                    <tr>
+                        <td><span class="feature-icon">🔒</span> Secure Connectivity</td>
+                        <td>WPA2 support for encrypted Wi-Fi communication</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W Specifications</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Add interactive elements
+            const specItems = document.querySelectorAll('.spec-item');
+            specItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

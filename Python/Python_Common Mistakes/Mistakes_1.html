@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Common Mistakes</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --error: #e53935;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 40px;
+      text-align: center;
+    }
+    
+    .mistake {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--error);
+    }
+    
+    .mistake-title {
+      font-weight: bold;
+      color: var(--error);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .mistake-title:before {
+      content: "❌";
+      margin-right: 10px;
+    }
+    
+    .incorrect {
+      background: #ffebee;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--error);
+      position: relative;
+    }
+    
+    .correct {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 10px 0;
+      border-left: 3px solid var(--success);
+      position: relative;
+    }
+    
+    .correct:before {
+      content: "";
+      position: absolute;
+      left: -25px;
+    }
+    
+    .explanation {
+      background: #e3f2fd;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 15px 0;
+      font-size: 0.95rem;
+    }
+    
+    .explanation:before {
+      content: "💡";
+      margin-right: 8px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Common Python Mistakes</h1>
+      <p>Learn to identify and fix frequent errors beginners make</p>
+    </header>
+    
+    <main>
+      <!-- Mistake 1 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Quotes</div>
+        <div class="incorrect">print(Hello)</div>
+        <div class="correct">print("Hello")</div>
+        <div class="explanation">
+          Strings in Python must be enclosed in quotes. You can use single (' ') or double (" ") quotes, but they must match.
+        </div>
+      </div>
+      
+      <!-- Mistake 2 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Parentheses</div>
+        <div class="incorrect">print"Hello"</div>
+        <div class="correct">print("Hello")</div>
+        <div class="explanation">
+          In Python 3, <code>print</code> is a function and requires parentheses. This was different in Python 2.
+        </div>
+      </div>
+      
+      <!-- Mistake 3 -->
+      <div class="mistake">
+        <div class="mistake-title">Mixed Quote Types</div>
+        <div class="incorrect">print("Hello')</div>
+        <div class="correct">print("Hello") or print('Hello')</div>
+        <div class="explanation">
+          Don't mix single and double quotes to start and end a string. Choose one style and be consistent.
+        </div>
+      </div>
+      
+      <!-- Mistake 4 -->
+      <div class="mistake">
+        <div class="mistake-title">Case Sensitivity</div>
+        <div class="incorrect">Print("Hello")</div>
+        <div class="correct">print("Hello")</div>
+        <div class="explanation">
+          Python is case-sensitive. <code>Print</code> with capital P is not the same as <code>print</code>.
+        </div>
+      </div>
+      
+      <!-- Mistake 5 -->
+      <div class="mistake">
+        <div class="mistake-title">Incomplete Math Operation</div>
+        <div class="incorrect">print(5 + )</div>
+        <div class="correct">print(5 + 3)</div>
+        <div class="explanation">
+          All math operations need complete expressions with both operands. The plus operator needs a number on both sides.
+        </div>
+      </div>
+      
+      <!-- Mistake 6 -->
+      <div class="mistake">
+        <div class="mistake-title">Incomplete Second Argument</div>
+        <div class="incorrect">print("Hello", 5 + )</div>
+        <div class="correct">print("Hello", 5 + 3)</div>
+        <div class="explanation">
+          When printing multiple items, each argument must be complete. The incomplete math operation causes a syntax error.
+        </div>
+      </div>
+      
+      <!-- Mistake 7 -->
+      <div class="mistake">
+        <div class="mistake-title">Forgot Closing Quote</div>
+        <div class="incorrect">print("Hello)</div>
+        <div class="correct">print("Hello")</div>
+        <div class="explanation">
+          Every opening quote needs a matching closing quote. Python will think your string continues to the next line.
+        </div>
+      </div>
+      
+      <!-- Mistake 8 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Closing Parentheses</div>
+        <div class="incorrect">print(10, 20, 30</div>
+        <div class="correct">print(10, 20, 30)</div>
+        <div class="explanation">
+          Every opening parenthesis must have a matching closing one. Count your parentheses to make sure they match.
+        </div>
+      </div>
+      
+      <!-- Mistake 9 -->
+      <div class="mistake">
+        <div class="mistake-title">Missing Quotes Around Words</div>
+        <div class="incorrect">print("Coding", is, "fun")</div>
+        <div class="correct">print("Coding", "is", "fun")</div>
+        <div class="explanation">
+          Text strings must be in quotes. Without quotes, Python thinks <code>is</code> is a variable name.
+        </div>
+      </div>
+      
+      <!-- Mistake 10 -->
+      <div class="mistake">
+        <div class="mistake-title">Emoji Without Quotes</div>
+        <div class="incorrect">print( )</div>
+        <div class="correct">print("")</div>
+        <div class="explanation">
+          Emojis are text characters and must be enclosed in quotes like any other string.
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Remember: Everyone makes mistakes - they're opportunities to learn!</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using RFID (RC522) with Arduino</title>
+    <style>
+        :root {
+            --primary: #5E35B1;
+            --secondary: #7E57C2;
+            --accent: #FFD600;
+            --light: #EDE7F6;
+            --dark: #4527A0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🪪 Using RFID (RC522) with Arduino</h1>
+        <p>Learn contactless identification and access control</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is RFID?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>RFID (Radio Frequency Identification) is a technology used to read data from cards or tags using radio waves.</p>
+        </div>
+        
+        <h3>🧠 How it works:</h3>
+        <ol>
+            <li>The RFID reader emits radio waves</li>
+            <li>When a tag or card gets close, it powers up and sends back its unique ID</li>
+            <li>Arduino reads that ID and can respond (like opening a door, turning on an LED, etc.)</li>
+        </ol>
+        
+        <h3>📦 Common Module: MFRC522 (RC522)</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Communication</td>
+                <td>SPI (Serial Peripheral Interface)</td>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>3.3V logic (⚠️ not 5V-tolerant!)</td>
+            </tr>
+            <tr>
+                <td>Range</td>
+                <td>~2–5 cm (short range)</td>
+            </tr>
+        </table>
+        
+        <div class="info-box">
+            <p><strong>Included with RC522:</strong></p>
+            <ul>
+                <li>RFID reader module</li>
+                <li>RFID tag</li>
+                <li>RFID key fob</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">RC522 RFID module</div>
+            <div class="material-item">RFID card/key fob</div>
+            <div class="material-item">Breadboard</div>
+            <div class="material-item">Jumper wires</div>
+        </div>
+        
+        <div class="warning-box">
+            <h3>⚠️ Important Note:</h3>
+            <p>The RC522 module uses <strong>3.3V logic only</strong>. Never connect 5V directly to the RC522 VCC pin.</p>
+        </div>
+        
+        <h3>🔌 RC522 to Arduino Wiring (SPI):</h3>
+        <table>
+            <tr>
+                <th>RC522 Pin</th>
+                <th>Connect to Arduino UNO</th>
+            </tr>
+            <tr>
+                <td>SDA</td>
+                <td>D10</td>
+            </tr>
+            <tr>
+                <td>SCK</td>
+                <td>D13</td>
+            </tr>
+            <tr>
+                <td>MOSI</td>
+                <td>D11</td>
+            </tr>
+            <tr>
+                <td>MISO</td>
+                <td>D12</td>
+            </tr>
+            <tr>
+                <td>IRQ</td>
+                <td>Not used</td>
+            </tr>
+            <tr>
+                <td>GND</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>RST</td>
+                <td>D9</td>
+            </tr>
+            <tr>
+                <td>3.3V</td>
+                <td>3.3V</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Install Required Library</h2>
+        
+        <h3>📦 Steps:</h3>
+        <ol>
+            <li>Open Arduino IDE</li>
+            <li>Go to <strong>Sketch > Include Library > Manage Libraries</strong></li>
+            <li>Search for <strong>MFRC522 by Miguel Balboa</strong></li>
+            <li>Click <strong>Install</strong></li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 4: Arduino Code – Read Tag UID</h2>
+        
+        <div class="code-block">
+            <span class="code-include">#include</span> <span class="code-value">&lt;SPI.h></span><br>
+            <span class="code-include">#include</span> <span class="code-value">&lt;MFRC522.h></span><br><br>
+            
+            <span class="code-include">#define</span> SS_PIN <span class="code-value">10</span><br>
+            <span class="code-include">#define</span> RST_PIN <span class="code-value">9</span><br>
+            MFRC522 <span class="code-function">rfid</span>(SS_PIN, RST_PIN);<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">SPI.begin</span>();       <span class="code-comment">// Init SPI bus</span><br>
+            &nbsp;&nbsp;rfid.<span class="code-function">PCD_Init</span>();   <span class="code-comment">// Init RFID reader</span><br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"Scan RFID Card..."</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-comment">// Look for new cards</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">if</span> ( !rfid.<span class="code-function">PICC_IsNewCardPresent</span>() || !rfid.<span class="code-function">PICC_ReadCardSerial</span>() )<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span>;<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"UID: "</span>);<br>
+            &nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">byte</span> i = <span class="code-value">0</span>; i < rfid.uid.size; i++) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(rfid.uid.uidByte[i] < <span class="code-value">0x10</span> ? <span class="code-value">"0"</span> : <span class="code-value">""</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(rfid.uid.uidByte[i], <span class="code-value">HEX</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">" "</span>);<br>
+            &nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>();<br><br>
+            
+            &nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">1000</span>); <span class="code-comment">// Avoid reading the same card repeatedly</span><br>
+            }
+        </div>
+        
+        <h3>🧪 What Happens:</h3>
+        <ol>
+            <li>Open Serial Monitor</li>
+            <li>Place RFID card/tag near the reader</li>
+            <li>The UID (unique ID of the card) is printed</li>
+        </ol>
+        
+        <h3>🔒 Make It a Security System:</h3>
+        <div class="info-box">
+            <p>Once you know the UID of your card, you can match it like this:</p>
+        </div>
+        <div class="code-block">
+            <span class="code-keyword">if</span> (rfid.uid.uidByte[<span class="code-value">0</span>] == <span class="code-value">0xA1</span> && rfid.uid.uidByte[<span class="code-value">1</span>] == <span class="code-value">0xB2</span>) {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"Access Granted"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(LED_BUILTIN, <span class="code-value">HIGH</span>);<br>
+            } <span class="code-keyword">else</span> {<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.println</span>(<span class="code-value">"Access Denied"</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">digitalWrite</span>(LED_BUILTIN, <span class="code-value">LOW</span>);<br>
+            }
+        </div>
+        <div class="info-box">
+            <p>Replace <code>0xA1</code>, <code>0xB2</code> with your card's real UID bytes.</p>
+        </div>
+        
+        <div class="project-ideas">
+            <h3>🎯 Project Ideas:</h3>
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>RFID Door Lock</td>
+                    <td>Servo opens door when correct card is used</td>
+                </tr>
+                <tr>
+                    <td>RFID Attendance System</td>
+                    <td>Log which student tapped their card</td>
+                </tr>
+                <tr>
+                    <td>RFID Pet Feeder</td>
+                    <td>Dispense food when your pet comes near</td>
+                </tr>
+                <tr>
+                    <td>Arduino Wallet Unlock</td>
+                    <td>Open safe box with only registered card</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Register multiple cards with different actions</li>
+            <li>Combine RFID with LCD to show welcome messages</li>
+            <li>Save UID logs to an SD card or display on web page</li>
+            <li>Create a time-based access system (only works 9AM-5PM)</li>
+            <li>Build a two-factor authentication (RFID + password)</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Key Point</th>
+            </tr>
+            <tr>
+                <td>RC522</td>
+                <td>RFID module using SPI communication</td>
+            </tr>
+            <tr>
+                <td>RFID Tags</td>
+                <td>Each has a unique UID</td>
+            </tr>
+            <tr>
+                <td>UID Reading</td>
+                <td>Use MFRC522 library and Serial Monitor</td>
+            </tr>
+            <tr>
+                <td>Applications</td>
+                <td>Door locks, attendance, logging, access control</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino RFID Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

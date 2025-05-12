@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Bluetooth (HC-05) with Arduino</title>
+    <style>
+        :root {
+            --primary: #0D47A1;
+            --secondary: #1976D2;
+            --accent: #FFC107;
+            --light: #E3F2FD;
+            --dark: #0B3D91;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📶 Using Bluetooth (HC-05) with Arduino</h1>
+        <p>Wireless control between Arduino and smartphones</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is Bluetooth in Arduino?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>Bluetooth allows wireless communication between Arduino and other devices like:</p>
+            <ul>
+                <li>Phones</li>
+                <li>Laptops</li>
+                <li>Other Arduinos</li>
+            </ul>
+            <p>With it, you can control LEDs, motors, or read sensors wirelessly using your phone or computer.</p>
+        </div>
+        
+        <h3>📦 What is the HC-05 Module?</h3>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td>Classic Bluetooth (not BLE)</td>
+            </tr>
+            <tr>
+                <td>Mode</td>
+                <td>Master or Slave (default is Slave)</td>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>3.3V logic, but works with 5V on VCC</td>
+            </tr>
+            <tr>
+                <td>Baud Rate</td>
+                <td>9600 (default)</td>
+            </tr>
+        </table>
+        
+        <h3>🔌 HC-05 Pins:</h3>
+        <table>
+            <tr>
+                <th>Pin</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>VCC</td>
+                <td>Connect to 5V</td>
+            </tr>
+            <tr>
+                <td>GND</td>
+                <td>Connect to GND</td>
+            </tr>
+            <tr>
+                <td>TXD</td>
+                <td>Transmit data</td>
+            </tr>
+            <tr>
+                <td>RXD</td>
+                <td>Receive data</td>
+            </tr>
+            <tr>
+                <td>EN / KEY (optional)</td>
+                <td>Used for AT commands/config mode</td>
+            </tr>
+        </table>
+        
+        <div class="info-box">
+            <p><strong>Tip:</strong> Use software serial if you're using Arduino UNO so the main serial port is free.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">HC-05 Bluetooth Module</div>
+            <div class="material-item">1 x LED (optional)</div>
+            <div class="material-item">Jumper wires</div>
+            <div class="material-item">Android phone with Bluetooth app</div>
+            <div class="material-item">1kΩ & 2kΩ resistors</div>
+        </div>
+        
+        <h3>🔌 Wiring the HC-05 to Arduino:</h3>
+        <table>
+            <tr>
+                <th>HC-05 Pin</th>
+                <th>Connect to Arduino</th>
+            </tr>
+            <tr>
+                <td>VCC</td>
+                <td>5V</td>
+            </tr>
+            <tr>
+                <td>GND</td>
+                <td>GND</td>
+            </tr>
+            <tr>
+                <td>TXD</td>
+                <td>Arduino pin 10</td>
+            </tr>
+            <tr>
+                <td>RXD</td>
+                <td>Arduino pin 11 via voltage divider</td>
+            </tr>
+        </table>
+        
+        <h3>🔧 Voltage Divider for RXD:</h3>
+        <div class="info-box">
+            <p>Use two resistors to protect the HC-05 from 5V:</p>
+            <ul>
+                <li><strong>1kΩ</strong> between Arduino TX (pin 11) and HC-05 RX</li>
+                <li><strong>2kΩ</strong> between HC-05 RX and GND</li>
+            </ul>
+            <p>This creates ~3.3V from Arduino's 5V signal.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Arduino Code – Control LED from Phone</h2>
+        
+        <div class="code-block">
+            <span class="code-include">#include</span> <span class="code-value">&lt;SoftwareSerial.h></span><br><br>
+            
+            SoftwareSerial <span class="code-function">BTSerial</span>(<span class="code-value">10</span>, <span class="code-value">11</span>); <span class="code-comment">// RX, TX</span><br><br>
+            
+            <span class="code-keyword">int</span> ledPin = <span class="code-value">13</span>;<br>
+            <span class="code-keyword">char</span> incomingChar;<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;<span class="code-function">pinMode</span>(ledPin, <span class="code-value">OUTPUT</span>);<br>
+            &nbsp;&nbsp;BTSerial.<span class="code-function">begin</span>(<span class="code-value">9600</span>);<br>
+            &nbsp;&nbsp;<span class="code-function">Serial.begin</span>(<span class="code-value">9600</span>);<br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-keyword">if</span> (BTSerial.<span class="code-function">available</span>()) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;incomingChar = BTSerial.<span class="code-function">read</span>();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.print</span>(<span class="code-value">"Received: "</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">Serial.println</span>(incomingChar);<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (incomingChar == <span class="code-value">'1'</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">HIGH</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-keyword">else</span> <span class="code-keyword">if</span> (incomingChar == <span class="code-value">'0'</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">digitalWrite</span>(ledPin, <span class="code-value">LOW</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <h3>📱 What to Do on the Phone:</h3>
+        <ol>
+            <li>Install <strong>Serial Bluetooth Terminal</strong> (Android)</li>
+            <li>Pair with HC-05 (default PIN: <strong>1234</strong> or <strong>0000</strong>)</li>
+            <li>Connect and send:
+                <ul>
+                    <li><strong>1</strong> → turns LED ON</li>
+                    <li><strong>0</strong> → turns LED OFF</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 4: Real-World Applications</h2>
+        
+        <div class="project-ideas">
+            <table>
+                <tr>
+                    <th>Project</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Bluetooth Car</td>
+                    <td>Control motors using phone</td>
+                </tr>
+                <tr>
+                    <td>Home Automation</td>
+                    <td>Control lights/fans via Bluetooth</td>
+                </tr>
+                <tr>
+                    <td>Wireless Data Logger</td>
+                    <td>Send sensor values to phone</td>
+                </tr>
+                <tr>
+                    <td>Door Lock System</td>
+                    <td>Unlock with Bluetooth command</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="challenge">
+            <h3>🧠 Student Challenges:</h3>
+            <ol>
+                <li>Control RGB LED color from phone using characters (R, G, B)</li>
+                <li>Send temperature data from Arduino to phone using HC-05</li>
+                <li>Combine Bluetooth + Keypad for password-controlled door</li>
+                <li>Create a wireless sensor monitoring system</li>
+                <li>Build a Bluetooth-controlled robotic arm</li>
+            </ol>
+        </div>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>HC-05</td>
+                <td>Bluetooth module (classic, slave by default)</td>
+            </tr>
+            <tr>
+                <td>Baud Rate</td>
+                <td>9600 bps (default)</td>
+            </tr>
+            <tr>
+                <td>Communication</td>
+                <td>Serial (TX/RX)</td>
+            </tr>
+            <tr>
+                <td>Libraries</td>
+                <td>Uses SoftwareSerial on pins 10/11</td>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>Requires voltage divider for RX (5V→3.3V)</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino Bluetooth Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

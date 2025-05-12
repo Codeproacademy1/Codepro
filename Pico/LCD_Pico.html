@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCD Display with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --lcd-color: #4a6b3d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .lcd-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .lcd-type {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .lcd-type:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lcd-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--lcd-color);
+        }
+        
+        .wiring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .wiring-table th, .wiring-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .wiring-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .wiring-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .wiring-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .feature-table th, .feature-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .feature-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .feature-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .feature-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .lcd-display {
+            background-color: #4a6b3d;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 2rem auto;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .lcd-row {
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.2em;
+        }
+        
+        .lcd-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .lcd-types {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">📺</span> What is an LCD?</h1>
+            <p class="subtitle">Connecting and Programming LCD Displays with Raspberry Pi Pico W</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>LCD Basics</h2>
+            <p>LCD (Liquid Crystal Display) is a display module used to show text and simple symbols. The most common type is the 16x2 LCD, which can display 2 rows with 16 characters each.</p>
+            
+            <div class="lcd-display">
+                <div class="lcd-row">Hello, Pico!      </div>
+                <div class="lcd-row">I2C LCD Working</div>
+            </div>
+            
+            <h3><span class="emoji">📦</span> LCD Types:</h3>
+            <div class="lcd-types">
+                <div class="lcd-type">
+                    <div class="lcd-icon">🔌</div>
+                    <h3>Parallel LCD (HD44780)</h3>
+                    <p>Requires many GPIO pins (4-8 data lines plus control lines)</p>
+                </div>
+                <div class="lcd-type">
+                    <div class="lcd-icon">🔗</div>
+                    <h3>I2C LCD (with I2C adapter)</h3>
+                    <p>Requires only 2 wires: SDA & SCL</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>✅ We'll focus on the I2C version for simplicity.</strong></p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧰</span> What You Need:</h2>
+            <ul>
+                <li>Raspberry Pi Pico W</li>
+                <li>I2C LCD 16x2 (with backpack)</li>
+                <li>Jumper wires</li>
+                <li>Breadboard</li>
+                <li>Thonny IDE</li>
+            </ul>
+            
+            <h3><span class="emoji">⚙️</span> Wiring (I2C LCD to Pico W):</h3>
+            <table class="wiring-table">
+                <thead>
+                    <tr>
+                        <th>LCD Pin</th>
+                        <th>Connect to Pico W</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>VCC</td>
+                        <td>3.3V (Pin 36)</td>
+                    </tr>
+                    <tr>
+                        <td>GND</td>
+                        <td>GND (Pin 38 or any GND)</td>
+                    </tr>
+                    <tr>
+                        <td>SDA</td>
+                        <td>GP0 (Pin 1)</td>
+                    </tr>
+                    <tr>
+                        <td>SCL</td>
+                        <td>GP1 (Pin 2)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>Note:</strong> These are the default I2C pins on Pico W (GP0 = SDA, GP1 = SCL)</p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">🧑‍💻</span> MicroPython Code for I2C LCD</h2>
+            
+            <h3>1. Install Required Libraries</h3>
+            <p>First, install the <code>lcd_api.py</code> and <code>i2c_lcd.py</code> libraries. You can find them here:</p>
+            <ul>
+                <li><code>lcd_api.py</code>: handles low-level LCD instructions</li>
+                <li><code>i2c_lcd.py</code>: controls LCD over I2C</li>
+            </ul>
+            <div class="highlight">
+                <p><strong>📁 Add these two files to your Pico using Thonny.</strong></p>
+            </div>
+            
+            <h3>2. Main Code: Display "Hello, Pico!"</h3>
+            <div class="highlight">
+                <pre><code>from machine import I2C, Pin
+from i2c_lcd import I2cLcd
+import time
+
+I2C_ADDR = 0x27  # Default I2C address, use scanner if unsure
+I2C_NUM_ROWS = 2
+I2C_NUM_COLS = 16
+
+i2c = I2C(0, sda=Pin(0), scl=Pin(1), freq=400000)
+lcd = I2cLcd(i2c, I2C_ADDR, I2C_NUM_ROWS, I2C_NUM_COLS)
+
+lcd.putstr("Hello, Pico!")
+time.sleep(2)
+lcd.clear()
+lcd.putstr("I2C LCD Working")</code></pre>
+            </div>
+            
+            <h3><span class="emoji">🔍</span> How to Find Your LCD's I2C Address</h3>
+            <p>Run this simple code to scan connected I2C devices:</p>
+            <div class="highlight">
+                <pre><code>from machine import I2C, Pin
+i2c = I2C(0, sda=Pin(0), scl=Pin(1))
+print(i2c.scan())</code></pre>
+            </div>
+            <p>It will return a list like <code>[39]</code>, which is <code>0x27</code> in hex.</p>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🌟</span> Features of LCD with Pico W</h2>
+            
+            <table class="feature-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Low power</td>
+                        <td>Runs on 3.3V easily</td>
+                    </tr>
+                    <tr>
+                        <td>Simple interface</td>
+                        <td>Only needs 2 wires with I2C</td>
+                    </tr>
+                    <tr>
+                        <td>Versatile</td>
+                        <td>Display sensor values, messages, or clock</td>
+                    </tr>
+                    <tr>
+                        <td>Real-time display</td>
+                        <td>Instant feedback from sensors/code</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-4">
+            <h2><span class="emoji">💡</span> Project Ideas</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">🌤️</div>
+                    <h3>Wi-Fi Weather Display</h3>
+                    <p>Show weather data from online API</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">⏰</div>
+                    <h3>Digital Clock</h3>
+                    <p>With Real-Time Clock (RTC) module</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🌡️</div>
+                    <h3>Temperature Monitor</h3>
+                    <p>With DHT sensor readings</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🔢</div>
+                    <h3>Button Counter</h3>
+                    <p>Count and display button presses</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">📶</div>
+                    <h3>Web Message Display</h3>
+                    <p>Show messages sent via web interface</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W LCD Tutorial</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // LCD display animation
+            const lcdRows = document.querySelectorAll('.lcd-row');
+            setTimeout(() => {
+                lcdRows[0].textContent = 'Hello, Pico!      ';
+                lcdRows[1].textContent = '                ';
+            }, 1000);
+            
+            setTimeout(() => {
+                lcdRows[1].textContent = 'I2C LCD Working';
+            }, 3000);
+            
+            setInterval(() => {
+                lcdRows[0].textContent = 'Hello, Pico!      ';
+                lcdRows[1].textContent = 'I2C LCD Working';
+                setTimeout(() => {
+                    lcdRows[0].textContent = '                ';
+                    lcdRows[1].textContent = '                ';
+                }, 2000);
+                setTimeout(() => {
+                    lcdRows[0].textContent = 'Hello, Pico!      ';
+                    lcdRows[1].textContent = 'I2C LCD Working';
+                }, 3000);
+            }, 5000);
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code')?.innerText || this.innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

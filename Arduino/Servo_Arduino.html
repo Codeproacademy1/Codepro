@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controlling Servo Motors with Arduino</title>
+    <style>
+        :root {
+            --primary: #E65100;
+            --secondary: #EF6C00;
+            --accent: #FFD600;
+            --light: #FFF3E0;
+            --dark: #BF360C;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        
+        h3 {
+            color: var(--dark);
+            margin-top: 25px;
+        }
+        
+        .lesson-part {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .info-box {
+            background-color: var(--light);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background-color: #FFF8E1;
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            margin: 15px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .servo-diagram {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .servo-diagram img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        
+        .circuit-diagram {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            line-height: 1.8;
+        }
+        
+        .materials-list {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .material-item {
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .code-block {
+            background-color: #263238;
+            color: #ECEFF1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #78909C;
+        }
+        
+        .code-keyword {
+            color: #80CBC4;
+        }
+        
+        .code-function {
+            color: #82B1FF;
+        }
+        
+        .code-value {
+            color: #F48FB1;
+        }
+        
+        .code-include {
+            color: #FFCC80;
+        }
+        
+        .challenge {
+            background-color: #E8F5E9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .project-ideas {
+            background-color: #E3F2FD;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .materials-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Controlling Servo Motors with Arduino</h1>
+        <p>Learn how to precisely control angular position with servos</p>
+    </header>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 1: What is a Servo Motor?</h2>
+        
+        <div class="info-box">
+            <h3>✅ Definition:</h3>
+            <p>A servo motor is a special type of motor that allows precise control of angular position (0° to 180° typically).</p>
+        </div>
+        
+        <h3>🧠 How It Works:</h3>
+        <ul>
+            <li>It has a small DC motor inside with gears and a control circuit.</li>
+            <li>You control the angle using PWM (Pulse Width Modulation).</li>
+            <li>The Servo library in Arduino handles the PWM signals for you.</li>
+        </ul>
+        
+        <h3>📦 Types of Servo Motors:</h3>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Angle Range</th>
+                <th>Torque</th>
+                <th>Used In</th>
+            </tr>
+            <tr>
+                <td>Micro Servo (SG90)</td>
+                <td>0°–180°</td>
+                <td>~1.8 kg·cm</td>
+                <td>DIY, hobby projects</td>
+            </tr>
+            <tr>
+                <td>Standard Servo</td>
+                <td>0°–180°</td>
+                <td>Higher torque</td>
+                <td>Robotics, automation</td>
+            </tr>
+            <tr>
+                <td>Continuous Servo</td>
+                <td>Rotates freely</td>
+                <td>N/A</td>
+                <td>Wheels, motion control</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 2: Components Needed</h2>
+        
+        <div class="materials-list">
+            <div class="material-item">Arduino UNO</div>
+            <div class="material-item">1 x Servo Motor (e.g., SG90)</div>
+            <div class="material-item">Jumper wires</div>
+            <div class="material-item">Breadboard or power supply (optional for external power)</div>
+        </div>
+        
+        <h3>🔌 Wiring the Servo</h3>
+        <table>
+            <tr>
+                <th>Servo Wire Color</th>
+                <th>Connect To</th>
+            </tr>
+            <tr>
+                <td>Brown or Black</td>
+                <td>GND (Arduino)</td>
+            </tr>
+            <tr>
+                <td>Red</td>
+                <td>5V (Arduino or external)</td>
+            </tr>
+            <tr>
+                <td>Orange or Yellow</td>
+                <td>Signal (Arduino pin 9)</td>
+            </tr>
+        </table>
+        
+        <div class="warning-box">
+            <h3>⚠️ Power Warning:</h3>
+            <p>If the servo jitters, use external 5V power (not directly from Arduino 5V pin) and common GND between Arduino and power supply.</p>
+        </div>
+    </div>
+    
+    <div class="lesson-part">
+        <h2>🔹 Part 3: Arduino Code – Move Servo</h2>
+        
+        <h3>🧾 Basic Sweep Example:</h3>
+        <div class="code-block">
+            <span class="code-include">#include</span> <<span class="code-value">Servo.h</span>><br><br>
+            
+            Servo myServo;         <span class="code-comment">// Create a servo object</span><br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">setup</span>() {<br>
+            &nbsp;&nbsp;myServo.<span class="code-function">attach</span>(<span class="code-value">9</span>);   <span class="code-comment">// Attach servo signal pin to Arduino pin 9</span><br>
+            }<br><br>
+            
+            <span class="code-keyword">void</span> <span class="code-function">loop</span>() {<br>
+            &nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">int</span> angle = <span class="code-value">0</span>; angle <= <span class="code-value">180</span>; angle += <span class="code-value">1</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;myServo.<span class="code-function">write</span>(angle);     <span class="code-comment">// Move servo to current angle</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">15</span>);                <span class="code-comment">// Wait for servo to reach</span><br>
+            &nbsp;&nbsp;}<br><br>
+            
+            &nbsp;&nbsp;<span class="code-keyword">for</span> (<span class="code-keyword">int</span> angle = <span class="code-value">180</span>; angle >= <span class="code-value">0</span>; angle -= <span class="code-value">1</span>) {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;myServo.<span class="code-function">write</span>(angle);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">delay</span>(<span class="code-value">15</span>);<br>
+            &nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <h3>🔸 Servo Library Functions:</h3>
+        <table>
+            <tr>
+                <th>Function</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>attach(pin)</code></td>
+                <td>Attaches servo to specified pin</td>
+            </tr>
+            <tr>
+                <td><code>write(angle)</code></td>
+                <td>Sends angle command (0–180°)</td>
+            </tr>
+            <tr>
+                <td><code>read()</code></td>
+                <td>Reads the last written angle</td>
+            </tr>
+            <tr>
+                <td><code>detach()</code></td>
+                <td>Stops controlling the servo</td>
+            </tr>
+        </table>
+        
+        <div class="project-ideas">
+            <h3>🎯 Student Projects:</h3>
+            <table>
+                <tr>
+                    <th>Project Idea</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Servo Lock System</td>
+                    <td>Use a button + servo to create a locking mechanism</td>
+                </tr>
+                <tr>
+                    <td>Obstacle Avoidance Robot</td>
+                    <td>Use servo + ultrasonic sensor to scan angles</td>
+                </tr>
+                <tr>
+                    <td>DIY Robotic Arm</td>
+                    <td>Control multiple servos to move joints</td>
+                </tr>
+                <tr>
+                    <td>Dial Gauge / Meter</td>
+                    <td>Visual display of values (e.g., temperature) using a servo</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="challenge">
+        <h2>🧠 Student Challenges:</h2>
+        <ol>
+            <li>Control the servo with a potentiometer (angle = knob position).</li>
+            <li>Use two buttons: one to increase angle, one to decrease.</li>
+            <li>Combine servo + keypad to enter a passcode that opens a door.</li>
+            <li>Create a servo that follows the position of another servo (master-slave).</li>
+            <li>Use a light sensor to make the servo point toward the brightest light.</li>
+        </ol>
+    </div>
+    
+    <div class="summary">
+        <h2>📘 Summary</h2>
+        <table>
+            <tr>
+                <th>Concept</th>
+                <th>Details</th>
+            </tr>
+            <tr>
+                <td>Servo Motor</td>
+                <td>Rotates to a specific angle (0°–180°)</td>
+            </tr>
+            <tr>
+                <td>Control Signal</td>
+                <td>PWM via Arduino using Servo library</td>
+            </tr>
+            <tr>
+                <td>Wiring</td>
+                <td>3 wires: GND, 5V, Signal</td>
+            </tr>
+            <tr>
+                <td>Projects</td>
+                <td>Lock system, robots, dials, sensor sweep</td>
+            </tr>
+        </table>
+    </div>
+    
+    <footer>
+        <p>© 2023 Arduino Servo Lesson | Educational Purpose</p>
+    </footer>
+</body>
+</html>

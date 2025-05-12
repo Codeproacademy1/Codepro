@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED Tutorial with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --led-on-color: #e74c3c;
+            --led-off-color: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .wiring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .wiring-table th, .wiring-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .wiring-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .wiring-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .wiring-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .benefit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .benefit-table th, .benefit-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .benefit-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .benefit-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .benefit-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .project-ideas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-idea {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-idea:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .led-demo {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .led {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--led-off-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .led.on {
+            background-color: var(--led-on-color);
+            box-shadow: 0 0 20px var(--led-on-color);
+        }
+        
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .option-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .option-btn:hover {
+            background-color: #b31d57;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">🔴</span> What is an LED?</h1>
+            <p class="subtitle">Learn to connect and control LEDs with Raspberry Pi Pico W</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>LED Basics</h2>
+            <p>An LED (Light Emitting Diode) is an electronic component that emits light when electric current flows through it.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li>Very low power consumption</li>
+                        <li>Glows in one specific color</li>
+                        <li>Works on low voltage (~2V)</li>
+                        <li>Needs a resistor to avoid burning out</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3>LED Legs</h3>
+                    <ul>
+                        <li><strong>Long leg</strong> → Positive (Anode)</li>
+                        <li><strong>Short leg</strong> → Negative (Cathode)</li>
+                        <li>Flat side on housing indicates cathode</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="led-demo">
+                <div class="led" id="ledDemo">💡</div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">⚙️</span> How to Connect an LED with Raspberry Pi Pico W</h2>
+            
+            <h3><span class="emoji">🧰</span> What You Need:</h3>
+            <ul>
+                <li>Raspberry Pi Pico W</li>
+                <li>1x LED (any color)</li>
+                <li>1x 330Ω resistor</li>
+                <li>Breadboard</li>
+                <li>Jumper wires</li>
+                <li>Micro USB cable</li>
+                <li>Thonny IDE (or similar)</li>
+            </ul>
+            
+            <h3><span class="emoji">🧷</span> Wiring Instructions:</h3>
+            <table class="wiring-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Connect To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Long leg of LED</td>
+                        <td>Any GPIO pin (e.g. GP15) through a 330Ω resistor</td>
+                    </tr>
+                    <tr>
+                        <td>Short leg of LED</td>
+                        <td>GND (any ground pin on Pico)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="highlight">
+                <p><strong>⚠️ Important:</strong> Always place a resistor between the GPIO pin and the LED to limit current and protect the LED.</p>
+            </div>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">💻</span> MicroPython Code to Blink the LED</h2>
+            
+            <div class="highlight">
+                <pre><code>from machine import Pin
+from time import sleep
+
+led = Pin(15, Pin.OUT)  # Use GPIO15
+
+while True:
+    led.on()      # Turn LED on
+    sleep(1)      # Wait 1 second
+    led.off()     # Turn LED off
+    sleep(1)      # Wait 1 second</code></pre>
+            </div>
+            
+            <h3><span class="emoji">📌</span> Code Explanation:</h3>
+            <ul>
+                <li><code>Pin(15, Pin.OUT)</code>: Sets GPIO15 as an output pin</li>
+                <li><code>led.on()</code>: Sends 3.3V to turn the LED ON</li>
+                <li><code>led.off()</code>: Stops current, turning LED OFF</li>
+                <li><code>sleep(1)</code>: Delays for 1 second between actions</li>
+            </ul>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🌟</span> Why This Project Is Great for Beginners</h2>
+            
+            <table class="benefit-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="emoji">🔄</span> Easy to Build</td>
+                        <td>Simple wiring and small number of components</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">👨‍💻</span> Learn MicroPython</td>
+                        <td>Great way to start writing code to control hardware</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">🧪</span> Instant Feedback</td>
+                        <td>See your code in action immediately through LED blinking</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">🌐</span> Extendable with Wi-Fi</td>
+                        <td>You can later control the LED over the internet (IoT)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">🎮</span> Can Add Interactivity</td>
+                        <td>Easily add buttons, sensors, or timers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-4">
+            <h2><span class="emoji">💡</span> Mini Project Ideas Using LED</h2>
+            
+            <div class="project-ideas">
+                <div class="project-idea">
+                    <h3>Traffic Light</h3>
+                    <p>Using 3 LEDs (Red, Yellow, Green)</p>
+                </div>
+                <div class="project-idea">
+                    <h3>Button-controlled LED</h3>
+                    <p>Turn LED on/off with a button</p>
+                </div>
+                <div class="project-idea">
+                    <h3>Morse Code Flasher</h3>
+                    <p>SOS signal or custom messages</p>
+                </div>
+                <div class="project-idea">
+                    <h3>Wi-Fi LED Control</h3>
+                    <p>Control LED over the internet</p>
+                </div>
+                <div class="project-idea">
+                    <h3>Countdown Timer</h3>
+                    <p>LED notification when time's up</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1" style="text-align: center;">
+            <h2>Want More Resources?</h2>
+            <div class="options">
+                <button class="option-btn" id="pdfBtn">✅ PDF Worksheet</button>
+                <button class="option-btn" id="diagramBtn">✅ Wiring Diagram</button>
+                <button class="option-btn" id="wifiBtn">✅ Wi-Fi Project</button>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W LED Tutorial</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // LED demo interaction
+            const led = document.getElementById('ledDemo');
+            led.addEventListener('click', function() {
+                this.classList.toggle('on');
+            });
+            
+            // Auto blink demo
+            setInterval(() => {
+                led.classList.toggle('on');
+            }, 1000);
+            
+            // Button handlers
+            document.getElementById('pdfBtn').addEventListener('click', function() {
+                alert('PDF worksheet would be downloaded here with circuit diagrams and exercises!');
+            });
+            
+            document.getElementById('diagramBtn').addEventListener('click', function() {
+                alert('A detailed Fritzing wiring diagram would be displayed here!');
+            });
+            
+            document.getElementById('wifiBtn').addEventListener('click', function() {
+                alert('Wi-Fi LED control project would be loaded with MicroPython code for web control!');
+            });
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

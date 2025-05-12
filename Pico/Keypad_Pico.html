@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keypad with Raspberry Pi Pico W</title>
+    <style>
+        :root {
+            --primary-color: #d6246a; /* Raspberry Pi pink */
+            --secondary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --keypad-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+            overflow-x: auto;
+        }
+        
+        .highlight pre {
+            margin: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .keypad-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .keypad-type {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .keypad-type:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .keypad-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--keypad-color);
+        }
+        
+        .wiring-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .wiring-table th, .wiring-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .wiring-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .wiring-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .wiring-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .use-case-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .use-case-table th, .use-case-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .use-case-table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .use-case-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .use-case-table tr:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .keypad-demo {
+            background-color: var(--keypad-color);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem auto;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .keypad-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .keypad-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .keypad-key {
+            width: 60px;
+            height: 60px;
+            background-color: #2c3e50;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .keypad-key:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .keypad-key.active {
+            background-color: var(--success-color);
+            transform: scale(0.95);
+            box-shadow: 0 0 10px var(--success-color);
+        }
+        
+        .output-display {
+            background-color: #34495e;
+            color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 1rem 0;
+            text-align: center;
+            min-height: 2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: var(--dark-color);
+            color: white;
+            margin-top: 2rem;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        @media (max-width: 768px) {
+            .keypad-types {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .keypad-key {
+                width: 40px;
+                height: 40px;
+                margin: 0 0.2rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><span class="emoji">⌨️</span> What is a Keypad?</h1>
+            <p class="subtitle">Connecting and Programming Matrix Keypads with Raspberry Pi Pico W</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="card animated">
+            <h2>Keypad Basics</h2>
+            <p>A Keypad is a matrix of buttons arranged in rows and columns. The most common types are:</p>
+            
+            <div class="keypad-types">
+                <div class="keypad-type">
+                    <div class="keypad-icon">🔢</div>
+                    <h3>4×4 Keypad</h3>
+                    <p>16 keys (0–9, A–D, *, #)</p>
+                </div>
+                <div class="keypad-type">
+                    <div class="keypad-icon">🔣</div>
+                    <h3>4×3 Keypad</h3>
+                    <p>12 keys (0–9, *, #)</p>
+                </div>
+            </div>
+            
+            <p>When you press a key, it connects a specific row and column pin.</p>
+            
+            <div class="keypad-demo">
+                <div class="output-display" id="keypadOutput">Press a key...</div>
+                <div class="keypad-row">
+                    <div class="keypad-key" data-key="1">1</div>
+                    <div class="keypad-key" data-key="2">2</div>
+                    <div class="keypad-key" data-key="3">3</div>
+                    <div class="keypad-key" data-key="A">A</div>
+                </div>
+                <div class="keypad-row">
+                    <div class="keypad-key" data-key="4">4</div>
+                    <div class="keypad-key" data-key="5">5</div>
+                    <div class="keypad-key" data-key="6">6</div>
+                    <div class="keypad-key" data-key="B">B</div>
+                </div>
+                <div class="keypad-row">
+                    <div class="keypad-key" data-key="7">7</div>
+                    <div class="keypad-key" data-key="8">8</div>
+                    <div class="keypad-key" data-key="9">9</div>
+                    <div class="keypad-key" data-key="C">C</div>
+                </div>
+                <div class="keypad-row">
+                    <div class="keypad-key" data-key="*">*</div>
+                    <div class="keypad-key" data-key="0">0</div>
+                    <div class="keypad-key" data-key="#">#</div>
+                    <div class="keypad-key" data-key="D">D</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="card animated delay-1">
+            <h2><span class="emoji">🧰</span> What You Need:</h2>
+            <ul>
+                <li>Raspberry Pi Pico W</li>
+                <li>4×4 Membrane Keypad</li>
+                <li>Jumper wires</li>
+                <li>Breadboard</li>
+                <li>Thonny IDE</li>
+            </ul>
+            
+            <h3><span class="emoji">🧷</span> Wiring the Keypad to Pico W</h3>
+            <p>The keypad has 8 pins (for 4 rows + 4 columns). Here's an example using GPIO pins GP2–GP9:</p>
+            
+            <table class="wiring-table">
+                <thead>
+                    <tr>
+                        <th>Keypad Pin</th>
+                        <th>Pico GPIO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ROW1</td>
+                        <td>GP2</td>
+                    </tr>
+                    <tr>
+                        <td>ROW2</td>
+                        <td>GP3</td>
+                    </tr>
+                    <tr>
+                        <td>ROW3</td>
+                        <td>GP4</td>
+                    </tr>
+                    <tr>
+                        <td>ROW4</td>
+                        <td>GP5</td>
+                    </tr>
+                    <tr>
+                        <td>COL1</td>
+                        <td>GP6</td>
+                    </tr>
+                    <tr>
+                        <td>COL2</td>
+                        <td>GP7</td>
+                    </tr>
+                    <tr>
+                        <td>COL3</td>
+                        <td>GP8</td>
+                    </tr>
+                    <tr>
+                        <td>COL4</td>
+                        <td>GP9</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-2">
+            <h2><span class="emoji">🧑‍💻</span> MicroPython Code for Keypad</h2>
+            
+            <h3>Step 1: Install the keypad class</h3>
+            <p>Paste this class in a file named <code>keypad.py</code> in Thonny:</p>
+            <div class="highlight">
+                <pre><code>from machine import Pin
+from time import sleep
+
+class Keypad:
+    def __init__(self, rows, cols, keys):
+        self.rows = [Pin(pin, Pin.OUT) for pin in rows]
+        self.cols = [Pin(pin, Pin.IN, Pin.PULL_DOWN) for pin in cols]
+        self.keys = keys
+
+    def scan(self):
+        for row_num, row_pin in enumerate(self.rows):
+            row_pin.high()
+            for col_num, col_pin in enumerate(self.cols):
+                if col_pin.value():
+                    row_pin.low()
+                    return self.keys[row_num][col_num]
+            row_pin.low()
+        return None</code></pre>
+            </div>
+            
+            <h3>Step 2: Use the Keypad</h3>
+            <div class="highlight">
+                <pre><code>from keypad import Keypad
+from time import sleep
+
+ROWS = [2, 3, 4, 5]   # GPIO for rows
+COLS = [6, 7, 8, 9]   # GPIO for columns
+
+KEYS = [
+    ["1", "2", "3", "A"],
+    ["4", "5", "6", "B"],
+    ["7", "8", "9", "C"],
+    ["*", "0", "#", "D"]
+]
+
+pad = Keypad(ROWS, COLS, KEYS)
+
+while True:
+    key = pad.scan()
+    if key:
+        print("Key pressed:", key)
+    sleep(0.2)</code></pre>
+            </div>
+        </section>
+        
+        <section class="card animated delay-3">
+            <h2><span class="emoji">🌟</span> What You Can Do with a Keypad</h2>
+            
+            <table class="use-case-table">
+                <thead>
+                    <tr>
+                        <th>Use Case</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="emoji">🔐</span> Password entry</td>
+                        <td>Use keypad to unlock servo or display</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">🎮</span> Game input</td>
+                        <td>Use it as a controller for simple games</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">📱</span> Calculator project</td>
+                        <td>Build a full calculator with LCD</td>
+                    </tr>
+                    <tr>
+                        <td><span class="emoji">🔢</span> Menu navigation</td>
+                        <td>Scroll through options using keys</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="card animated delay-4">
+            <h2><span class="emoji">💡</span> Example Project Ideas</h2>
+            
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-icon">🔒</div>
+                    <h3>Keypad Door Lock</h3>
+                    <p>With servo motor to unlock</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🧮</div>
+                    <h3>Calculator</h3>
+                    <p>With LCD display</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">❓</div>
+                    <h3>Quiz Game</h3>
+                    <p>Input system for answers</p>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">🚨</div>
+                    <h3>Security System</h3>
+                    <p>With code entry</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Raspberry Pi Pico W Keypad Tutorial</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Keypad demo interaction
+            const keys = document.querySelectorAll('.keypad-key');
+            const output = document.getElementById('keypadOutput');
+            
+            keys.forEach(key => {
+                key.addEventListener('click', function() {
+                    const keyValue = this.getAttribute('data-key');
+                    output.textContent = `Pressed: ${keyValue}`;
+                    
+                    // Visual feedback
+                    this.classList.add('active');
+                    setTimeout(() => {
+                        this.classList.remove('active');
+                    }, 200);
+                });
+            });
+            
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.highlight');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const code = this.querySelector('code')?.innerText || this.innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalBorder = this.style.borderLeft;
+                        this.style.borderLeft = '4px solid var(--success-color)';
+                        setTimeout(() => {
+                            this.style.borderLeft = originalBorder;
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
