@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Python Comment Assignments</title>
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --secondary: #1b5e20;
+      --accent: #4caf50;
+      --light: #f1f8e9;
+      --dark: #212529;
+      --success: #81c784;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5fff7;
+      margin: 0;
+      padding: 0;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    h1 {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 4px;
+      background: var(--accent);
+      bottom: -10px;
+      left: 25%;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      color: var(--primary);
+      margin-top: 30px;
+      font-size: 1.5rem;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 .emoji {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .assignment {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--accent);
+      transition: transform 0.3s ease;
+    }
+    
+    .assignment:hover {
+      transform: translateY(-3px);
+    }
+    
+    .task {
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 12px 0 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .task:before {
+      content: "▹";
+      color: var(--accent);
+      margin-right: 8px;
+    }
+    
+    .steps {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    
+    .steps li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 25px;
+    }
+    
+    .steps li:before {
+      content: "•";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+    
+    .example {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    
+    .example-title:before {
+      content: "🖥️";
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .output {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      margin: 8px 0;
+      line-height: 1.4;
+      border: 1px solid #e0e0e0;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
+    
+    .note {
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 6px;
+      margin: 12px 0;
+      font-size: 0.85rem;
+    }
+    
+    .note:before {
+      content: "💡";
+      margin-right: 6px;
+    }
+    
+    .code {
+      font-family: 'Consolas', monospace;
+      background: #e8f5e9;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+    
+    .comment {
+      color: #2e7d32;
+      font-style: italic;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .assignment {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Python Comment Assignments</h1>
+      <p>Learn to document your code effectively with Python comments!</p>
+    </header>
+    
+    <main>
+      <!-- Assignment 1 -->
+      <div class="assignment">
+        <h2><span class="emoji">💬</span> Assignment 1: Single-Line Comments</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create a Python script with single-line comments explaining each step.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Write a simple program that calculates the area of a rectangle</li>
+          <li>Add a comment at the top explaining the program's purpose</li>
+          <li>Add comments explaining each variable</li>
+          <li>Add a comment explaining the calculation</li>
+          <li>Add a comment explaining the output</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output"><span class="comment"># Calculate area of a rectangle</span>
+length = 5  <span class="comment"># length in cm</span>
+width = 3   <span class="comment"># width in cm</span>
+
+<span class="comment"># Calculate area (length × width)</span>
+area = length * width
+
+<span class="comment"># Display the result</span>
+print(f"Area: {area} cm²")</div>
+          <div class="note">Single-line comments start with <span class="code">#</span> and continue to the end of the line.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 2 -->
+      <div class="assignment">
+        <h2><span class="emoji">📝</span> Assignment 2: Multi-Line Docstrings</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create a function with a proper docstring explaining its purpose.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Write a function that converts Fahrenheit to Celsius</li>
+          <li>Add a multi-line docstring immediately after the function definition</li>
+          <li>Include: description, parameters, and return value in the docstring</li>
+          <li>Call the function and print the result</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output">def fahrenheit_to_celsius(f_temp):
+    <span class="comment">"""Convert Fahrenheit temperature to Celsius.
+    
+    Args:
+        f_temp (float): Temperature in Fahrenheit
+    
+    Returns:
+        float: Temperature in Celsius
+    """</span>
+    return (f_temp - 32) * 5/9
+
+print(fahrenheit_to_celsius(75))</div>
+          <div class="note">Docstrings are enclosed in triple quotes <span class="code">"""</span> and describe what the function does.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 3 -->
+      <div class="assignment">
+        <h2><span class="emoji">🚧</span> Assignment 3: Commenting Out Code</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Practice commenting out code to disable execution without deleting.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Write a program with two different ways to calculate the average of three numbers</li>
+          <li>Comment out the approach you're not using</li>
+          <li>Add a comment explaining why you chose the other approach</li>
+          <li>Include a TODO comment for future improvements</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output">num1, num2, num3 = 10, 20, 30
+
+<span class="comment"># Approach 1: Simple arithmetic average</span>
+average = (num1 + num2 + num3) / 3
+
+<span class="comment"># Approach 2: Using sum() function (commented out)</span>
+<span class="comment"># average = sum([num1, num2, num3]) / 3</span>
+
+<span class="comment"># Using Approach 1 for better readability with just 3 numbers</span>
+print(f"Average: {average}")
+
+<span class="comment"># TODO: Add input validation for non-numeric values</span></div>
+          <div class="note">Commented code won't execute but remains visible for reference.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 4 -->
+      <div class="assignment">
+        <h2><span class="emoji">📚</span> Assignment 4: Module-Level Docstring</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Create a Python file with a proper module docstring.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a new Python file (e.g., <span class="code">calculator.py</span>)</li>
+          <li>Add a module docstring at the very top explaining the file's purpose</li>
+          <li>Include: module name, author, date, and description</li>
+          <li>Add some functions with their own docstrings</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output"><span class="comment">"""calculator.py - Basic math operations module
+
+Author: Jane Doe
+Date: 2023-10-15
+
+This module provides basic arithmetic operations
+for educational purposes.
+"""</span>
+
+def add(a, b):
+    <span class="comment">"""Return the sum of two numbers."""</span>
+    return a + b
+
+def multiply(a, b):
+    <span class="comment">"""Return the product of two numbers."""</span>
+    return a * b</div>
+          <div class="note">Module docstrings should be the first thing in your Python file.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 5 -->
+      <div class="assignment">
+        <h2><span class="emoji">🏷️</span> Assignment 5: Inline Comments</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Write a program with effective inline comments explaining complex logic.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a program that checks if a number is prime</li>
+          <li>Add inline comments explaining each step of the algorithm</li>
+          <li>Make sure comments explain why, not just what the code does</li>
+          <li>Include a function docstring</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output">def is_prime(n):
+    <span class="comment">"""Check if a number is prime.
+    
+    Args:
+        n (int): Number to check
+    
+    Returns:
+        bool: True if prime, False otherwise
+    """</span>
+    if n <= 1:
+        return False  <span class="comment"># Numbers less than 2 can't be prime</span>
+    
+    <span class="comment"># Check divisors from 2 to square root of n</span>
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False  <span class="comment"># Found a divisor, not prime</span>
+    
+    return True  <span class="comment"># No divisors found, it's prime</span></div>
+          <div class="note">Good comments explain the reasoning behind the code.</div>
+        </div>
+      </div>
+      
+      <!-- Assignment 6 -->
+      <div class="assignment">
+        <h2><span class="emoji">⚠️</span> Assignment 6: TODO Comments</h2>
+        
+        <div class="task">Your Task:</div>
+        <p>Practice using TODO comments to mark future improvements.</p>
+        
+        <div class="task">Steps:</div>
+        <ol class="steps">
+          <li>Create a simple program with some missing features</li>
+          <li>Add at least 3 TODO comments marking what needs to be improved</li>
+          <li>Include different priority levels (HIGH, MEDIUM, LOW)</li>
+          <li>Make sure each TODO explains what needs to be done</li>
+        </ol>
+        
+        <div class="example">
+          <div class="example-title">Example Solution:</div>
+          <div class="output"><span class="comment"># TODO(HIGH): Add error handling for invalid inputs</span>
+<span class="comment"># TODO(MEDIUM): Support decimal numbers</span>
+<span class="comment"># TODO(LOW): Add color to output for better visibility</span>
+
+def calculate_discount(price, discount):
+    return price * (1 - discount/100)</div>
+          <div class="note">TODOs help you remember important improvements for later.</div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Master these commenting techniques to write professional, maintainable code!</p>
+    </footer>
+  </div>
+</body>
+</html>
