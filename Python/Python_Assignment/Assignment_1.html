@@ -1,260 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Python Beginner Assignments</title>
-  <style>
-    :root {
-      --primary: #2e7d32;
-      --secondary: #1b5e20;
-      --accent: #4caf50;
-      --light: #f1f8e9;
-      --dark: #212529;
-      --success: #81c784;
-    }
-    
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5fff7;
-      margin: 0;
-      padding: 0;
-      color: var(--dark);
-      line-height: 1.6;
-    }
-    
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 30px;
-    }
-    
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    
-    h1 {
-      color: var(--secondary);
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      position: relative;
-      display: inline-block;
-    }
-    
-    h1:after {
-      content: "";
-      position: absolute;
-      width: 50%;
-      height: 4px;
-      background: var(--accent);
-      bottom: -10px;
-      left: 25%;
-      border-radius: 2px;
-    }
-    
-    h2 {
-      color: var(--primary);
-      margin-top: 30px;
-      font-size: 1.8rem;
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 8px;
-      display: flex;
-      align-items: center;
-    }
-    
-    h2 .emoji {
-      margin-right: 10px;
-      font-size: 1.5rem;
-    }
-    
-    .assignment {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      padding: 25px;
-      margin-bottom: 30px;
-      border-left: 5px solid var(--accent);
-      transition: transform 0.3s ease;
-    }
-    
-    .assignment:hover {
-      transform: translateY(-5px);
-    }
-    
-    .task {
-      font-weight: bold;
-      color: var(--secondary);
-      margin: 15px 0 10px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .task:before {
-      content: "▹";
-      color: var(--accent);
-      margin-right: 8px;
-    }
-    
-    .steps {
-      padding-left: 20px;
-    }
-    
-    .steps li {
-      margin-bottom: 10px;
-      position: relative;
-      padding-left: 25px;
-    }
-    
-    .steps li:before {
-      content: "•";
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    }
-    
-    .example {
-      background: #e8f5e9;
-      border-radius: 8px;
-      padding: 15px;
-      margin: 15px 0;
-      border-left: 4px solid var(--accent);
-    }
-    
-    .example-title {
-      font-weight: bold;
-      color: var(--primary);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .example-title:before {
-      content: "🖥️";
-      margin-right: 8px;
-    }
-    
-    .output {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      font-family: 'Consolas', monospace;
-      margin: 10px 0;
-      line-height: 1.5;
-      border: 1px solid #e0e0e0;
-      white-space: pre-wrap;
-    }
-    
-    .note {
-      background: #e8f5e9;
-      padding: 12px;
-      border-radius: 8px;
-      margin: 15px 0;
-      font-size: 0.9rem;
-    }
-    
-    .note:before {
-      content: "💡";
-      margin-right: 8px;
-    }
-    
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      color: #6c757d;
-      font-size: 0.9rem;
-    }
-    
-    @media (max-width: 768px) {
-      .container {
-        padding: 20px;
-      }
-      
-      h1 {
-        font-size: 2rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Function Assignments | Python Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+        .assignment-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .assignment-card {
+            border-left: 4px solid #4361ee;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 0 8px 8px 0;
+        }
+        .assignment-title {
+            color: #4361ee;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .assignment-title i {
+            font-size: 1.5rem;
+        }
+        .steps-list {
+            padding-left: 20px;
+        }
+        .steps-list li {
+            margin-bottom: 8px;
+        }
+        .expected-output {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .back-button {
+            margin-top: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        code {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Python Beginner Assignments</h1>
-      <p>Practice your Python skills with these fun exercises!</p>
-    </header>
-    
-    <main>
-      <!-- Assignment 1 -->
-      <div class="assignment">
-        <h2><span class="emoji">👋</span> Assignment 1: Say Hello to Everyone</h2>
-        
-        <div class="task">Your Task:</div>
-        <p>Write a Python program that prints a greeting to 3 friends on the same line.</p>
-        
-        <div class="task">Steps:</div>
-        <ol class="steps">
-          <li>Open your Python editor (IDLE, VS Code, etc.)</li>
-          <li>Use the <code>print()</code> function</li>
-          <li>Print "Hello" followed by three friends' names in one line</li>
-          <li>Separate the names with commas inside the print() function</li>
-        </ol>
-        
-        <div class="example">
-          <div class="example-title">Expected Output:</div>
-          <div class="output">Hello Ali Mona Sara</div>
-          <div class="note">Remember: Use your own friends' names, not the ones in the example!</div>
+    <div class="container py-4">
+        <div class="assignment-container">
+            <h1 class="text-center mb-4">Print Function Assignments</h1>
+            
+            <div class="assignment-card">
+                <h2 class="assignment-title">
+                    <i class="fas fa-hand-wave"></i>
+                    Assignment 1: Say Hello to Everyone
+                </h2>
+                <p><strong>Your Task:</strong><br>
+                Write a Python program that prints a greeting to 3 friends on the same line.</p>
+                
+                <h5>Steps:</h5>
+                <ol class="steps-list">
+                    <li>Open your Python editor (IDLE, VS Code, etc.)</li>
+                    <li>Use the <code>print()</code> function</li>
+                    <li>Print "Hello" followed by three friends' names in one line</li>
+                    <li>Separate the names with commas inside the <code>print()</code> function</li>
+                </ol>
+                
+                <h5>Expected Output:</h5>
+                <div class="expected-output">
+                    Hello Ali Mona Sara
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Remember:</strong> Use your own friends' names, not the ones in the example!
+                </div>
+            </div>
+            
+            <div class="assignment-card">
+                <h2 class="assignment-title">
+                    <i class="fas fa-quote-left"></i>
+                    Assignment 2: Write Your Favorite Quote
+                </h2>
+                <p><strong>Your Task:</strong><br>
+                Print your favorite quote using triple quotes for multi-line formatting.</p>
+                
+                <h5>Steps:</h5>
+                <ol class="steps-list">
+                    <li>Choose a meaningful quote you love (from a book, movie, or person)</li>
+                    <li>Write it between triple quotes (<code>'''</code> or <code>"""</code>)</li>
+                    <li>Use the <code>print()</code> function to display it</li>
+                    <li><strong>Bonus:</strong> Make the quote span multiple lines</li>
+                </ol>
+                
+                <h5>Expected Output:</h5>
+                <div class="expected-output">
+                    Dream big and dare to fail.<br>
+                    - Norman Vaughan
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> The output will keep the same line breaks as in your code.
+                </div>
+            </div>
+            
+            <div class="assignment-card">
+                <h2 class="assignment-title">
+                    <i class="fas fa-smile"></i>
+                    Assignment 3: Emoji Fun
+                </h2>
+                <p><strong>Your Task:</strong><br>
+                Print a creative sentence that includes at least 2 different emojis.</p>
+                
+                <h5>Steps:</h5>
+                <ol class="steps-list">
+                    <li>Think of a fun sentence about your hobbies or interests</li>
+                    <li>Find 2 emojis that match your sentence</li>
+                    <li>Use Windows key + . or Mac control + command + space to insert emojis</li>
+                    <li>Print your sentence with emojis using <code>print()</code></li>
+                </ol>
+                
+                <h5>Expected Output:</h5>
+                <div class="expected-output">
+                    I love pizza 🍕 and coding 💻!
+                </div>
+                
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Emojis make your programs more fun and expressive!
+                </div>
+            </div>
+            
+            <a href="index.html" class="btn btn-primary back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Course
+            </a>
         </div>
-      </div>
-      
-      <!-- Assignment 2 -->
-      <div class="assignment">
-        <h2><span class="emoji">✍️</span> Assignment 2: Write Your Favorite Quote</h2>
-        
-        <div class="task">Your Task:</div>
-        <p>Print your favorite quote using triple quotes for multi-line formatting.</p>
-        
-        <div class="task">Steps:</div>
-        <ol class="steps">
-          <li>Choose a meaningful quote you love (from a book, movie, or person)</li>
-          <li>Write it between triple quotes (''' or """)</li>
-          <li>Use the <code>print()</code> function to display it</li>
-          <li>Bonus: Make the quote span multiple lines</li>
-        </ol>
-        
-        <div class="example">
-          <div class="example-title">Expected Output:</div>
-          <div class="output">Dream big and dare to fail.
-- Norman Vaughan</div>
-          <div class="note">Tip: The output will keep the same line breaks as in your code.</div>
-        </div>
-      </div>
-      
-      <!-- Assignment 3 -->
-      <div class="assignment">
-        <h2><span class="emoji">🎨</span> Assignment 3: Emoji Fun</h2>
-        
-        <div class="task">Your Task:</div>
-        <p>Print a creative sentence that includes at least 2 different emojis.</p>
-        
-        <div class="task">Steps:</div>
-        <ol class="steps">
-          <li>Think of a fun sentence about your hobbies or interests</li>
-          <li>Find 2 emojis that match your sentence</li>
-          <li>Use Windows key + . or Mac control + command + space to insert emojis</li>
-          <li>Print your sentence with emojis using <code>print()</code></li>
-        </ol>
-        
-        <div class="example">
-          <div class="example-title">Expected Output:</div>
-          <div class="output">I love pizza 🍕 and coding 💻!</div>
-          <div class="note">Pro Tip: Emojis make your programs more fun and expressive!</div>
-        </div>
-      </div>
-    </main>
-    
-    <footer>
-      <p>Happy coding! Practice these assignments to become a Python pro.</p>
-    </footer>
-  </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </body>
 </html>
