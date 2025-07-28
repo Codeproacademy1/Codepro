@@ -1,88 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Tutorials - CodeCraft Academy</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Lessons – CodePro Academy</title>
+  <style>
+    /* GLOBAL STYLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50;
+      background-color: #f0f8ff;
+      line-height: 1.6;
+    }
+
+    /****** NAVBAR STYLES ******/
+    header {
+      background-color: #ffffff;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 60px;
+      z-index: 100;
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      height: 100%;
+      max-width: 100%;
+    }
+    .navbar-left {
+      flex: 1;
+    }
+    .navbar-center {
+      display: flex;
+      align-items: center;
+    }
+    .home-link {
+      font-size: 24px;
+      text-decoration: none;
+      color: #2c3e50;
+      margin-right: 10px;
+      transition: transform 0.2s;
+    }
+    .home-link:hover {
+      transform: scale(1.1);
+    }
+    .academy-logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    .academy-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    /****** MAIN LAYOUT STYLES ******/
+    .main-container {
+      display: flex;
+      height: calc(100% - 60px);
+      width: 100%;
+      position: fixed;
+      top: 60px;
+    }
+
+    /* Left sidebar styling */
+    .sidebar {
+      width: 280px;
+      background: #f0f8ff;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+      height: 100%;
+      padding: 15px;
+      transition: transform 0.3s;
+    }
+    .sidebar-title {
+      text-align: center;
+      margin: 10px 0 20px;
+      font-size: 24px;
+      color: #2c3e50;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #00b894;
+    }
+
+    /* Main content area */
+    .content-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      background-color: #f8fbff;
+    }
+
+    /* Section navigation buttons */
+    .section-nav {
+      display: flex;
+      justify-content: center;
+      background-color: #2c3e50;
+      padding: 10px 0;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .section-nav button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+    .section-nav button:hover {
+      background-color: #019875;
+      transform: translateY(-2px);
+    }
+    .section-nav button.active {
+      background-color: #019875;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Content sections */
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .section:hover {
+      transform: translateY(-5px);
+    }
+    pre {
+      background: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      tab-size: 4;
+    }
+    code {
+      font-family: 'Fira Code', Consolas, monospace;
+      font-size: 14px;
+    }
+    button.copy-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    button.copy-btn:hover {
+      background-color: #019875;
+      transform: scale(1.05);
+    }
+    .icon-title {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .icon-title img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+    .assignment-card {
+      background-color: #e2f1f8;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 600px;
+      max-width: 90%;
+      margin: 20px auto;
+      border-left: 8px solid #00b894;
+    }
+    .github-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+    .github-link a {
+      color: #00b894;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .github-link a:hover {
+      text-decoration: underline;
+    }
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #00b894;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /****** SIDEBAR DETAILS + SUMMARY ******/
+    details {
+      background: white;
+      padding: 10px 15px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+    }
+    details[open] {
+      background-color: #eaf7ff;
+    }
+    details:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    summary {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+      cursor: pointer;
+      outline: none;
+      padding: 10px 5px;
+      display: flex;
+      align-items: center;
+    }
+    summary:hover {
+      color: #00b894;
+    }
+    summary img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+    }
+    .sidebar a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #2c3e50;
+      display: block;
+      padding: 8px 15px;
+      transition: all 0.2s;
+      border-radius: 6px;
+      margin: 5px 0;
+    }
+    .sidebar a:hover {
+      color: #00b894;
+      background-color: #eaf7ff;
+      transform: translateX(5px);
+    }
+    .sidebar li {
+      margin-bottom: 5px;
+      list-style-type: none;
+    }
+    .sidebar ul {
+      padding-left: 10px;
+      margin: 10px 0;
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    
+    /* Active sidebar link */
+    .sidebar a.active {
+      color: white;
+      background-color: #00b894;
+      font-weight: bold;
+    }
+    .sidebar a.active:hover {
+      background-color: #019875;
+    }
+
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px;
+      color: #2c3e50;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 60px;
+        height: calc(100% - 60px);
+        transform: translateX(-100%);
+        z-index: 90;
+        background-color: #f0f8ff;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .content-area {
+        margin-left: 0;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .section-nav button {
+        padding: 8px 12px;
+        margin: 0 5px;
+        font-size: 14px;
+        min-width: 90px;
+      }
+    }
+
+    /* Notification styles */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #00b894;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 1;
+      transition: opacity 0.5s;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <div class="logo-placeholder">CodeCraft Academy</div>
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-btn">Tutorials</a>
-                    <div class="dropdown-content">
-                        <a href="Arduino.html">Arduino</a>
-                        <a href="Python.html">Python</a>
-                        <a href="Pico.html">Pico W</a>
-                    </div>
-                </li>
-                <li><a href="#">Our Kits</a></li>
-                <li><a href="#">Certification</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
-            </div>
-        </nav>
-    </header>
 
-    <main>
-        <h1 class="page-title">Python Tutorials</h1>
-        <p class="page-description">Learn Python programming from basics to advanced concepts.</p>
+  <!-- TOP NAVBAR -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-left">
+        <button class="menu-toggle">☰</button>
+        <a href="https://sites.google.com/view/codepro-academy" class="home-link">🏠</a>
+      </div>
+      <div class="navbar-center">
+        <img src="https://i.imgur.com/vwLt5jS.png" alt="Academy Logo" class="academy-logo">
+        <span class="academy-name">CodePro Academy</span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT AREA -->
+  <div class="main-container">
+    <!-- LEFT SIDEBAR -->
+    <nav class="sidebar">
+      <h1 class="sidebar-title">📘 Python Learning</h1>
+
+      <!-- Python Basics -->
+      <details open>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/1802/1802977.png" alt="icon"> Python Basics</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link active" data-topic="print" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example1.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_1.html">✅ Print</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="comments" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example16.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_16.html">✅ Comments</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="datatypes" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example2.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_2.html">✅ Data Types</a></li>
+		  </ul>
+      </details>
+
+      <!-- Python Fundamentals -->
+      <details>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/2621/2621303.png" alt="icon"> Python Fundamentals</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link" data-topic="Variables" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example3.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_3.html">✅ Variables</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="Input and Casting" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example4.html" data-assignment="https://codeproacademy1.github.io/Python/Codepro/Python_Assignment/Assignment_4.html">✅ Casting</a></li>
+		  <li><a href="#" class="sidebar-link" data-topic="operators" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example5.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_5.html">✅ Operators</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="Numbers" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example6.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_6.html">✅ Numbers</a></li>
+		</ul>
+      </details>
+
+      <!-- Conditions -->
+      <details>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/3767/3767089.png" alt="icon"> Conditions</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link" data-topic="if - else" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example7.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_7.html">✅ if/elif/else</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="match" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example8.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_8.html">✅ Match</a></li>
+        </ul>
+      </details>
+
+      <!-- Containers -->
+      <details>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/2885/2885253.png" alt="icon"> Containers</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link" data-topic="list" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example9.html" data-assignment= "https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_9.html">✅ List</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="tuples" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example10.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_10.html">✅ Tuples</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="set" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example11.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_11.html">✅ Set</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="dictionaries" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example12.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_12.html">✅ Dictionaries</a></li>
+        </ul>
+      </details>
+
+      <!-- Loops -->
+      <details>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/2489/2489714.png" alt="icon"> Loops</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link" data-topic="for" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example13.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_13.html">✅ For Loops</a></li>
+          <li><a href="#" class="sidebar-link" data-topic="while" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example14.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_14.html">✅ While Loops</a></li>
+        </ul>
+      </details>
+
+      <!-- Functions -->
+      <details>
+        <summary><img src="https://cdn-icons-png.flaticon.com/512/2315/2315309.png" alt="icon"> Functions</summary>
+        <ul>
+          <li><a href="#" class="sidebar-link" data-topic="functions" data-examples="https://codeproacademy1.github.io/Codepro/Python/Python_Examples/Example15.html" data-assignment="https://codeproacademy1.github.io/Codepro/Python/Python_Assignment/Assignment_15.html">✅ Functions</a></li>
+        </ul>
+      </details>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="content-area">
+      <!-- Section navigation buttons -->
+      <div class="section-nav">
+        <button class="active" data-section="examples">Examples</button>
+        <button data-section="assignment">Assignment</button>
+      </div>
+
+      <!-- Content container where pages will be loaded -->
+      <div id="content-container">
+        <!-- Default content will be loaded here -->
+        <div class="loader"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Current topic and content state
+    let currentTopic = 'print';
+    let currentSection = 'examples';
+    let currentContentUrls = {
+      examples: 'https://codeproacademy1.github.io/Codepro/Python_Examples/Example1.html',
+      assignment: 'https://codeproacademy1.github.io/Codepro/Python_Assignment/Assignment_1.html'
+    };
+
+    // Function to show notification
+    function showNotification(message, duration = 2000) {
+      const notification = document.createElement('div');
+      notification.className = 'notification';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 500);
+      }, duration);
+    }
+
+    // Function to copy code from the examples
+    function copyCode(id) {
+      const code = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(code)
+        .then(() => showNotification('✅ Code copied!'))
+        .catch(err => {
+          // Fallback for older browsers
+          const textarea = document.createElement("textarea");
+          textarea.value = code;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          textarea.remove();
+          showNotification('Code copied to clipboard!');
+        });
+    }
+
+    // Function to load content
+    async function loadContent() {
+      const url = currentContentUrls[currentSection];
+      const container = document.getElementById('content-container');
+      
+      // Show loading spinner
+      container.innerHTML = '<div class="loader"></div>';
+      
+      try {
+        const response = await fetch(url);
         
-        <div class="tutorial-list">
-            <h2>Python Fundamentals</h2>
+        if (!response.ok) {
+          throw new Error(`Failed to load: HTTP ${response.status}`);
+        }
+        
+        const html = await response.text();
+        container.innerHTML = html;
+        
+        // Reattach copy button event listeners
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+          const codeId = btn.getAttribute('data-code-id') || 
+                        btn.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+          if (codeId) {
+            btn.onclick = () => copyCode(codeId);
+          }
+        });
+        
+      } catch (error) {
+        console.error('Error loading content:', error);
+        container.innerHTML = `
+          <div class="section">
+            <h2>Error Loading Content</h2>
+            <p>Could not load the ${currentSection} content for ${currentTopic}.</p>
+            <p><strong>Error:</strong> ${error.message}</p>
+            <p>Please check:</p>
             <ul>
-                <li><a href="https://codeproacademy1.github.io/Codepro/Python/Python_Exercises/Exercise1/Exercises1.html">print() function</a></li>
-                <li><a href="#">Comments</a></li>
-                <li><a href="#">Data Types</a></li>
-                <li><a href="#">Variables</a></li>
-                <li><a href="#">Casting</a></li>
-                <li><a href="#">Operators</a></li>
-                <li><a href="#">Numbers</a></li>
+              <li>The URL exists: <code>${url}</code></li>
+              <li>Your internet connection</li>
+              <li>Try again later</li>
             </ul>
-            
-            <h2>Control Flow</h2>
-            <ul>
-                <li><a href="#">if/elif/else</a></li>
-                <li><a href="#">match statement</a></li>
-            </ul>
-            
-            <h2>Data Structures</h2>
-            <ul>
-                <li><a href="#">Lists</a></li>
-                <li><a href="#">Tuples</a></li>
-                <li><a href="#">Sets</a></li>
-                <li><a href="#">Dictionaries</a></li>
-            </ul>
-            
-            <h2>Loops</h2>
-            <ul>
-                <li><a href="#">for loops</a></li>
-                <li><a href="#">while loops</a></li>
-            </ul>
-            
-            <h2>Functions</h2>
-            <ul>
-                <li><a href="#">Function basics</a></li>
-                <li><a href="#">Parameters and arguments</a></li>
-                <li><a href="#">Return values</a></li>
-                <li><a href="#">Lambda functions</a></li>
-            </ul>
-        </div>
-    </main>
+          </div>
+        `;
+      }
+    }
 
-    <footer>
-        <p>&copy; 2023 CodeCraft Academy. All rights reserved.</p>
-    </footer>
+    // Handle sidebar link clicks
+    function handleSidebarLinkClick(event) {
+      event.preventDefault();
+      
+      // Update active link in sidebar
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Update current topic and content URLs
+      currentTopic = event.target.dataset.topic;
+      currentContentUrls = {
+        examples: event.target.dataset.examples,
+        assignment: event.target.dataset.assignment
+      };
+      
+      // Reset to examples section when changing topics
+      currentSection = 'examples';
+      updateSectionButtons();
+      
+      // Load the new content
+      loadContent();
+      
+      // Close mobile menu if open
+      document.querySelector('.sidebar').classList.remove('open');
+    }
 
-    <script src="js/script.js"></script>
+    // Handle section button clicks
+    function handleSectionButtonClick(event) {
+      currentSection = event.target.dataset.section;
+      updateSectionButtons();
+      loadContent();
+    }
+
+    // Update active state of section buttons
+    function updateSectionButtons() {
+      document.querySelectorAll('.section-nav button').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.section === currentSection) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Toggle mobile menu
+    function toggleMenu() {
+      document.querySelector('.sidebar').classList.toggle('open');
+    }
+
+    // Initialize event listeners
+    function initialize() {
+      // Sidebar links
+      document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', handleSidebarLinkClick);
+      });
+      
+      // Section buttons
+      document.querySelectorAll('.section-nav button').forEach(btn => {
+        btn.addEventListener('click', handleSectionButtonClick);
+      });
+      
+      // Menu toggle
+      document.querySelector('.menu-toggle').addEventListener('click', toggleMenu);
+      
+      // Load initial content
+      loadContent();
+      
+      // Make sidebar details remember their state
+      const details = document.querySelectorAll('details');
+      details.forEach(detail => {
+        detail.addEventListener('toggle', function() {
+          if (this.open) {
+            // Close other details in the same parent
+            details.forEach(otherDetail => {
+              if (otherDetail !== this && otherDetail.parentNode === this.parentNode) {
+                otherDetail.open = false;
+              }
+            });
+          }
+        });
+      });
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener("DOMContentLoaded", initialize);
+  </script>
 </body>
 </html>
